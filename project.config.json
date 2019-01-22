@@ -1,0 +1,29 @@
+{
+	"description": "梦享邦成长计划",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false
+	},
+	"compileType": "dreamershaven",
+	"libVersion": "2.0.0",
+	"appid": "wx34fb3ff2e6437831",
+	"projectname": "dreamershaven",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
+}

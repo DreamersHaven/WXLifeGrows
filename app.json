@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/userLogin/login",
+    "pages/index/index",
+    "pages/radar/index",
+    "pages/gauge/index",
+    "pages/tree/index",
+    "pages/map/index",
+    "pages/graph/index",
+    "pages/parallel/index",
+    "pages/mine/mine",
+    "pages/disc/disc",
+    "pages/userRegist/regist",
+    "pages/share/share"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#eee",
+    "navigationBarBackgroundColor": "#eee",
+    "navigationBarTitleText": "梦享邦成长计划",
+    "navigationBarTextStyle": "black"
+  }
+}
