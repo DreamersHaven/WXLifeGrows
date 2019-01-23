@@ -1,0 +1,32 @@
+<template name="question">
+
+  <i-row>
+    <i-col span="8" i-class="col-class">最符合</i-col>
+    <i-col span="8" i-class="col-class">最不符合</i-col>
+    <i-col span="8" i-class="col-class"></i-col>
+
+  </i-row>
+
+  <i-row wx:for="{{questions[current-1].choices}}">
+
+    <i-col span="8" i-class="col-class">
+
+
+      <i-radio checked="{{item.m}}" bindchange="onSwitChChange" id="{{item.key}}-most">
+      </i-radio>
+    </i-col>
+    <i-col span="8" i-class="col-class">
+
+
+      <i-radio checked="{{item.l}}" bindchange="onSwitChChange" id="{{item.key}}-lease">
+      </i-radio>
+    </i-col>
+    <i-col span="8" i-class="col-class">{{item.text}}</i-col>
+
+
+  </i-row>
+
+
+
+
+</template>

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/disc/disc",
     "pages/userLogin/login",
     "pages/index/index",
     "pages/radar/index",
@@ -9,7 +10,7 @@
     "pages/graph/index",
     "pages/parallel/index",
     "pages/mine/mine",
-    "pages/disc/disc",
+   
     "pages/userRegist/regist",
     "pages/share/share"
   ],

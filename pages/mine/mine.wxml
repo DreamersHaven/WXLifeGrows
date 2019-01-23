@@ -14,9 +14,9 @@
     <label class='nickname'>{{nickname}}</label>
 
     <block wx:if="{{isMe}}">
-     
+      <button size='mini' class='primary' bindtap='discTest'> DISC测评</button>
       <button size='mini' type='' class='logout' bindtap='logout'>注销</button>
-       <button size='mini' class='primary' bindtap='discTest'> DISC测评</button>
+      
     </block>
   
 

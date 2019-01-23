@@ -1,1 +1,32 @@
-这是DISC测试界面
+
+<!--
+<i-panel wx:for="{{questions}}" wx:for-item="question" title="{{question.key}}">
+   第 {{question.key}} 题   
+    <i-radio-group current="{{current}}" bindchange="handleChange">
+        <i-radio wx:for="{{question.choices}}" wx:key="{{item.key}}"  value="{{item.text}}">
+        </i-radio>
+    </i-radio-group>
+</i-panel>
+-->
+
+
+<import src="../../template/question.wxml" />  
+<template is="question" data="{{questions: questions,current:current}}" /> 
+
+
+
+<i-page current="{{ current }}" total="{{ topicsNum }}" bind:change="handleChange">
+    <view slot="prev">
+        <i-icon type="return"></i-icon>
+        上一题
+    </view>
+    <view slot="next">
+        下一题
+        <i-icon type="enter"></i-icon>
+    </view>
+</i-page>
+ 
+
+ 
+
+ 
