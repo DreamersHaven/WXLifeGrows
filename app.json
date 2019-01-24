@@ -1,5 +1,8 @@
 {
   "pages": [
+    "pages/aGraph/index",
+    "pages/lGraph/index",
+    "pages/mGraph/index",
     "pages/disc/disc",
     "pages/userLogin/login",
     "pages/index/index",
@@ -10,9 +13,10 @@
     "pages/graph/index",
     "pages/parallel/index",
     "pages/mine/mine",
-   
     "pages/userRegist/regist",
     "pages/share/share"
+   
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
