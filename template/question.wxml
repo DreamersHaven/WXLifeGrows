@@ -1,4 +1,9 @@
 <template name="question">
+ 
+
+    <view class="comment-title">
+		 第{{current}}题
+		</view>
 
   <i-row>
     <i-col span="8" i-class="col-class">最符合</i-col>
@@ -12,13 +17,13 @@
     <i-col span="8" i-class="col-class">
 
 
-      <i-radio checked="{{item.m}}" bindchange="onSwitChChange" id="{{item.key}}-most">
+      <i-radio checked="{{item.m}}" bindchange="onSwitChChange" id="{{item.key}}-most-{{item.label}}">
       </i-radio>
     </i-col>
     <i-col span="8" i-class="col-class">
 
 
-      <i-radio checked="{{item.l}}" bindchange="onSwitChChange" id="{{item.key}}-lease">
+      <i-radio checked="{{item.l}}" bindchange="onSwitChChange" id="{{item.key}}-lease-{{item.label}}">
       </i-radio>
     </i-col>
     <i-col span="8" i-class="col-class">{{item.text}}</i-col>
@@ -26,7 +31,7 @@
 
   </i-row>
 
-
+ 
 
 
 </template>

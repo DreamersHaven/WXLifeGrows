@@ -12,6 +12,15 @@
   justify-content: space-between;
   box-sizing: border-box;
 } 
+
+.comment-title {
+	/*border: 1px solid black;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30rpx;
+  font-size: 20px;
+}
 /*tabBar*/
 .tab-bar {
   position: fixed;
