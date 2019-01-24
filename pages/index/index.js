@@ -20,7 +20,7 @@ Page({
     
     charts: [
       {
-        id: 'parallel',
+        id: 'disc',
         name: 'DISC测评'
       }, {
         id: 'gauge',

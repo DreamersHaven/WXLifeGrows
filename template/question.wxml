@@ -5,7 +5,7 @@
 		 第{{current}}题
 		</view>
 
-  <i-row>
+  <i-row i-class="comment-toprow">
     <i-col span="8" i-class="col-class">最符合</i-col>
     <i-col span="8" i-class="col-class">最不符合</i-col>
     <i-col span="8" i-class="col-class"></i-col>

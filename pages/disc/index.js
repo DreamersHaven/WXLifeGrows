@@ -927,7 +927,8 @@ Page({
    * 用户点击完成，进行如下操作
    * 1、计算DISC结果。分别计算最符合和最不符合中的DISC的数目
    * 2、计算A（最符合-最不符合）的DISC数目
-   * 3、将MLA中值传递给绘图页面，进行绘图操作
+   * 3、将MLA的值存储到数据库
+   * 4、将MLA中值传递给绘图页面，进行绘图操作
    */
   completeClick(event){
     console.log("##########用户完成DISC测试，生成DISC分析图表所用数据##########")
@@ -969,6 +970,11 @@ Page({
     console.log('L：最不符合' + this.data.L)
     this.data.A = (mD - lD) + ',' + (mI - lI) + ',' + (mS - lS) + ',' + (mC- lC)
     console.log('A：M-L' + this.data.A)
+
+    //将MLA的值存储到服务器
+
+    //跳转到绘图页面
+
   },
 
   /**

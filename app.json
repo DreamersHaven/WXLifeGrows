@@ -1,10 +1,12 @@
 {
   "pages": [
+    "pages/userLogin/login",
+    "pages/disc/index",
     "pages/aGraph/index",
     "pages/lGraph/index",
     "pages/mGraph/index",
-    "pages/disc/disc",
-    "pages/userLogin/login",
+   
+    
     "pages/index/index",
     "pages/radar/index",
     "pages/gauge/index",

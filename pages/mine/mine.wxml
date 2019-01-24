@@ -1,31 +1,30 @@
 <import src="../../template/tabBar.wxml" />  
 <template is="tabBar" data="{{tabBar: tabBar}}" /> 
 
-<view>
-
-  <view class='container'>
-
-    <block wx:if="{{isMe}}">
-      <image src="{{faceUrl}}" class="face" bindtap='changeFace'></image>
-    </block>
-    <block wx:if="{{!isMe}}">
-      <image src="{{faceUrl}}" class="face"></image>
-    </block>
-    <label class='nickname'>{{nickname}}</label>
-
-    <block wx:if="{{isMe}}">
-      <button size='mini' class='primary' bindtap='discTest'> DISC测评</button>
-      <button size='mini' type='' class='logout' bindtap='logout'>注销</button>
-      
-    </block>
-  
-
-    
-  </view>
-
-</view>
-
-<view class="line"></view>
-  
+ 
+ 
+<i-card title="{{nickname}}"  extra="修改头像" thumb="{{faceUrl}}" bindtap='changeFace'>
+    <view slot="content">个性签名</view>
+    <view slot="footer">其他信息</view>
+</i-card>
 
  
+
+<i-panel  i-class="cell-panel-demo" >
+     <i-cell title="DISC测评结果"   is-link>
+        <i-icon type="activity_fill" slot="icon" />
+    </i-cell>
+ 
+ 
+    <i-cell title="完善个人信息"   is-link>
+        <i-icon type="businesscard_fill" slot="icon" />
+    </i-cell>
+
+     <i-cell title="退出登录"   bindtap='logout'>
+        <i-icon type="setup_fill" slot="icon" />
+    </i-cell>
+ 
+  
+    
+ 
+</i-panel>

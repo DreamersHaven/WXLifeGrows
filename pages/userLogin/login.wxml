@@ -6,7 +6,7 @@
         <form bindsubmit='doLogin'>
             <!--账号-->
             <view class="inputView">
-                <image class="nameImage" src="../resource/images/username.png"></image>
+                <i-icon type="addressbook" size="24"/>
                 <label class="loginLabel">账号</label>
                 <input name="username" value='dongyaxin' class="inputText" placeholder="请输入账号" />
             </view>
@@ -14,18 +14,18 @@
 
             <!--密码-->
             <view class="inputView">
-                <image class="keyImage" src="../resource/images/password.png"></image>
+                 <i-icon type="lock" size="24"/>
                 <label class="loginLabel">密码</label>
                 <input name="password" value='123456' class="inputText" password="true" placeholder="请输入密码" />
             </view>
 
             <!--按钮-->
             <view>
-                <button class="loginBtn" type="primary" form-type='submit'>登录</button>
+                <button class="loginBtn" type="ghost" form-type='submit'>登录</button>
             </view>
 
             <view>
-                <button class="goRegistBtn" type="warn" bindtap="goRegistPage">没有账号？点击注册</button>
+                <button class="goRegistBtn" type="ghost" bindtap="goRegistPage">没有账号？点击注册</button>
             </view>
         </form>
     </view>

@@ -42,11 +42,13 @@ page {
 
 /*按钮*/
 .loginBtn {
-    width: 80%;
+    width: 70%;
     margin-top: 35px;
+    font-size: 15px;
 }
 
 .goRegistBtn {
-    width: 80%;
+    width: 70%;
     margin-top: 15px;
+    font-size: 15px;
 }

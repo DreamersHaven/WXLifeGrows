@@ -1,3 +1,5 @@
+
+
 <canvas canvas-id="myCanvas"
   style="width:100%;height:{{windowHeight}}px;"
   bindtouchstart="start"
