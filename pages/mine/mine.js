@@ -185,14 +185,52 @@ Page({
       }
     })
   },
+  /**
+   * 显示用户最新的DISC测评结果
+   * 1、依据用户ID查询DISC测评结果
+   * 2、跳转到DISC图形展示页面，显示该用户的DISC测评结果
+   */
+  showDiscResult: function () {
+    var user = app.getGlobalUserInfo();
+    var serverUrl = app.serverUrl;
+    var mresult=''
+    var aresult=''
+    var lresult=''
+    wx.showLoading({
+      title: '请等待...',
+    });
+    // 调用后端
+    wx.request({
+      url: serverUrl + '/queryDiscResult?userId=' + user.userId,
+      method: "POST",
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data);
+        wx.hideLoading();
+        if (res.data.status == 200) {
+         
+          wx.showToast({
+            title: '正在为您生成DISC分析图表',
+            icon: 'success',
+            duration: 2000
+          });
+          mresult = res.data.data.mresult
+          lresult = res.data.data.lresult
+          aresult = res.data.data.aresult
+           
+          // 页面跳转
+          wx.navigateTo({
+            url: '../amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult+'&fromPage=mine',
 
-  discTest: function () {
-    // 页面跳转
-    wx.redirectTo({
-      url: '../disc/disc',
+          })
+        }
+      }
     })
-
   }
+
+  
 
 
    

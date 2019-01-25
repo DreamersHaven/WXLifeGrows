@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
   data: {
     currentTab: 'isAGraph',
@@ -5,6 +6,7 @@ Page({
     discA: '',
     discM: '',
     discL: '',
+    discType:'',
     x: 0,
     y: 0,
     hidden: true,
@@ -1389,8 +1391,10 @@ Page({
     wx.getSystemInfo({
       success: function(res) {
         that.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight,
+         // windowWidth: res.windowWidth,
+          windowWidth: that.data.bgWIDTH,
+          //windowHeight: res.windowHeight,
+          windowHeight: that.data.bgHEIGHT,
           pixelRatio: res.pixelRatio
         })
 
@@ -1760,5 +1764,52 @@ Page({
     } else if (detail.key == "isLGraph"){
       this.getLGraph()
     }
-  }
+  },
+  /**
+   * 保存某个用户的DISC测评结果
+   */
+  doSaveResult: function (e) {
+     
+      var serverUrl = app.serverUrl
+      var user = app.getGlobalUserInfo()
+      var userId = user.userId
+    var username = user.username
+      wx.showLoading({
+        title: '请等待...',
+      });
+      wx.request({
+        url: serverUrl + '/saveDiscResult',
+        method: "POST",
+        data: {
+          userId: userId,
+          username: username,
+          mresult: this.data.discM,
+          lresult:this.data.discL,
+          aresult:this.data.discA,
+          discType:this.data.discType
+        },
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          console.log(res.data);
+          wx.hideLoading();
+          var status = res.data.status;
+          if (status == 200) {
+            wx.showToast({
+              title: "DISC结果保存成功，可以在【我的】页面进行查看~~",
+              icon: 'none',
+              duration: 3000
+            }) 
+           } else if (status == 500) {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        }
+      })
+    }
+  
 })
