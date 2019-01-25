@@ -1,12 +1,16 @@
+<i-tabs current="{{ currentTab }}" bindchange="tabshandleChange">
+    <i-tab key="isAGraph" title="自我形象"></i-tab>
+    <i-tab key="isMGraph" title="向外形象"></i-tab>
+    <i-tab key="isLGraph" title="受压形象"></i-tab>
+</i-tabs>
 
-
-<canvas    canvas-id="myCanvas"
+<canvas      canvas-id="myCanvas"
   style="width:100%;height:{{windowHeight}}px;"
   />
-
- <canvas   canvas-id="myCanvasM"
+<!--
+ <canvas hidden='{{isMHidden}}'  canvas-id="myCanvasM"
   style="width:100%;height:{{windowHeight}}px;"/> 
 
-  <canvas   canvas-id="myCanvasL"
+  <canvas hidden='{{isLHidden}}'  canvas-id="myCanvasL"
   style="width:100%;height:{{windowHeight}}px;"/>
-
+-->

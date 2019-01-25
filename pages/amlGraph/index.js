@@ -1,5 +1,7 @@
 Page({
   data: {
+    currentTab: 'isAGraph',
+    
     discA: '',
     discM: '',
     discL: '',
@@ -1402,8 +1404,8 @@ Page({
       discL: options.L,
     })
     this.getAGraph()
-    this.getMGraph()
-    this.getLGraph()
+    //this.getMGraph()
+    //this.getLGraph()
 
   },
 
@@ -1419,7 +1421,7 @@ Page({
    * 
    */
   getLGraph: function() {
-    const ctx = wx.createCanvasContext('myCanvasL')
+    const ctx = wx.createCanvasContext('myCanvas')
     var url = '../../img/bg-sm.jpg'
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
 
@@ -1516,7 +1518,7 @@ Page({
    * 
    */
   getMGraph: function() {
-    const ctx = wx.createCanvasContext('myCanvasM')
+    const ctx = wx.createCanvasContext('myCanvas')
     var url = '../../img/bg-sm.jpg'
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
 
@@ -1742,5 +1744,21 @@ Page({
     ctx.lineTo(this.data.C.x / 2, this.data.C.y / 2)
     ctx.stroke()
     ctx.draw()
+  },
+  /**
+   * 当切换页面中的TAB页时：
+   * 
+   */
+  tabshandleChange({ detail }) {
+    this.setData({
+      currentTab: detail.key
+    });
+    if (detail.key =="isAGraph"){
+      this.getAGraph()
+    } else if (detail.key == "isMGraph"){
+      this.getMGraph()
+    } else if (detail.key == "isLGraph"){
+      this.getLGraph()
+    }
   }
 })
