@@ -1,0 +1,12 @@
+
+
+<canvas    canvas-id="myCanvas"
+  style="width:100%;height:{{windowHeight}}px;"
+  />
+
+ <canvas   canvas-id="myCanvasM"
+  style="width:100%;height:{{windowHeight}}px;"/> 
+
+  <canvas   canvas-id="myCanvasL"
+  style="width:100%;height:{{windowHeight}}px;"/>
+
