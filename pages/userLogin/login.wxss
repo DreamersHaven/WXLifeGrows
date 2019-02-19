@@ -47,8 +47,13 @@ page {
     font-size: 15px;
 }
 
-.goRegistBtn {
+.goLoginBtn {
     width: 70%;
     margin-top: 15px;
     font-size: 15px;
+}
+
+.view.block{
+  text-align: center;
+   font-size: 14px;
 }

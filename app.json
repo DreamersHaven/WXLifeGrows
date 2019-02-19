@@ -1,26 +1,27 @@
 {
   "pages": [
-    "pages/userLogin/login",
-    "pages/disc/index",
-    "pages/amlGraph/index",
     "pages/index/index",
-    "pages/radar/index",
-    "pages/gauge/index",
-    "pages/tree/index",
-    "pages/map/index",
-    "pages/graph/index",
-    "pages/parallel/index",
+    "pages/userLogin/login",
     "pages/mine/mine",
     "pages/userRegist/regist",
     "pages/share/share"
-   
     
+  ],
+  "subPackages": [
+    {
+      "root": "packageDISC",
+      "pages": [
+        "pages/amlGraph/index",
+        "pages/disc/index",
+        "pages/discResults/index"
+      ]
+    }
   ],
   "window": {
     "backgroundTextStyle": "light",
     "backgroundColor": "#eee",
     "navigationBarBackgroundColor": "#eee",
-    "navigationBarTitleText": "梦享邦成长计划",
+    "navigationBarTitleText": "DISC性格测试",
     "navigationBarTextStyle": "black"
   }
 }

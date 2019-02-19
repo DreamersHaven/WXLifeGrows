@@ -67,6 +67,7 @@ Page({
               })
             } else {
               wx.redirectTo({
+                //要跳转的页面是动态设置的
                 url: '../index/index',
               })
             }

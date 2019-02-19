@@ -112,7 +112,7 @@ Page({
           wx.removeStorageSync("userInfo")
           // 页面跳转
           wx.redirectTo({
-            url: '../userLogin/login',
+            url: '../index/index',
           })
         }
       }
@@ -212,7 +212,7 @@ Page({
         if (res.data.status == 200) {
          
           wx.showToast({
-            title: '正在为您生成DISC分析图表',
+            title: '请等待...',
             icon: 'success',
             duration: 2000
           });
@@ -222,7 +222,7 @@ Page({
            
           // 页面跳转
           wx.navigateTo({
-            url: '../amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult+'&fromPage=mine',
+            url: '/packageDISC/pages/amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult+'&fromPage=mine',
 
           })
         }

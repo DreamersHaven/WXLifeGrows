@@ -1,6 +1,6 @@
 //app.js
 App({
-  serverUrl: "http://192.168.199.116:8888",
+  serverUrl: "http://192.168.1.113:8888",
   userInfo: null,
   
   setGlobalUserInfo: function (user) {
@@ -99,5 +99,7 @@ App({
     _curPage.setData({
       tabBar: tabBar
     });
-  }
+  },
+
+ 
 })

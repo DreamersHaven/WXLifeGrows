@@ -1,0 +1,8 @@
+/* pages/disc/disc.wxss */
+
+.cell-page-demo{
+    display: block;
+    margin-top: 30px;
+}
+
+ 

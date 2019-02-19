@@ -1,8 +1,6 @@
 <view>
-    <view class="login-icon">
-        <image class="login-img" src="../resource/images/dsp.jpg"></image>
-    </view>
-    <view class="login-from">
+ 
+    <view>
         <form bindsubmit='doLogin'>
             <!--账号-->
             <view class="inputView">
@@ -18,14 +16,32 @@
                 <label class="loginLabel">密码</label>
                 <input name="password" value='123456' class="inputText" password="true" placeholder="请输入密码" />
             </view>
+            <view class="line"></view>
 
             <!--按钮-->
             <view>
-                <button class="loginBtn" type="ghost" form-type='submit'>登录</button>
+                <button class="button.bluebutton" type="ghost" form-type='submit'>登录</button>
             </view>
 
             <view>
-                <button class="goRegistBtn" type="ghost" bindtap="goRegistPage">没有账号？点击注册</button>
+             
+                <i-load-more tip="没有账号？注册一个"  loading="{{ false }}">
+                
+                
+                
+                </i-load-more>
+ <view class="view.block" bindtap="goRegistPage">
+    <i-icon type="mine" size="28" color="#5cadff" />
+                注册新用户
+    
+    </view>
+
+    <view class="view.block" bindtap="goRegistPage">
+    
+    <i-icon type="success" size="28" color="#19be6b" />
+    微信授权登录
+    </view>
+                
             </view>
         </form>
     </view>

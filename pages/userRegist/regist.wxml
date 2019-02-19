@@ -1,7 +1,5 @@
 <view>
-    <view class="login-icon">
-        <image class="login-img" src="../resource/images/dsp.jpg"></image>
-    </view>
+
     <view class="login-from">
         <form bindsubmit='doRegist'>
             <!--账号-->
@@ -22,11 +20,11 @@
 
             <!--按钮-->
             <view>
-                <button class="loginBtn" type="ghost" form-type='submit'>注册</button>
+                <button class="button.bluebutton"  form-type='submit'>注册</button>
             </view>
 
             <view>
-                <button class="goLoginBtn" type="ghost" bindtap="goLoginPage">返回登录</button>
+                <button class="button.yellowbutton"   bindtap="goLoginPage">返回登录</button>
             </view>
         </form>
     </view>
