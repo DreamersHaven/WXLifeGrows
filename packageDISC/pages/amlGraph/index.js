@@ -1,12 +1,17 @@
 const app = getApp()
 Page({
   data: {
-    currentTab: 'isAGraph',
-    isSave:true,
+    current: '',
+    currentTab: 'isMGraph',
+    //用于控制页面中保存按钮的状态
+    isNoSave:true,
     discA: '',
     discM: '',
     discL: '',
     discType:'',
+    //自我形象DISC对应的坐标值，以逗号分隔，用于生成测评报告
+    yvalueM:'',
+    
     x: 0,
     y: 0,
     hidden: true,
@@ -31,6 +36,7 @@ Page({
       x: 0,
       y: 0
     },
+   
     COORDS: {
       'D28': {
         x: 100,
@@ -1405,19 +1411,27 @@ Page({
 
     //判断页面请求来源
     var isQueryResults = options.fromPage
-    var isSave=true
+    var isNoSave=true
     if (isQueryResults != null && isQueryResults != '' && isQueryResults != undefined) {
-      isSave=false
+      isNoSave=false
     }
     that.setData({
       discA: options.A,
       discM: options.M,
       discL: options.L,
-      isSave: isSave
+      isNoSave: isNoSave
     })
-    this.getAGraph()
-    //this.getMGraph()
+    //this.getAGraph()
     //this.getLGraph()
+    this.getMGraph()
+    //记录自我形象的DISC坐标值，用于生成测评报告
+
+    that.data.yvalueM = that.data.D.y / 2 + "," + that.data.I.y + "," + that.data.S.y + "," + that.data.C.y
+    
+    console.log("自我形象的DISC值为：" + that.data.discM)
+    console.log("自我形象的Y坐标轴值为：" + that.data.yvalueM)
+
+    
 
   },
 
@@ -1526,7 +1540,7 @@ Page({
   },
 
   /**
-   * 通过最符合的DISC结果，绘制向外形象的DISC图
+   * 通过最符合的DISC结果，绘制自我形象的DISC图
    * 
    */
   getMGraph: function() {
@@ -1610,7 +1624,8 @@ Page({
     if (c == 12) this.data.C = this.data.COORDS_M['C27']
     if (c > 12) this.data.C = this.data.COORDS_M['C28']
 
-
+    //找到坐标点后，判断所属类型，按照y坐标进行由高到底的排序
+    
 
     ctx.moveTo(this.data.D.x / 2, this.data.D.y / 2)
     ctx.lineTo(this.data.I.x / 2, this.data.I.y / 2)
@@ -1773,9 +1788,41 @@ Page({
       this.getLGraph()
     }
   },
+  handleChange({ detail }) {
+  
+    if (detail.key == "homepage") {
+      this.goHomePage()
+    } else if (detail.key == "save") {
+      if(this.data.isNoSave){
+        this.doSaveResult()
+      }else{
+
+      }
+      
+    } else if (detail.key == "activity") {
+      this.getDiscReport()
+    }
+
+    this.setData({
+      current: detail.key,
+      
+    });
+  },
   goHomePage: function () {
     wx.redirectTo({
       url: '/pages/index/index',
+    })
+  },
+  /**
+   * 查看测评报告
+   * 传递参数为
+   *  yvalue  --M的DISC坐标值
+      mresult --M的DISC测评结果
+   */
+  getDiscReport: function () {
+    var that = this
+    wx.navigateTo({
+      url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM,
     })
   },
 
@@ -1784,7 +1831,7 @@ Page({
    * 保存某个用户的DISC测评结果
    */
   doSaveResult: function (e) {
-     
+     var that=this
       var serverUrl = app.serverUrl
       var user = app.getGlobalUserInfo()
       var userId = user.userId
@@ -1816,6 +1863,10 @@ Page({
               icon: 'none',
               duration: 3000
             }) 
+            that.setData({
+              isNoSave:false
+
+            })
            } else if (status == 500) {
             wx.showToast({
               title: res.data.msg,

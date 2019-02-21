@@ -1,8 +1,18 @@
+<i-tab-bar current="{{ current }}" bindchange="handleChange" >
+    <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="Home"></i-tab-bar-item>
+    <i-tab-bar-item key="activity" icon="activity" current-icon="activity_fill" title="测评报告"></i-tab-bar-item>
+    
+    <i-tab-bar-item key="save" icon="task" dot  current-icon="task_fill" title="保存" wx:if="{{isNoSave}}"></i-tab-bar-item>
 
+    <i-tab-bar-item key="save" icon="task"   current-icon="task_fill" title="已保存" wx:elif="{{isNoSave==false}}"></i-tab-bar-item>
+
+    <i-tab-bar-item key="share" icon="interactive" current-icon="interactive_fill"   title="分享"></i-tab-bar-item>
+    <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill" count="3" title="查看历史"></i-tab-bar-item>
+</i-tab-bar>
 
 <i-tabs current="{{ currentTab }}" bindchange="tabshandleChange">
-    <i-tab key="isAGraph" title="自我形象"></i-tab>
-    <i-tab key="isMGraph" title="向外形象"></i-tab>
+    <i-tab key="isMGraph" title="自我形象"></i-tab>
+    <i-tab key="isAGraph" title="向外形象"></i-tab>
     <i-tab key="isLGraph" title="受压形象"></i-tab>
 </i-tabs>
 <view class='view.canvas'>
@@ -10,31 +20,8 @@
   style="width:100%;height:{{windowHeight}}px;"
   />
 </view>
-  <i-panel>
-  <i-cell title="测评结果分析" is-link>
-    <i-icon type="activity" slot="icon" />
-  </i-cell>
-
-  <i-cell title="分享测评结果" bindtap=''>
-    <i-icon type="interactive" slot="icon" />
-  </i-cell>
-
- <!--如果请求页面来自我的，操作列表显示为再测一次，否则显示为保存测评结果-->
+ 
+ 
   
-  <i-cell title="保存测评结果" bindtap='doSaveResult' wx:if="{{isSave}}" >
-    <i-icon type="send" slot="icon" />
-  </i-cell>
-
-  <i-cell title="历史测评结果" bindtap='' >
-    <i-icon type="createtask" slot="icon" />
-  </i-cell>
-
   
-</i-panel>
-
-    <!--圆形点击框  -->
-    <view class="round-click" bindtap="goHomePage" >
-       
-        <i-icon type="homepage" slot="icon" size='40' color="#f8f8f9"/>
-    </view>
 

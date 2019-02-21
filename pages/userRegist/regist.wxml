@@ -1,6 +1,6 @@
 <view>
 
-    <view class="login-from">
+    <view class='comment-toprow'>
         <form bindsubmit='doRegist'>
             <!--账号-->
             <view class="inputView">
@@ -17,7 +17,7 @@
                 <label class="loginLabel">密码</label>
                 <input name="password" class="inputText" password="true" placeholder="请输入密码"/>
             </view>
-
+<view class="line"></view>
             <!--按钮-->
             <view>
                 <button class="button.bluebutton"  form-type='submit'>注册</button>

@@ -2,7 +2,9 @@
   "usingComponents": {
     "i-icon": "../../dist/icon/index",
     "i-card": "../../dist/card/index",
-    "i-load-more": "../../dist/load-more/index"
+    "i-load-more": "../../dist/load-more/index",
+          "i-row": "../../dist/row/index",
+          "i-col": "../../dist/col/index"
   }
 }
 

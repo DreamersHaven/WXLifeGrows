@@ -3,7 +3,7 @@ const app = getApp()
 
 Page({
   data: {
-    faceUrl: "../resource/images/noneface.png",
+    faceUrl: "",
     isMe: true 
 
   },
@@ -11,7 +11,7 @@ Page({
 
 
   onLoad: function (params) {
-    app.editTabBar();//添加tabBar数据  
+      
     var me = this;
 
     // var user = app.userInfo;
@@ -51,12 +51,10 @@ Page({
         wx.hideLoading();
         if (res.data.status == 200) {
           var userInfo = res.data.data;
-          var faceUrl = "../resource/images/noneface.png";
+          var faceUrl = "/pages/resource/images/noneface.png";
           if (userInfo.picId != null && userInfo.picId != '' && userInfo.picId != undefined) {
             faceUrl = serverUrl + userInfo.picId;
           }
-
-
           me.setData({
             faceUrl: faceUrl,
             nickname: userInfo.username
@@ -77,7 +75,7 @@ Page({
       }
     })
 
-    me.getMyVideoList(1);
+    //me.getMyVideoList(1);
   },
 
   
@@ -183,6 +181,12 @@ Page({
 
 
       }
+    })
+  },
+
+  goHomePage: function () {
+    wx.redirectTo({
+      url: '/pages/index/index',
     })
   },
   /**

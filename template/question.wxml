@@ -17,21 +17,18 @@
     <i-col span="8" i-class="col-class">
 
 
-      <i-radio checked="{{item.m}}" bindchange="onSwitChChange" id="{{item.key}}-most-{{item.label}}">
+      <i-radio    checked="{{item.m}}" bindchange="onSwitChChange" id="{{item.key}}-most-{{item.label}}">
       </i-radio>
     </i-col>
     <i-col span="8" i-class="col-class">
 
 
-      <i-radio checked="{{item.l}}" bindchange="onSwitChChange" id="{{item.key}}-lease-{{item.label}}">
+      <i-radio   checked="{{item.l}}" bindchange="onSwitChChange" id="{{item.key}}-lease-{{item.label}}">
       </i-radio>
     </i-col>
     <i-col span="8" i-class="col-class">{{item.text}}</i-col>
 
 
   </i-row>
-
- 
-
 
 </template>

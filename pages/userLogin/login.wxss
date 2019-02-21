@@ -8,7 +8,7 @@ page {
 
 /*表单内容*/
 .inputView {
-    background-color: white;
+    background-color: whitesmoke;
     line-height: 45px;
 }
 
@@ -57,3 +57,5 @@ page {
   text-align: center;
    font-size: 14px;
 }
+
+

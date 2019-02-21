@@ -1,14 +1,15 @@
+<!--
 <import src="../../template/tabBar.wxml" />
 <template is="tabBar" data="{{tabBar: tabBar}}" />
+-->
 
-
-
+<view class='comment-toprow'>
 <i-card title="{{nickname}}" extra="修改头像" thumb="{{faceUrl}}" bindtap='changeFace'>
   <view slot="content">个性签名</view>
   <view slot="footer">其他信息</view>
 </i-card>
 
-
+</view>
 
 <i-panel i-class="cell-panel-demo">
   <i-cell title="DISC测评结果" is-link bindtap='showDiscResult'>
@@ -28,3 +29,9 @@
 
 
 </i-panel>
+
+ <!--圆形点击框  -->
+    <view class="round-click" bindtap="goHomePage" >
+       
+        <i-icon type="homepage" slot="icon" size='40' color="#f8f8f9"/>
+    </view>

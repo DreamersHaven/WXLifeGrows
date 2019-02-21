@@ -1,7 +1,9 @@
 <view>
  
-    <view>
+    <view class='comment-toprow'>
+        
         <form bindsubmit='doLogin'>
+         
             <!--账号-->
             <view class="inputView">
                 <i-icon type="addressbook" size="24"/>
@@ -20,30 +22,44 @@
 
             <!--按钮-->
             <view>
-                <button class="button.bluebutton" type="ghost" form-type='submit'>登录</button>
+                <button class="button.bluebutton"  form-type='submit'>登录</button>
             </view>
 
-            <view>
+</form>
+
+   </view>
+
+  <view>
              
-                <i-load-more tip="没有账号？注册一个"  loading="{{ false }}">
-                
-                
-                
-                </i-load-more>
- <view class="view.block" bindtap="goRegistPage">
+   
+    <i-row>
+    
+    <i-col span="12" i-class="col-class">
+       <button
+   
+    open-type="getUserInfo"
+    bindgetuserinfo="bindGetUserInfo"
+class='but.noborder'>
+    <i-icon type="interactive" size="28" color="#19be6b" />
+    <view>微信授权登录</view>
+    
+    </button>
+     </i-col>
+    <i-col span="12" i-class="col-class"> 
+      <button
+    
+   
+    bindtap="goRegistPage"
+class='but.noborder'>
     <i-icon type="mine" size="28" color="#5cadff" />
-                注册新用户
+    <view>注册新用户</view>
     
-    </view>
-
-    <view class="view.block" bindtap="goRegistPage">
+    </button>
+     
     
-    <i-icon type="success" size="28" color="#19be6b" />
-    微信授权登录
-    </view>
-                
-            </view>
-        </form>
-    </view>
+    </i-col>
+    
+</i-row>
+ </view>
 </view>
 
