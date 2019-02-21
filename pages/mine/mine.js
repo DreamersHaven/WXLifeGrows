@@ -75,7 +75,7 @@ Page({
       }
     })
 
-    //me.getMyVideoList(1);
+    
   },
 
   

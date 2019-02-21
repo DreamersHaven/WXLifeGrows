@@ -1,7 +1,3 @@
-<!--
-<import src="../../template/tabBar.wxml" />
-<template is="tabBar" data="{{tabBar: tabBar}}" />
--->
 
 <view class='comment-toprow'>
 <i-card title="{{nickname}}" extra="修改头像" thumb="{{faceUrl}}" bindtap='changeFace'>
