@@ -53,7 +53,7 @@ Page({
           var userInfo = res.data.data;
           var faceUrl = "/pages/resource/images/noneface.png";
           if (userInfo.picId != null && userInfo.picId != '' && userInfo.picId != undefined) {
-            faceUrl = serverUrl + userInfo.picId;
+            faceUrl = userInfo.picId;
           }
           me.setData({
             faceUrl: faceUrl,
@@ -215,20 +215,32 @@ Page({
         wx.hideLoading();
         if (res.data.status == 200) {
          
-          wx.showToast({
-            title: '请等待...',
-            icon: 'success',
-            duration: 2000
-          });
-          mresult = res.data.data.mresult
-          lresult = res.data.data.lresult
-          aresult = res.data.data.aresult
-           
-          // 页面跳转
-          wx.navigateTo({
-            url: '/packageDISC/pages/amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult+'&fromPage=mine',
+          if (res.data.data != null && res.data.data != '' && res.data.data != undefined) {
+            mresult = res.data.data.mresult
+            lresult = res.data.data.lresult
+            aresult = res.data.data.aresult
 
-          })
+            // 页面跳转
+            wx.navigateTo({
+              url: '/packageDISC/pages/amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult + '&fromPage=mine',
+
+            })
+          }else{//如果用户还没有进行DISC测试，提示还未进行DISC测试，是否进行测试
+            wx.showModal({
+              title: '提示',
+              content: '您还未进行DISC测试，是否进行测试？',
+              success: function (res) {
+                console.log(res)
+                if (res.confirm) {
+                  console.log('用户点击了确定')
+                } else {
+                  console.log('用户点击了取消')
+                }
+              }
+            })
+         
+          }
+
         }
       }
     })

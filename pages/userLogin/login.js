@@ -93,11 +93,58 @@ Page({
     })
   },
   bindGetUserInfo(res) {
-    console.log(res);
-    if (res.detail.userInfo) {
+    var me = this;
+    let info = res;
+    var serverUrl = app.serverUrl;
+    console.log(info);
+    if (info.detail.userInfo) {
       console.log("点击了同意授权");
+      wx.login({
+        success: function (res) {
+          if (res.code) {
+            wx.request({
+              url: serverUrl + '/wxlogin',
+              method: "POST",
+              data: {
+                code: res.code,
+                nickName: info.detail.userInfo.nickName,
+                city: info.detail.userInfo.city,
+                province: info.detail.userInfo.province,
+                avatarUrl: info.detail.userInfo.avatarUrl
+              },
+              header: {
+                'content-type': 'application/json' // 默认值
+              },
+              success: function (res) {
+                // 登录成功跳转 
+                wx.showToast({
+                  title: '微信授权登录成功',
+                  icon: 'success',
+                  duration: 2000
+                });
+                app.setGlobalUserInfo(res.data.data);
+
+                var redirectUrl = me.redirectUrl;
+                if (redirectUrl != null && redirectUrl != undefined && redirectUrl != '') {
+                  wx.redirectTo({
+                    url: redirectUrl,
+                  })
+                } else {
+                  wx.redirectTo({
+                    //要跳转的页面是动态设置的
+                    url: '../index/index',
+                  })
+                }
+              }
+            })
+          } else {
+            console.log("授权失败");
+          }
+        },
+      })
+
     } else {
       console.log("点击了拒绝授权");
     }
-  }
+  }      
 })

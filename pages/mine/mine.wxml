@@ -1,8 +1,7 @@
 
 <view class='comment-toprow'>
-<i-card title="{{nickname}}" extra="修改头像" thumb="{{faceUrl}}" bindtap='changeFace'>
-  <view slot="content">个性签名</view>
-  <view slot="footer">其他信息</view>
+<i-card title="{{nickname}}" extra="查看详细" thumb="{{faceUrl}}" bindtap=''>
+  
 </i-card>
 
 </view>

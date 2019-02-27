@@ -1,2 +1,46 @@
-<!--packageDISC/pages/discReport/index.wxml-->
-<text>用户性格类型为{{discType}}</text>
+<!--
+    discType: "",
+    cname: "",
+    ename: "",
+    evaDesc: "",
+    behaChara: "",
+    communicate: "",
+    ability: "",
+    superiority: "",
+    vulnerable: ""
+-->
+<view class="caption-wrap">
+  <text class="caption-title">{{discType}}{{cname}}</text>
+  <i-collapse name="name1">
+    <i-collapse-item title="{{ename}}" name="name1">
+      <view slot="content">
+        {{evaDesc}}
+      </view>
+    </i-collapse-item>
+    <i-collapse-item title="行为特征" name="name2">
+      <view slot="content" i-class-content="green-text">
+        {{behaChara}}
+      </view>
+    </i-collapse-item>
+    <i-collapse-item title="交流沟通" name="name3">
+      <view slot="content">
+        {{communicate}}
+      </view>
+    </i-collapse-item>
+    <i-collapse-item title="能力特征" name="name4">
+      <view slot="content">
+        {{ability}}
+      </view>
+    </i-collapse-item>
+    <i-collapse-item title="行为优势" name="name5">
+      <view slot="content">
+        {{superiority}}
+      </view>
+    </i-collapse-item>
+    <i-collapse-item title="行为弱势" name="name6">
+      <view slot="content">
+        {{vulnerable}}
+      </view>
+    </i-collapse-item>
+  </i-collapse>
+</view>

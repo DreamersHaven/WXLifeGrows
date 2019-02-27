@@ -6,7 +6,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    discType:""
+    discType: "",
+    cname: "",
+    ename: "",
+    evaDesc: "",
+    behaChara: "",
+    communicate: "",
+    ability: "",
+    superiority: "",
+    vulnerable: ""
+
   },
 
   /**
@@ -14,13 +23,13 @@ Page({
    */
   onLoad: function (options) {
     var me = this;
-    
+
     //接收页面传递的测试结果
     var yvalue = options.yvalue
     var mresult = options.mresult
 
     console.log("依据用户测评结果查询详细测评报告,坐标值为：" + yvalue + "DISC值为：" + mresult);//正确返回结果
-    
+
     wx.showLoading({
       title: '报告生成中，请稍后...',
     });
@@ -42,7 +51,17 @@ Page({
         if (res.data.status == 200) {
           var reportInfo = res.data.data;
           me.setData({
-            discType: reportInfo.discType
+
+            discType: reportInfo.discType,
+            cname: reportInfo.cname,
+            ename: reportInfo.ename,
+            evaDesc: reportInfo.evaDesc,
+            behaChara: reportInfo.behaChara,
+            communicate: reportInfo.communicate,
+            ability: reportInfo.ability,
+            superiority: reportInfo.superiority,
+            vulnerable: reportInfo.vulnerable
+
           });
         } else if (res.data.status == 502) {
           wx.showToast({

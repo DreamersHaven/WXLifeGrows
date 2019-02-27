@@ -4,14 +4,14 @@ Page({
     current: '',
     currentTab: 'isMGraph',
     //用于控制页面中保存按钮的状态
-    isNoSave:true,
+    isNoSave: true,
     discA: '',
     discM: '',
     discL: '',
-    discType:'',
+    discType: '',
     //自我形象DISC对应的坐标值，以逗号分隔，用于生成测评报告
-    yvalueM:'',
-    
+    yvalueM: '',
+
     x: 0,
     y: 0,
     hidden: true,
@@ -36,7 +36,7 @@ Page({
       x: 0,
       y: 0
     },
-   
+
     COORDS: {
       'D28': {
         x: 100,
@@ -1392,12 +1392,12 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     var that = this
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         that.setData({
-         // windowWidth: res.windowWidth,
+          // windowWidth: res.windowWidth,
           windowWidth: that.data.bgWIDTH,
           //windowHeight: res.windowHeight,
           windowHeight: that.data.bgHEIGHT,
@@ -1411,9 +1411,9 @@ Page({
 
     //判断页面请求来源
     var isQueryResults = options.fromPage
-    var isNoSave=true
+    var isNoSave = true
     if (isQueryResults != null && isQueryResults != '' && isQueryResults != undefined) {
-      isNoSave=false
+      isNoSave = false
     }
     that.setData({
       discA: options.A,
@@ -1427,18 +1427,18 @@ Page({
     //记录自我形象的DISC坐标值，用于生成测评报告
 
     that.data.yvalueM = that.data.D.y / 2 + "," + that.data.I.y + "," + that.data.S.y + "," + that.data.C.y
-    
+
     console.log("自我形象的DISC值为：" + that.data.discM)
     console.log("自我形象的Y坐标轴值为：" + that.data.yvalueM)
 
-    
+
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
@@ -1446,7 +1446,7 @@ Page({
    * 通过最不符合的DISC结果，绘制受压形象的DISC图
    * 
    */
-  getLGraph: function() {
+  getLGraph: function () {
     const ctx = wx.createCanvasContext('myCanvas')
     var url = '../resource/bg-sm.jpg'
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
@@ -1543,7 +1543,7 @@ Page({
    * 通过最符合的DISC结果，绘制自我形象的DISC图
    * 
    */
-  getMGraph: function() {
+  getMGraph: function () {
     const ctx = wx.createCanvasContext('myCanvas')
     var url = '../resource/bg-sm.jpg'
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
@@ -1625,7 +1625,7 @@ Page({
     if (c > 12) this.data.C = this.data.COORDS_M['C28']
 
     //找到坐标点后，判断所属类型，按照y坐标进行由高到底的排序
-    
+
 
     ctx.moveTo(this.data.D.x / 2, this.data.D.y / 2)
     ctx.lineTo(this.data.I.x / 2, this.data.I.y / 2)
@@ -1641,7 +1641,7 @@ Page({
   /**
    * 通过A的DISC结果，绘制自我形象DISC图
    */
-  getAGraph: function() {
+  getAGraph: function () {
     const ctx = wx.createCanvasContext('myCanvas')
     var url = '../resource/bg-sm.jpg'
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
@@ -1780,32 +1780,32 @@ Page({
     this.setData({
       currentTab: detail.key
     });
-    if (detail.key =="isAGraph"){
+    if (detail.key == "isAGraph") {
       this.getAGraph()
-    } else if (detail.key == "isMGraph"){
+    } else if (detail.key == "isMGraph") {
       this.getMGraph()
-    } else if (detail.key == "isLGraph"){
+    } else if (detail.key == "isLGraph") {
       this.getLGraph()
     }
   },
   handleChange({ detail }) {
-  
+
     if (detail.key == "homepage") {
       this.goHomePage()
     } else if (detail.key == "save") {
-      if(this.data.isNoSave){
+      if (this.data.isNoSave) {
         this.doSaveResult()
-      }else{
+      } else {
 
       }
-      
+
     } else if (detail.key == "activity") {
       this.getDiscReport()
     }
 
     this.setData({
       current: detail.key,
-      
+
     });
   },
   goHomePage: function () {
@@ -1831,51 +1831,51 @@ Page({
    * 保存某个用户的DISC测评结果
    */
   doSaveResult: function (e) {
-     var that=this
-      var serverUrl = app.serverUrl
-      var user = app.getGlobalUserInfo()
-      var userId = user.userId
+    var that = this
+    var serverUrl = app.serverUrl
+    var user = app.getGlobalUserInfo()
+    var userId = user.userId
     var username = user.username
-      wx.showLoading({
-        title: '请等待...',
-      });
-      wx.request({
-        url: serverUrl + '/saveDiscResult',
-        method: "POST",
-        data: {
-          userId: userId,
-          username: username,
-          mresult: this.data.discM,
-          lresult:this.data.discL,
-          aresult:this.data.discA,
-          discType:this.data.discType
-        },
-        header: {
-          'content-type': 'application/json' // 默认值
-        },
-        success: function (res) {
-          console.log(res.data);
-          wx.hideLoading();
-          var status = res.data.status;
-          if (status == 200) {
-            wx.showToast({
-              title: "DISC结果保存成功，可以在【个人中心】查看测试结果",
-              icon: 'none',
-              duration: 3000
-            }) 
-            that.setData({
-              isNoSave:false
+    wx.showLoading({
+      title: '请等待...',
+    });
+    wx.request({
+      url: serverUrl + '/saveDiscResult',
+      method: "POST",
+      data: {
+        userId: userId,
+        username: username,
+        mresult: this.data.discM,
+        lresult: this.data.discL,
+        aresult: this.data.discA,
+        discType: this.data.discType
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data);
+        wx.hideLoading();
+        var status = res.data.status;
+        if (status == 200) {
+          wx.showToast({
+            title: "DISC结果保存成功，可以在【个人中心】查看测试结果",
+            icon: 'none',
+            duration: 3000
+          })
+          that.setData({
+            isNoSave: false
 
-            })
-           } else if (status == 500) {
-            wx.showToast({
-              title: res.data.msg,
-              icon: 'none',
-              duration: 3000
-            })
-          }
+          })
+        } else if (status == 500) {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none',
+            duration: 3000
+          })
         }
-      })
-    }
-  
+      }
+    })
+  }
+
 })
