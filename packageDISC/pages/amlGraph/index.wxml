@@ -1,27 +1,73 @@
-<i-tab-bar current="{{ current }}" bindchange="handleChange" >
+<!--
+页面显示控制，该页面有两种显示方式
+1、分享给别人查看
+2、自己查看
+使用
+-->
+<i-drawer mode="left" visible="{{showRighShareModle}}" bind:close="toggleRightShareModle">
+  <view class="demo-container">
+    <text class='collapse-item-title'>请选择要分享的内容:</text>
+    <button id='onlyPic' class='but.noborder' open-type='share'>
+      <i-icon type="dynamic" size="28" color="#5cadff" />
+      <view>结果图</view>
+    </button>
+    <button id='onlyReport' class='but.noborder' open-type='share'>
+      <i-icon type="activity" size="28" color="#5cadff" />
+      <view>测评报告</view>
+    </button>
+    <button id='picAndReport' class='but.noborder' open-type='share'>
+      <i-icon type="task" size="28" color="#5cadff" />
+
+      <view>测评报告+结果图</view>
+    </button>
+
+     <button id='cancel' class='but.noborder' bindtap='toggleRightShareModle'>
+      <i-icon type="close" size="28" color="#5cadff" />
+      <view>取消</view>
+    </button>
+
+  </view>
+</i-drawer>
+
+<view wx:if="{{pageStyle=='meReport'}}">
+  <i-tab-bar current="{{ current }}" bindchange="handleChange">
     <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="Home"></i-tab-bar-item>
     <i-tab-bar-item key="activity" icon="activity" current-icon="activity_fill" title="测评报告"></i-tab-bar-item>
-    
-    <i-tab-bar-item key="save" icon="task" dot  current-icon="task_fill" title="保存" wx:if="{{isNoSave}}"></i-tab-bar-item>
 
-    <i-tab-bar-item key="save" icon="task"   current-icon="task_fill" title="已保存" wx:elif="{{isNoSave==false}}"></i-tab-bar-item>
+    <i-tab-bar-item key="save" icon="task" dot current-icon="task_fill" title="保存" wx:if="{{isNoSave}}"></i-tab-bar-item>
 
-    <i-tab-bar-item key="share" icon="interactive" current-icon="interactive_fill"   title="分享"></i-tab-bar-item>
+    <i-tab-bar-item key="save" icon="task" current-icon="task_fill" title="已保存" wx:elif="{{isNoSave==false}}"></i-tab-bar-item>
+
+    <i-tab-bar-item key="share" icon="interactive" current-icon="interactive_fill" title="分享"></i-tab-bar-item>
     <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill" count="3" title="查看历史"></i-tab-bar-item>
-</i-tab-bar>
+  </i-tab-bar>
 
-<i-tabs current="{{ currentTab }}" bindchange="tabshandleChange">
+  <i-tabs current="{{ currentTab }}" bindchange="tabshandleChange">
     <i-tab key="isMGraph" title="自我形象"></i-tab>
     <i-tab key="isAGraph" title="向外形象"></i-tab>
     <i-tab key="isLGraph" title="受压形象"></i-tab>
-</i-tabs>
-<view class='view.canvas'>
-<canvas      canvas-id="myCanvas"
-  style="width:100%;height:{{windowHeight}}px;"
-  />
-</view>
- 
- 
-  
-  
+  </i-tabs>
 
+</view>
+
+<view wx:if="{{pageStyle=='shareMeReport'}}">
+  <i-tabs current="picMGraph" bindchange="shareReporthandleChange">
+    <i-tab key="discReport" title="测试报告"></i-tab>
+    <i-tab key="picMGraph" title="结果图"></i-tab>
+
+  </i-tabs>
+</view>
+
+<view wx:if="{{pageStyle=='shareMeReport'||pageStyle=='onlyPic'}}">
+  <text class='collapse-item-title'>自我形象图</text>
+</view>
+<view class='view.canvas' wx:if="{{showRighShareModle==false}}">
+  <canvas canvas-id="myCanvas" style="width:100%;height:{{windowHeight}}px;" />
+</view>
+
+<view wx:if="{{pageStyle=='shareMeReport'||pageStyle=='onlyPic'}}">
+  <text class='collapse-item-title'>外在形象图</text>
+  <canvas canvas-id="myCanvasA" style="width:100%;height:{{windowHeight}}px;" />
+  <text class='collapse-item-title'>受压图</text>
+  <canvas canvas-id="myCanvasL" style="width:100%;height:{{windowHeight}}px;" />
+</view>

@@ -1,6 +1,7 @@
 //app.js
 App({
   serverUrl: "http://192.168.199.116:8888",
+  //serverUrl: "https://www.dreamershaven.cn/dreamershaven-0.0.1",
   userInfo: null,
   
   setGlobalUserInfo: function (user) {

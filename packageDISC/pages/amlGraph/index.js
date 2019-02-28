@@ -11,7 +11,10 @@ Page({
     discType: '',
     //自我形象DISC对应的坐标值，以逗号分隔，用于生成测评报告
     yvalueM: '',
-
+    //页面显示样式对应的值，是否为分享给他人
+    pageStyle: 'meReport',
+    //以抽屉的方式显示分享的选项
+    showRighShareModle: false,
     x: 0,
     y: 0,
     hidden: true,
@@ -20,6 +23,8 @@ Page({
     pixelRatio: 0,
     bgWIDTH: 311,
     bgHEIGHT: 483,
+
+
     D: {
       x: 0,
       y: 0
@@ -1392,10 +1397,10 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         that.setData({
           // windowWidth: res.windowWidth,
           windowWidth: that.data.bgWIDTH,
@@ -1411,6 +1416,13 @@ Page({
 
     //判断页面请求来源
     var isQueryResults = options.fromPage
+
+    //判断页面显示样式
+    var pageStyle = 'meReport'
+    if (options.pageStyle != null && options.pageStyle != '' && options.pageStyle != undefined) {
+      pageStyle = options.pageStyle
+    }
+
     var isNoSave = true
     if (isQueryResults != null && isQueryResults != '' && isQueryResults != undefined) {
       isNoSave = false
@@ -1419,14 +1431,21 @@ Page({
       discA: options.A,
       discM: options.M,
       discL: options.L,
-      isNoSave: isNoSave
+      isNoSave: isNoSave,
+      pageStyle: pageStyle
     })
-    //this.getAGraph()
-    //this.getLGraph()
-    this.getMGraph()
-    //记录自我形象的DISC坐标值，用于生成测评报告
 
+    this.getMGraph('myCanvas')
+
+    //记录自我形象的DISC坐标值，用于生成测评报告
     that.data.yvalueM = that.data.D.y / 2 + "," + that.data.I.y + "," + that.data.S.y + "," + that.data.C.y
+
+    if (that.data.pageStyle == 'shareMeReport' || that.data.pageStyle == 'onlyPic') {
+      this.getAGraph('myCanvasA')
+      this.getLGraph('myCanvasL')
+    }
+
+
 
     console.log("自我形象的DISC值为：" + that.data.discM)
     console.log("自我形象的Y坐标轴值为：" + that.data.yvalueM)
@@ -1438,7 +1457,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
@@ -1446,8 +1465,8 @@ Page({
    * 通过最不符合的DISC结果，绘制受压形象的DISC图
    * 
    */
-  getLGraph: function () {
-    const ctx = wx.createCanvasContext('myCanvas')
+  getLGraph: function(canvasName) {
+    const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
 
@@ -1543,8 +1562,8 @@ Page({
    * 通过最符合的DISC结果，绘制自我形象的DISC图
    * 
    */
-  getMGraph: function () {
-    const ctx = wx.createCanvasContext('myCanvas')
+  getMGraph: function(canvasName) {
+    const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
 
@@ -1641,8 +1660,8 @@ Page({
   /**
    * 通过A的DISC结果，绘制自我形象DISC图
    */
-  getAGraph: function () {
-    const ctx = wx.createCanvasContext('myCanvas')
+  getAGraph: function(canvasName) {
+    const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
 
@@ -1776,31 +1795,36 @@ Page({
    * 当切换页面中的TAB页时：
    * 
    */
-  tabshandleChange({ detail }) {
+  tabshandleChange({
+    detail
+  }) {
     this.setData({
       currentTab: detail.key
     });
     if (detail.key == "isAGraph") {
-      this.getAGraph()
+      this.getAGraph('myCanvas')
     } else if (detail.key == "isMGraph") {
-      this.getMGraph()
+      this.getMGraph('myCanvas')
     } else if (detail.key == "isLGraph") {
-      this.getLGraph()
+      this.getLGraph('myCanvas')
     }
   },
-  handleChange({ detail }) {
+  handleChange({
+    detail
+  }) {
 
     if (detail.key == "homepage") {
       this.goHomePage()
     } else if (detail.key == "save") {
+
       if (this.data.isNoSave) {
         this.doSaveResult()
-      } else {
-
-      }
+      } else {}
 
     } else if (detail.key == "activity") {
       this.getDiscReport()
+    } else if (detail.key == "share") {
+      this.toggleRightShareModle()
     }
 
     this.setData({
@@ -1808,29 +1832,97 @@ Page({
 
     });
   },
-  goHomePage: function () {
+  goHomePage: function() {
     wx.redirectTo({
       url: '/pages/index/index',
     })
+  },
+  /**
+   * 点击【分享】显示 
+   */
+  toggleRightShareModle() {
+    if (this.data.showRighShareModle){
+      this.getMGraph("myCanvas")
+      
+
+    }
+    this.setData({
+      showRighShareModle: !this.data.showRighShareModle,
+      currentTab: 'isMGraph'
+    });
+  },
+
+  /**
+   * 分享测试报告
+   */
+  shareReporthandleChange({
+    detail
+  }) {
+
+    if (detail.key == "discReport") {
+      this.getDiscReport()
+
+    } else if (detail.key == "picMGraph") {
+
+    }
+
   },
   /**
    * 查看测评报告
    * 传递参数为
    *  yvalue  --M的DISC坐标值
       mresult --M的DISC测评结果
+      lresult --受压的DISC测评结果
+      aresult --外在形象的DISC测评结果
    */
-  getDiscReport: function () {
+  getDiscReport: function() {
     var that = this
     wx.navigateTo({
-      url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM,
+      url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA,
     })
+  },
+
+  /**
+   * 用户点击右上角分享
+   * 
+   */
+  onShareAppMessage: function(res) {
+
+    var that = this
+    var shareType = "picAndReport"
+    var title ='这是我的DISC性格测评结果，分享给你呦'
+    var path = '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA
+    var imageUrl ='/pages/resource/images/dsp.jpg'
+    if (res.from = "button") {
+      shareType = res.target.id
+      console.log('用户进行分享测试报告的操作:' + shareType)
+      //只分享测试结果
+      if (shareType =='onlyPic'){
+        path = '/packageDISC/pages/amlGraph/index?pageStyle=onlyPic&M=' + that.data.discM + '&L=' + that.data.discL + '&A=' + that.data.discA
+      }else{
+        path = path + '&pageStyle=' + shareType
+      }
+      return {
+        title: title,
+        path: path,
+        imageUrl: imageUrl,
+        success: function(res) {
+
+        }
+
+      }
+    }
+    //分享类型中右上角的分享
+    else {
+
+    }
   },
 
 
   /**
    * 保存某个用户的DISC测评结果
    */
-  doSaveResult: function (e) {
+  doSaveResult: function(e) {
     var that = this
     var serverUrl = app.serverUrl
     var user = app.getGlobalUserInfo()
@@ -1853,7 +1945,7 @@ Page({
       header: {
         'content-type': 'application/json' // 默认值
       },
-      success: function (res) {
+      success: function(res) {
         console.log(res.data);
         wx.hideLoading();
         var status = res.data.status;

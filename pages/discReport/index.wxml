@@ -1,43 +1,46 @@
-<!--
-    discType: "",
-    cname: "",
-    ename: "",
-    evaDesc: "",
-    behaChara: "",
-    communicate: "",
-    ability: "",
-    superiority: "",
-    vulnerable: ""
--->
-<view class="caption-wrap">
-  <text class="caption-title">{{discType}}{{cname}}</text>
+
+
+<view class="caption-wrap" wx:if="{{pageStyle=='picAndReport'}}">
+<i-tabs current="discReport" bindchange="handleChange">
+    <i-tab key="discReport" title="测试报告"></i-tab>
+    <i-tab key="picMGraph" title="结果图"></i-tab>
+    
+</i-tabs>
+</view>
+
+ <text class="caption-title">{{discType}}{{cname}}</text>
+
+<view class="caption-wrap" wx:if="{{isQuerySuss}}">
+  
+
+
   <i-collapse name="name1">
-    <i-collapse-item title="{{ename}}" name="name1">
+    <i-collapse-item title="{{ename}}" name="name1" i-class-title="collapse-item-title" i-class-content="collapse-item-content">
       <view slot="content">
         {{evaDesc}}
       </view>
     </i-collapse-item>
-    <i-collapse-item title="行为特征" name="name2">
+    <i-collapse-item title="行为特征" name="name2" i-class-title="collapse-item-title" i-class-content="collapse-item-content">
       <view slot="content" i-class-content="green-text">
         {{behaChara}}
       </view>
     </i-collapse-item>
-    <i-collapse-item title="交流沟通" name="name3">
+    <i-collapse-item title="交流沟通" name="name3" i-class-title="collapse-item-title" i-class-content="collapse-item-content">
       <view slot="content">
         {{communicate}}
       </view>
     </i-collapse-item>
-    <i-collapse-item title="能力特征" name="name4">
+    <i-collapse-item title="能力特征" name="name4" i-class-title="collapse-item-title" i-class-content="collapse-item-content">
       <view slot="content">
         {{ability}}
       </view>
     </i-collapse-item>
-    <i-collapse-item title="行为优势" name="name5">
+    <i-collapse-item title="行为优势" name="name5" i-class-title="collapse-item-title" i-class-content="collapse-item-content">
       <view slot="content">
         {{superiority}}
       </view>
     </i-collapse-item>
-    <i-collapse-item title="行为弱势" name="name6">
+    <i-collapse-item title="行为弱势" name="name6" i-class-title="collapse-item-title" i-class-content="collapse-item-content">
       <view slot="content">
         {{vulnerable}}
       </view>

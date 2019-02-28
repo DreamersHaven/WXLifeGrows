@@ -35,7 +35,7 @@
             </view>
 
             <view>
-                <button class="button.yellowbutton" hover-class="hover.yellowbutton" type="ghost" bindtap="onShareAppMessage">我要分享</button>
+                <button class="button.yellowbutton" hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
             </view>
         
   
