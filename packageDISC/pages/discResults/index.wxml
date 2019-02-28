@@ -1,13 +1,38 @@
-<!--packageDISC/pages/discResults/index.wxml-->
-<text>你的DISC结果，都在这里啦~</text>
+<view class="i-swipeout-demo">
 
-<i-grid>
-    <i-grid-item>
-        <i-grid-icon>
-            <image src="../images/icon-vip.png" />
-        </i-grid-icon>
-        <i-grid-label>Grid</i-grid-label>
-    </i-grid-item>
-    <i-grid-item>Grid</i-grid-item>
-    <i-grid-item>Grid</i-grid-item>
-</i-grid>
+
+  <i-action-sheet visible="{{ visible2 }}" actions="{{ actions2 }}" show-cancel bind:cancel="handleCancel2" bind:click="handleClickItem2" mask-closable="{{ false }}">
+    <view slot="header" style="padding: 16px">
+      <view style="color: #444;font-size: 16px">确定吗？</view>
+      <text>删除后无法恢复哦</text>
+    </view>
+  </i-action-sheet>
+
+  <view class="" wx:for="{{list}}">
+    <i-swipeout i-class="i-swipeout-demo-item" operateWidth="{{180}}" unclosable="{{true}}" toggle="{{toggle}}">
+      
+      <view slot="content" bindtap="showDiscReport" id="{{item.id}}">
+        <view class="i-swipeout-image">
+          <i-avatar  size="30">{{item.discType}}</i-avatar>
+        </view>
+        <view class="i-swipeout-des">
+          <view class="i-swipeout-des-h2">{{item.evaDesc}}</view>
+          <view class="i-swipeout-des-detail">{{item.gmtCreate}}</view>
+        </view>
+      </view>
+
+      <view slot="button" class="i-swipeout-demo-button-group" style="background:#2db7f5;">
+        <view class="i-swipeout-demo-button" style="width:60px" bindtap="actionsTap">
+          <i-icon size="32" type="like_fill"></i-icon>
+        </view>
+        <view class="i-swipeout-demo-button" style="width:60px" bindtap="actionsTap">
+          <i-icon size="32" type="share_fill"></i-icon>
+        </view>
+        <view class="i-swipeout-demo-button" style="width:60px" bindtap="actionsTap">
+          <i-icon size="32" type="delete_fill"></i-icon>
+        </view>
+      </view>
+    </i-swipeout>
+  </view>
+
+</view>

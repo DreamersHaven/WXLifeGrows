@@ -1833,6 +1833,8 @@ Page({
       this.toggleRightShareModle()
     } else if (detail.key == "scan") {
       this.goDiscPage()
+    } else if (detail.key == "browse"){
+      this.getDiscHistoryResult()
     }
 
     this.setData({
@@ -1893,6 +1895,16 @@ Page({
     })
   },
 
+  /**
+    * 查看历史测评报告
+    * 
+    */
+  getDiscHistoryResult: function () {
+    var that = this
+    wx.navigateTo({
+      url: '/packageDISC/pages/discResults/index',
+    })
+  },
   /**
    * 用户点击右上角分享
    * 
@@ -1974,7 +1986,8 @@ Page({
         mresult: this.data.discM,
         lresult: this.data.discL,
         aresult: this.data.discA,
-        discType: this.data.discType
+        discType: this.data.discType,
+        yvalue: this.data.yvalueM
       },
       header: {
         'content-type': 'application/json' // 默认值

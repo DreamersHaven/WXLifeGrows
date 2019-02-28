@@ -39,7 +39,7 @@
     <i-tab-bar-item key="save" icon="task" current-icon="task_fill" title="已保存" wx:elif="{{isNoSave==false}}"></i-tab-bar-item>
 
     <i-tab-bar-item key="share" icon="interactive" current-icon="interactive_fill" title="分享"></i-tab-bar-item>
-    <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill" count="3" title="查看历史"></i-tab-bar-item>
+    <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill"  title="查看历史"></i-tab-bar-item>
   </i-tab-bar>
 
   <i-tabs current="{{ currentTab }}" bindchange="tabshandleChange">
