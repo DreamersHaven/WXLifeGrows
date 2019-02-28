@@ -13,6 +13,8 @@ Page({
     yvalueM: '',
     //页面显示样式对应的值，是否为分享给他人
     pageStyle: 'meReport',
+    //是否通过他人分享，进入的小程序页面
+    isShareOthers: false,
     //以抽屉的方式显示分享的选项
     showRighShareModle: false,
     x: 0,
@@ -1423,6 +1425,11 @@ Page({
       pageStyle = options.pageStyle
     }
 
+    //判断是否通过他人分享，进入的小程序页面
+    var isShareOthers = false
+    if (options.isShareOthers != undefined) {
+      isShareOthers = options.isShareOthers
+    }
     var isNoSave = true
     if (isQueryResults != null && isQueryResults != '' && isQueryResults != undefined) {
       isNoSave = false
@@ -1432,7 +1439,8 @@ Page({
       discM: options.M,
       discL: options.L,
       isNoSave: isNoSave,
-      pageStyle: pageStyle
+      pageStyle: pageStyle,
+      isShareOthers: isShareOthers
     })
 
     this.getMGraph('myCanvas')
@@ -1809,9 +1817,7 @@ Page({
       this.getLGraph('myCanvas')
     }
   },
-  handleChange({
-    detail
-  }) {
+  handleChange({detail}) {
 
     if (detail.key == "homepage") {
       this.goHomePage()
@@ -1825,6 +1831,8 @@ Page({
       this.getDiscReport()
     } else if (detail.key == "share") {
       this.toggleRightShareModle()
+    } else if (detail.key == "scan") {
+      this.goDiscPage()
     }
 
     this.setData({
@@ -1841,9 +1849,9 @@ Page({
    * 点击【分享】显示 
    */
   toggleRightShareModle() {
-    if (this.data.showRighShareModle){
+    if (this.data.showRighShareModle) {
       this.getMGraph("myCanvas")
-      
+
 
     }
     this.setData({
@@ -1860,7 +1868,10 @@ Page({
   }) {
 
     if (detail.key == "discReport") {
-      this.getDiscReport()
+      var that = this
+      wx.navigateTo({
+        url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA + '&isShareOthers=' + that.data.isShareOthers,
+      })
 
     } else if (detail.key == "picMGraph") {
 
@@ -1878,7 +1889,7 @@ Page({
   getDiscReport: function() {
     var that = this
     wx.navigateTo({
-      url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA,
+      url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA + '&pageStyle=onlyReport',
     })
   },
 
@@ -1890,21 +1901,21 @@ Page({
 
     var that = this
     var shareType = "picAndReport"
-    var title ='这是我的DISC性格测评结果，分享给你呦'
+    var title = '这是我的DISC性格测评结果，分享给你呦'
     var path = '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA
-    var imageUrl ='/pages/resource/images/dsp.jpg'
+    var imageUrl = '/pages/resource/images/dsp.jpg'
     if (res.from = "button") {
       shareType = res.target.id
       console.log('用户进行分享测试报告的操作:' + shareType)
       //只分享测试结果
-      if (shareType =='onlyPic'){
+      if (shareType == 'onlyPic') {
         path = '/packageDISC/pages/amlGraph/index?pageStyle=onlyPic&M=' + that.data.discM + '&L=' + that.data.discL + '&A=' + that.data.discA
-      }else{
+      } else {
         path = path + '&pageStyle=' + shareType
       }
       return {
         title: title,
-        path: path,
+        path: path + '&isShareOthers=true',
         imageUrl: imageUrl,
         success: function(res) {
 
@@ -1916,6 +1927,29 @@ Page({
     else {
 
     }
+  },
+
+  /**
+   * 我要测试
+   * 1、判断用户是否已经登录
+   * 2、如果已经登录跳转到DISC测试页面
+   * 3、如果还未授权登录，跳转到用户登录页面
+   */
+  goDiscPage: function() {
+    var user = app.getGlobalUserInfo();
+    var userId = user.userId;
+    console.log("当前用户的userId为：" + userId)
+    if (userId != null && userId != '' && userId != undefined) {
+      wx.navigateTo({
+        url: '/packageDISC/pages/disc/index',
+      })
+    } else {
+      console.log("用户未登录，跳转到授权登录页面...")
+      wx.navigateTo({
+        url: '/pages/userLogin/login?redirectUrl=/packageDISC/pages/disc/index',
+      })
+    }
+
   },
 
 

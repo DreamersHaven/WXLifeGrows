@@ -1,3 +1,14 @@
+<!--当通过朋友推荐进入小程序-->
+<view wx:if="{{isShareOthers}}">
+  <i-tab-bar bindchange="tabbarHandleChange">
+    <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="Home"></i-tab-bar-item>
+
+    <i-tab-bar-item key="scan" icon="dynamic" current-icon="dynamic_fill" title="我要测试"></i-tab-bar-item>
+
+  </i-tab-bar>
+ 
+</view>
+
 
 
 <view class="caption-wrap" wx:if="{{pageStyle=='picAndReport'}}">

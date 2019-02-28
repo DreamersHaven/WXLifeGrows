@@ -20,7 +20,9 @@ Page({
     mresult: "",
     lresult: "",
     aresult: "",
-    pageStyle: 'picAndReport'
+    pageStyle: 'picAndReport',
+    //是否通过他人分享，进入的小程序页面
+    isShareOthers: false
   },
 
   /**
@@ -38,6 +40,12 @@ Page({
     console.log("用户分享的测试报告类型：" + options.pageStyle)
     if (options.pageStyle != undefined){
       pageStyle = options.pageStyle
+    }
+
+    //判断是否通过他人分享，进入的小程序页面
+    var isShareOthers = false
+    if (options.isShareOthers != undefined) {
+      isShareOthers = options.isShareOthers
     }
 
     console.log("依据用户测评结果查询详细测评报告,坐标值为：" + yvalue + "DISC值为：" + mresult); //正确返回结果
@@ -79,7 +87,8 @@ Page({
               mresult: mresult,
               lresult: lresult,
               aresult: aresult,
-              pageStyle:pageStyle
+              pageStyle:pageStyle,
+              isShareOthers: isShareOthers
 
             });
 
@@ -92,7 +101,8 @@ Page({
               lresult: lresult,
               aresult: aresult,
               isQuerySuss:false,
-              pageStyle: pageStyle
+              pageStyle: pageStyle,
+              isShareOthers: isShareOthers
             });
           }
 
@@ -175,7 +185,46 @@ Page({
 
     } else if (detail.key == "picMGraph") {
       wx.navigateTo({
-        url: '/packageDISC/pages/amlGraph/index?pageStyle=shareMeReport&M=' + this.data.mresult + '&L=' + this.data.lresult + '&A=' + this.data.aresult,
+        url: '/packageDISC/pages/amlGraph/index?pageStyle=shareMeReport&M=' + this.data.mresult + '&L=' + this.data.lresult + '&A=' + this.data.aresult +'&isShareOthers='+this.data.isShareOthers,
+      })
+    }
+
+  },
+  /**
+   * 通过朋友分享进入小程序页面
+   */
+  tabbarHandleChange({ detail }) {
+
+    if (detail.key == "homepage") {
+      this.goHomePage()
+    }  else if (detail.key == "scan") {
+      this.goDiscPage()
+    }
+
+  },
+  goHomePage: function () {
+    wx.redirectTo({
+      url: '/pages/index/index',
+    })
+  },
+  /**
+ * 我要测试
+ * 1、判断用户是否已经登录
+ * 2、如果已经登录跳转到DISC测试页面
+ * 3、如果还未授权登录，跳转到用户登录页面
+ */
+  goDiscPage: function () {
+    var user = app.getGlobalUserInfo();
+    var userId = user.userId;
+    console.log("当前用户的userId为：" + userId)
+    if (userId != null && userId != '' && userId != undefined) {
+      wx.navigateTo({
+        url: '/packageDISC/pages/disc/index',
+      })
+    } else {
+      console.log("用户未登录，跳转到授权登录页面...")
+      wx.navigateTo({
+        url: '../userLogin/login?redirectUrl=/packageDISC/pages/disc/index',
       })
     }
 
