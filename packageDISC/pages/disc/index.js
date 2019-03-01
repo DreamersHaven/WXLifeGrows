@@ -1,5 +1,7 @@
 // pages/disc/disc.js
 //const app = getApp();
+const { $Toast } = require('../../../dist/base/index');
+ 
 Page({
 
   /**
@@ -16,18 +18,20 @@ Page({
         key: 'Q1',
         most: '',
         lease: '',
-        choices: [{
+        choices: [
+          {
+            key: 'Q1C2',
+            text: '兴致勃勃',
+            label: 'I',
+            m: false,
+            l: false
+          }, 
+          {
           key: 'Q1C1',
           text: '敢作敢为',
           label: 'D',
           m:false,
           l:false
-        }, {
-          key: 'Q1C2',
-          text: '兴致勃勃',
-          label: 'I',
-           m: false,
-           l: false
         }, {
           key: 'Q1C3',
           text: '交往得体',
@@ -46,13 +50,7 @@ Page({
         key: 'Q2',
         most: '',
         lease: '',
-        choices: [{
-          key: 'Q2C1',
-          text: '有决心',
-          label: 'D',
-          m: false,
-          l: false
-        }, {
+        choices: [ {
           key: 'Q2C2',
           text: '得人信任',
             label: 'I',
@@ -70,7 +68,13 @@ Page({
             label: 'C',
             m: false,
             l: false
-        }]
+          }, {
+            key: 'Q2C1',
+            text: '有决心',
+            label: 'D',
+            m: false,
+            l: false
+          }]
       },
       {
         key: 'Q3',
@@ -82,16 +86,18 @@ Page({
           label: 'D',
           m: false,
           l: false
-        }, {
+        }, 
+          {
+            key: 'Q3C3',
+            text: '冷静',
+            label: 'S',
+            m: false,
+            l: false
+          }, 
+        {
           key: 'Q3C2',
           text: '友善',
             label: 'I',
-            m: false,
-            l: false
-        }, {
-          key: 'Q3C3',
-          text: '冷静',
-            label: 'S',
             m: false,
             l: false
         }, {
@@ -106,18 +112,20 @@ Page({
         key: 'Q4',
         most: '',
         lease: '',
-        choices: [{
+        choices: [
+          {
+            key: 'Q4C2',
+            text: '健谈',
+            label: 'I',
+            m: false,
+            l: false
+          }, 
+          {
           key: 'Q4C1',
           text: '果断',
           label: 'D',
           m: false,
           l: false
-        }, {
-          key: 'Q4C2',
-          text: '健谈',
-            label: 'I',
-            m: false,
-            l: false
         }, {
           key: 'Q4C3',
           text: '自制力强',
@@ -860,10 +868,29 @@ Page({
       ]
   },
 
-
+  /**
+   * 用户点击上一题下一题
+   */
   handleChange({ detail }) {
     const type = detail.type;
     if (type === 'next') {
+      
+      //用户点击下一题时，判断最符合项以及最不符合项是否均设置
+      var current = this.data.current-1
+      var question = this.data.questions[current]
+      var m = question.most
+      var l = question.lease
+      
+      if (m==''||l==''){
+     
+
+        $Toast({
+          content: '最符合及最不符合项均必填，请检查',
+          type: 'warning'
+        });
+        return
+      }
+
       this.setData({
         current: this.data.current + 1
         
@@ -920,7 +947,7 @@ Page({
         })
       }
     }
-    console.log(this.data.questions[current])
+    //console.log(this.data.questions[current])
   },
 
   /**
@@ -932,6 +959,24 @@ Page({
    */
   completeClick(event){
     console.log("##########用户完成DISC测试，生成DISC分析图表所用数据##########")
+    //校验用户最后一道题是否选择了最符合与最不符合项
+    //用户点击下一题时，判断最符合项以及最不符合项是否均设置
+    var current = this.data.current - 1
+    var question = this.data.questions[current]
+    var m = question.most
+    var l = question.lease
+
+    if (m == '' || l == '') {
+
+
+      $Toast({
+        content: '最符合及最不符合项均必填，请检查',
+        type: 'warning'
+      });
+      return
+    }
+
+    
     var questions= this.data.questions
     var mD=0
     var mI = 0

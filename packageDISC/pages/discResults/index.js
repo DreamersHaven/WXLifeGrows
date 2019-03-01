@@ -172,7 +172,7 @@ Page({
         mresult = discResultList[i].mresult
         lresult = discResultList[i].lresult
         aresult = discResultList[i].aresult
-        url = '/pages/discReport/index?yvalue=' + yvalue + '&mresult=' + mresult + '&lresult=' + lresult + '&aresult=' + aresult +'&pageStyle=picAndReport'
+        url = '/pages/discReport/index?yvalue=' + yvalue + '&mresult=' + mresult + '&lresult=' + lresult + '&aresult=' + aresult +'&pageStyle=picAndReport&isShareOthers=false'
 
         wx.navigateTo({
           url: url,
