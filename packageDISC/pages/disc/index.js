@@ -834,7 +834,15 @@ Page({
         key: 'Q28',
         most: '',
         lease: '',
-        choices: [{
+        choices: [
+          {
+            key: 'Q28C3',
+            text: '乐于助人',
+            label: 'S',
+            m: false,
+            l: false
+          }, 
+          {
           key: 'Q28C1',
           text: '有开创精神',
           label: 'D',
@@ -844,12 +852,6 @@ Page({
           key: 'Q28C2',
           text: '乐观',
             label: 'I',
-            m: false,
-            l: false
-        }, {
-          key: 'Q28C3',
-          text: '乐于助人',
-            label: 'S',
             m: false,
             l: false
         }, {
