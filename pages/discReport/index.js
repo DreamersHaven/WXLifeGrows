@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isQuerySuss:true,
+    isQuerySuss: true,
     discType: "",
     cname: "",
     ename: "",
@@ -24,32 +24,83 @@ Page({
     //是否通过他人分享，进入的小程序页面
     isShareOthers: false
   },
-
   /**
-   * 生命周期函数--监听页面加载
+   * 设置页面值
    */
-  onLoad: function(options) {
-    var me = this;
-
-    //接收页面传递的测试结果
+  setreportInfo: function (options, reportInfo) {
+    var me=this
     var yvalue = options.yvalue
     var mresult = options.mresult
     var lresult = options.lresult
     var aresult = options.aresult
+    //判断测试报告的显示类型，默认为测试报告和结果图都显示
     var pageStyle = 'picAndReport'
-    console.log("用户分享的测试报告类型：" + options.pageStyle)
-    if (options.pageStyle != undefined){
+    if (options.pageStyle != undefined) {
       pageStyle = options.pageStyle
     }
-
     //判断是否通过他人分享，进入的小程序页面
     var isShareOthers = false
     if (options.isShareOthers != undefined) {
       isShareOthers = options.isShareOthers
     }
 
+    if (reportInfo != undefined) {
+      me.setData({
+
+        discType: reportInfo.discType,
+        cname: reportInfo.cname,
+        ename: reportInfo.ename,
+        evaDesc: reportInfo.evaDesc,
+        behaChara: reportInfo.behaChara,
+        communicate: reportInfo.communicate,
+        ability: reportInfo.ability,
+        superiority: reportInfo.superiority,
+        vulnerable: reportInfo.vulnerable,
+        yvalue: yvalue,
+        mresult: mresult,
+        lresult: lresult,
+        aresult: aresult,
+        pageStyle: pageStyle,
+        isShareOthers: isShareOthers
+
+      });
+    } else {
+      me.setData({
+
+        discType: '未找到符合的测评报告',
+        yvalue: yvalue,
+        mresult: mresult,
+        lresult: lresult,
+        aresult: aresult,
+        isQuerySuss: false,
+        pageStyle: pageStyle,
+        isShareOthers: isShareOthers
+      });
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+
+
+    var me = this;
+
+    //接收页面传递的测试结果
+    var yvalue = options.yvalue
+    var mresult = options.mresult
     console.log("依据用户测评结果查询详细测评报告,坐标值为：" + yvalue + "DISC值为：" + mresult); //正确返回结果
 
+    //依据坐标值和DISC结果进行缓存，如果存在缓存就在客户端直接获取数据
+    var key = "report_" + yvalue + mresult
+    var info = wx.getStorageSync(key)
+    if (info) {
+      console.log("该数据已经缓存，直接在本地缓存中获取数据")
+      me.setreportInfo(options, info)
+      return
+    }
+ 
     wx.showLoading({
       title: '报告生成中，请稍后...',
     });
@@ -65,53 +116,22 @@ Page({
       header: {
         'content-type': 'application/json' // 默认值
       },
-      success: function(res) {
+      success: function (res) {
         console.log(res.data);
         wx.hideLoading();
         if (res.data.status == 200) {
           var reportInfo = res.data.data;
-          //添加异常处理如果没有查找到相关的测评信息
-          if (reportInfo != undefined) {
-            me.setData({
+          //将从数据库获取的内容信息，设置到本地缓存中
+          console.log("从数据中获取数据，并缓存到本地")
+          me.setreportInfo(options, reportInfo)
 
-              discType: reportInfo.discType,
-              cname: reportInfo.cname,
-              ename: reportInfo.ename,
-              evaDesc: reportInfo.evaDesc,
-              behaChara: reportInfo.behaChara,
-              communicate: reportInfo.communicate,
-              ability: reportInfo.ability,
-              superiority: reportInfo.superiority,
-              vulnerable: reportInfo.vulnerable,
-              yvalue: yvalue,
-              mresult: mresult,
-              lresult: lresult,
-              aresult: aresult,
-              pageStyle:pageStyle,
-              isShareOthers: isShareOthers
-
-            });
-
-          }else{
-            me.setData({
-
-              discType: '未找到符合的测评报告',
-              yvalue: yvalue,
-              mresult: mresult,
-              lresult: lresult,
-              aresult: aresult,
-              isQuerySuss:false,
-              pageStyle: pageStyle,
-              isShareOthers: isShareOthers
-            });
-          }
-
+          wx.setStorageSync(key, reportInfo)
         } else if (res.data.status == 502) {
           wx.showToast({
             title: res.data.msg,
             duration: 3000,
             icon: "none",
-            success: function() {
+            success: function () {
               wx.redirectTo({
                 url: '../../index/index',
               })
@@ -126,42 +146,42 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
@@ -169,7 +189,7 @@ Page({
    * 用户点击右上角分享
    * 
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
 
@@ -184,8 +204,8 @@ Page({
     if (detail.key == "discReport") {
 
     } else if (detail.key == "picMGraph") {
-      wx.navigateTo({
-        url: '/packageDISC/pages/amlGraph/index?pageStyle=shareMeReport&M=' + this.data.mresult + '&L=' + this.data.lresult + '&A=' + this.data.aresult +'&isShareOthers='+this.data.isShareOthers,
+      wx.redirectTo({
+        url: '/packageDISC/pages/amlGraph/index?pageStyle=shareMeReport&M=' + this.data.mresult + '&L=' + this.data.lresult + '&A=' + this.data.aresult + '&isShareOthers=' + this.data.isShareOthers,
       })
     }
 
@@ -193,11 +213,13 @@ Page({
   /**
    * 通过朋友分享进入小程序页面
    */
-  tabbarHandleChange({ detail }) {
+  tabbarHandleChange({
+    detail
+  }) {
 
     if (detail.key == "homepage") {
       this.goHomePage()
-    }  else if (detail.key == "scan") {
+    } else if (detail.key == "scan") {
       this.goDiscPage()
     }
 
@@ -208,25 +230,11 @@ Page({
     })
   },
   /**
- * 我要测试
- * 1、判断用户是否已经登录
- * 2、如果已经登录跳转到DISC测试页面
- * 3、如果还未授权登录，跳转到用户登录页面
- */
+   * 我要测试,调用公共函数
+   */
   goDiscPage: function () {
-    var user = app.getGlobalUserInfo();
-    var userId = user.userId;
-    console.log("当前用户的userId为：" + userId)
-    if (userId != null && userId != '' && userId != undefined) {
-      wx.navigateTo({
-        url: '/packageDISC/pages/disc/index',
-      })
-    } else {
-      console.log("用户未登录，跳转到授权登录页面...")
-      wx.navigateTo({
-        url: '../userLogin/login?redirectUrl=/packageDISC/pages/disc/index',
-      })
-    }
+    var common = require('../../utils/common.js')
+    common.goDiscPage()
 
   }
 

@@ -1871,7 +1871,7 @@ Page({
 
     if (detail.key == "discReport") {
       var that = this
-      wx.navigateTo({
+      wx.redirectTo({
         url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA + '&isShareOthers=' + that.data.isShareOthers,
       })
 
@@ -1948,19 +1948,8 @@ Page({
    * 3、如果还未授权登录，跳转到用户登录页面
    */
   goDiscPage: function() {
-    var user = app.getGlobalUserInfo();
-    var userId = user.userId;
-    console.log("当前用户的userId为：" + userId)
-    if (userId != null && userId != '' && userId != undefined) {
-      wx.navigateTo({
-        url: '/packageDISC/pages/disc/index',
-      })
-    } else {
-      console.log("用户未登录，跳转到授权登录页面...")
-      wx.navigateTo({
-        url: '/pages/userLogin/login?redirectUrl=/packageDISC/pages/disc/index',
-      })
-    }
+    var common = require('../../../utils/common.js')
+    common.goDiscPage()
 
   },
 
@@ -2006,6 +1995,12 @@ Page({
             isNoSave: false
 
           })
+          //此次要清空已经缓存的用户测评历史结果、以及最新的DISC测评结果
+          var key = "reportList_" + userId
+          wx.removeStorageSync(key)
+          var keyDiscResult = "newDiscResult_" + userId
+          wx.removeStorageSync(keyDiscResult)
+
         } else if (status == 500) {
           wx.showToast({
             title: res.data.msg,

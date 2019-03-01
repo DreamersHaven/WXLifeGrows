@@ -4,81 +4,64 @@ const app = getApp()
 Page({
   data: {
     faceUrl: "",
-    isMe: true 
+    isMe: true
 
   },
 
-
+  setMineInfo(params, user) {
+    var me = this;
+    var userId = user.userId;
+    var publisherId = params.publisherId;
+    var isMe = true
+    if (publisherId != null && publisherId != '' && publisherId != undefined) {
+      userId = publisherId;
+      isMe = false
+    }
+    var faceUrl = "/pages/resource/images/noneface.png";
+    if (user.picId != null && user.picId != '' && user.picId != undefined) {
+      faceUrl = user.picId;
+    }
+    me.setData({
+      userId: userId,
+      faceUrl: faceUrl,
+      nickname: user.username,
+      isMe: isMe,
+      //publisherId: publisherId,
+      serverUrl: app.serverUrl
+    });
+  },
 
   onLoad: function (params) {
-      
+
     var me = this;
 
     // var user = app.userInfo;
-    // fixme 修改原有的全局对象为本地缓存
+    // 修改原有的全局对象为本地缓存
     var user = app.getGlobalUserInfo();
-    var userId = user.userId;
-
-    var publisherId = params.publisherId;
-    if (publisherId != null && publisherId != '' && publisherId != undefined) {
-      userId = publisherId;
-      me.setData({
-        isMe: false,
-        publisherId: publisherId,
-        serverUrl: app.serverUrl
-      })
+    if (user) {
+      console.log('从本地缓存中获取用户信息：' + user)
+      me.setMineInfo(params, user)
+      return
     }
-    me.setData({
-      userId: userId
-    })
-
-
-    wx.showLoading({
-      title: '请等待...',
-    });
-    var serverUrl = app.serverUrl;
-    // 调用后端
-    wx.request({
-      url: serverUrl + '/user/query?userId=' + userId ,
-      method: "POST",
-      header: {
-        'content-type': 'application/json', // 默认值
-        'headerUserId': user.userId,
-        'headerUserToken': user.userToken
-      },
+    //如果没有查询到本地用户缓存信息，提示用户session过期，是否重新登录
+    wx.showModal({
+      title: '提示',
+      content: '用户session过期，是否重新登录？',
       success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.data.status == 200) {
-          var userInfo = res.data.data;
-          var faceUrl = "/pages/resource/images/noneface.png";
-          if (userInfo.picId != null && userInfo.picId != '' && userInfo.picId != undefined) {
-            faceUrl = userInfo.picId;
-          }
-          me.setData({
-            faceUrl: faceUrl,
-            nickname: userInfo.username
-             
-          });
-        } else if (res.data.status == 502) {
-          wx.showToast({
-            title: res.data.msg,
-            duration: 3000,
-            icon: "none",
-            success: function () {
-              wx.redirectTo({
-                url: '../userLogin/login',
-              })
-            }
+
+        if (res.confirm) {
+          wx.redirectTo({
+            url: '../userLogin/login?redirectUrl=/pages/mine/mine',
           })
+        } else {
+
         }
       }
     })
 
-    
   },
 
-  
+
 
   logout: function () {
     // var user = app.userInfo;
@@ -190,16 +173,61 @@ Page({
     })
   },
   /**
+   * 依据用户的最新DISC测试结果，跳转到查看DISC测试结果的详细页面
+   */
+  goDiscResultPage: function (info) {
+    var mresult = ''
+    var aresult = ''
+    var lresult = ''
+    if (info != undefined) {
+      mresult = info.mresult
+      lresult = info.lresult
+      aresult = info.aresult
+
+      // 页面跳转
+      wx.redirectTo({
+        url: '/packageDISC/pages/amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult + '&fromPage=mine',
+
+      })
+    } else {//如果用户还没有进行DISC测试，提示还未进行DISC测试，是否进行测试
+      wx.showModal({
+        title: '提示',
+        content: '您还未进行DISC测试，是否进行测试？',
+        success: function (res) {
+          console.log(res)
+          if (res.confirm) {
+            console.log('用户点击了确定')
+            var common = require('../../utils/common.js')
+            common.goDiscPage()
+          } else {
+
+            console.log('用户点击了取消')
+          }
+        }
+      })
+
+    }
+
+  },
+  /**
    * 显示用户最新的DISC测评结果
    * 1、依据用户ID查询DISC测评结果
    * 2、跳转到DISC图形展示页面，显示该用户的DISC测评结果
+   * 3、将该用户最新的DISC测评结果加入缓存，注意在保存新报告的时候，
+   *    该缓存信息需要被清除，从新获取数据
    */
   showDiscResult: function () {
+    var me = this
     var user = app.getGlobalUserInfo();
     var serverUrl = app.serverUrl;
-    var mresult=''
-    var aresult=''
-    var lresult=''
+
+    var key = "newDiscResult_" + user.userId
+    var newDiscResult = wx.getStorageSync(key)
+    if (newDiscResult) {
+      console.log('从本地缓存中获取该用户的最新DISC测评结果')
+      me.goDiscResultPage(newDiscResult)
+      return
+    }
     wx.showLoading({
       title: '请等待...',
     });
@@ -214,48 +242,26 @@ Page({
         console.log(res.data);
         wx.hideLoading();
         if (res.data.status == 200) {
-         
-          if (res.data.data != null && res.data.data != '' && res.data.data != undefined) {
-            mresult = res.data.data.mresult
-            lresult = res.data.data.lresult
-            aresult = res.data.data.aresult
-
-            // 页面跳转
-            wx.navigateTo({
-              url: '/packageDISC/pages/amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult + '&fromPage=mine',
-
-            })
-          }else{//如果用户还没有进行DISC测试，提示还未进行DISC测试，是否进行测试
-            wx.showModal({
-              title: '提示',
-              content: '您还未进行DISC测试，是否进行测试？',
-              success: function (res) {
-                console.log(res)
-                if (res.confirm) {
-                  console.log('用户点击了确定')
-                } else {
-                  console.log('用户点击了取消')
-                }
-              }
-            })
-         
+          me.goDiscResultPage(res.data.data)
+          if (res.data.data != undefined) {
+            console.log('从服务器中获取该用户最新的DISC测评结果，并缓存到本地')
+            wx.setStorageSync(key, res.data.data)
           }
-
         }
       }
     })
   }
 
-  
 
 
-   
-   
-   
-   
-   
-   
-   
-  
+
+
+
+
+
+
+
+
+
 
 })

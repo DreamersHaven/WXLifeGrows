@@ -28,8 +28,6 @@ Page({
         isLogin: false
       })
     } else {
-      
-
       console.log("用户已登录，用户名称" + user.username + ",用户头像：" + user.picId)
       var faceUrl = "/pages/resource/images/noneface.png";
       if (user.picId != null && user.picId != '' && user.picId != undefined) {
@@ -66,19 +64,8 @@ Page({
    * 3、如果还未授权登录，跳转到用户登录页面
    */
   goDiscPage: function() {
-    var user = app.getGlobalUserInfo();
-    var userId = user.userId;
-    console.log("当前用户的userId为：" + userId)
-    if (userId != null && userId != '' && userId != undefined) {
-      wx.navigateTo({
-        url: '/packageDISC/pages/disc/index',
-      })
-    } else {
-      console.log("用户未登录，跳转到授权登录页面...")
-      wx.navigateTo({
-        url: '../userLogin/login?redirectUrl=/packageDISC/pages/disc/index',
-      })
-    }
+    var common = require('../../utils/common.js')
+    common.goDiscPage()
 
   },
 
@@ -90,12 +77,12 @@ Page({
     var userId = user.userId;
     console.log("当前用户的userId为：" + userId)
     if (userId != null && userId != '' && userId != undefined) {
-      wx.navigateTo({
+      wx.redirectTo({
         url: '../mine/mine',
       })
     } else {
       console.log("用户未登录，跳转到授权登录页面...")
-      wx.navigateTo({
+      wx.redirectTo({
         url: '../userLogin/login?redirectUrl=../mine/mine',
       })
     }

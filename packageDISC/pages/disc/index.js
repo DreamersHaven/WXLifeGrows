@@ -974,7 +974,7 @@ Page({
     //将MLA的值存储到服务器
 
     //跳转到绘图页面
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../amlGraph/index?M='+this.data.M+'&L='+this.data.L+'&A='+this.data.A,
 
     })
@@ -1036,5 +1036,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+    goHomePage: function () {
+    wx.redirectTo({
+      url: '/pages/index/index',
+    })
   }
 })

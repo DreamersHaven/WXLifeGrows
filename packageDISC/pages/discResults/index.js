@@ -25,6 +25,16 @@ Page({
 
     var serverUrl = app.serverUrl;
     var userId = user.userId
+    var key = "reportList_" + userId
+    var reportList=wx.getStorageSync(key)
+    if (reportList){
+      console.info("该用户[" + userId+"]的历史测评报告已经缓存，直接从本地缓存中获取数据")
+      me.setData({
+        list: reportList, //将表中查询出来的信息传给list
+      })
+      return
+    }
+    
     wx.showLoading({
       title: '用户【' + userId + '】的历史测评结果加载中，请稍后...',
     });
@@ -39,9 +49,11 @@ Page({
         console.log(res.data);
         wx.hideLoading();
         if (res.data.status == 200) {
+          console.info("该用户[" + userId + "]的历史测评报告已经从数据库加载到本地缓存")
           me.setData({
             list: res.data.data, //将表中查询出来的信息传给list
           })
+          wx.setStorageSync(key, res.data.data)
 
         } else if (res.data.status == 502) {
           wx.showToast({

@@ -19,6 +19,12 @@
 
 
   <button class='button.bluebutton'  hover-class="hover.bluebutton" bindtap="completeClick">完成</button>
+
+   <!--圆形点击框  -->
+    <view class="round-click" bindtap="goHomePage" >
+       
+        <i-icon type="homepage" slot="icon" size='40' color="#f8f8f9"/>
+    </view>
  
 
  

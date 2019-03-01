@@ -92,6 +92,10 @@ Page({
       url: '../userRegist/regist',
     })
   },
+
+  /**
+   * 微信授权登录
+   */
   bindGetUserInfo(res) {
     var me = this;
     let info = res;
