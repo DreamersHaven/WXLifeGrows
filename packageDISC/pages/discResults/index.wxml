@@ -9,7 +9,7 @@
         </view>
         <view class="i-swipeout-des">
           <view class="i-swipeout-des-h2">{{item.evaDesc}}</view>
-          <view class="i-swipeout-des-detail">{{item.gmtCreate}}</view>
+          <view class="i-swipeout-des-detail">{{item.gmtCreateStr}}</view>
         </view>
       </view>
 

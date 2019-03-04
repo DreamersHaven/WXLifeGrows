@@ -1,0 +1,54 @@
+<i-panel title="统计">
+</i-panel>
+<i-row>
+  <i-col i-class="color-col" span="12">
+    <i-card i-class="color">
+      <view slot="content" class="color-item primary">
+        <view class="color-item-title">{{usersNum}}</view>
+        <view class="color-item-content">总用户数</view>
+      </view>
+    </i-card>
+  </i-col>
+  <i-col i-class="color-col" span="12">
+    <i-card i-class="color">
+      <view slot="content" class="color-item success">
+        <view class="color-item-title">{{testsNum}}</view>
+        <view class="color-item-content">总测试数</view>
+      </view>
+    </i-card>
+  </i-col>
+
+</i-row>
+<i-panel title="查询某用户的DISC测评报告">
+</i-panel>
+ <form bindsubmit='showDiscResult'>
+<i-row>
+  <i-col  span="16">
+      
+    <view>
+      
+      <i-input name="userId" value="" placeholder="请输入用户名" />
+    </view>
+  </i-col>
+  <i-col   span="8">
+     <!--按钮-->
+    <view>
+      <button class="button.small" form-type='submit'>查询</button>
+    </view>
+  </i-col>
+
+</i-row>
+  </form>
+
+
+
+
+ 
+
+
+
+
+<!--圆形点击框  -->
+<view class="round-click" bindtap="goBack">
+  <i-icon type="undo" slot="icon" size='40' color="#f8f8f9" />
+</view>

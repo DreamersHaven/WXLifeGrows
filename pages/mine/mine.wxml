@@ -11,9 +11,13 @@
     <i-icon type="activity_fill" slot="icon" />
   </i-cell>
 
-
+  <!--
   <i-cell title="完善个人信息" is-link>
     <i-icon type="businesscard_fill" slot="icon" />
+  </i-cell>
+  -->
+  <i-cell title="统计查询" is-link bindtap='showAdminResult'>
+    <i-icon type="search"  slot="icon" />
   </i-cell>
 
   <i-cell title="退出登录" bindtap='logout'>

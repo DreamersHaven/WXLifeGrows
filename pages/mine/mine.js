@@ -173,6 +173,14 @@ Page({
     })
   },
   /**
+   * 显示统计查询页面
+   */
+  showAdminResult:function(){
+    wx.redirectTo({
+      url: '/packageAdmin/pages/admin/index',
+    })
+  },
+  /**
    * 依据用户的最新DISC测试结果，跳转到查看DISC测试结果的详细页面
    */
   goDiscResultPage: function (info) {

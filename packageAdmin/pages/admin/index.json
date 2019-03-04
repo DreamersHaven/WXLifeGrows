@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "统计&查询",
+  "usingComponents": {
+    "i-input": "../../../dist/input/index",
+    "i-button": "../../../dist/button/index",
+    "i-panel": "../../../dist/panel/index",
+    "i-card": "../../../dist/card/index",
+    "i-row": "../../../dist/row/index",
+    "i-col": "../../../dist/col/index",
+    "i-icon": "../../../dist/icon/index"
+  }
+}
