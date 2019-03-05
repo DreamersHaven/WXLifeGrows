@@ -22,17 +22,25 @@ Page({
     var user = app.getGlobalUserInfo();
 
     var serverUrl = app.serverUrl;
-    var userId = user.userId
-    var key = "reportList_" + userId
-    var reportList = wx.getStorageSync(key)
-    if (reportList) {
-      console.info("该用户[" + userId + "]的历史测评报告已经缓存，直接从本地缓存中获取数据")
-      me.setData({
-        list: reportList, //将表中查询出来的信息传给list
-      })
-      return
+    //是否为管理员查看其他用户的测评报告
+    var antherUserId = ""
+    var userId = ''
+    if (options.antherUserId != undefined) {
+      antherUserId = options.antherUserId
+      userId = antherUserId
     }
-
+    if (antherUserId == "") {
+      userId = user.userId
+      var key = "reportList_" + userId
+      var reportList = wx.getStorageSync(key)
+      if (reportList) {
+        console.info("该用户[" + userId + "]的历史测评报告已经缓存，直接从本地缓存中获取数据")
+        me.setData({
+          list: reportList, //将表中查询出来的信息传给list
+        })
+        return
+      }
+    }
     wx.showLoading({
       title: '用户【' + userId + '】的历史测评结果加载中，请稍后...',
     });
@@ -200,7 +208,7 @@ Page({
           var newkey = "newDiscResult_" + userId
           wx.removeStorageSync(newkey)
           //如果最后一条测评报告也被删除，跳转到主页
-          if (list.length==0){
+          if (list.length == 0) {
             wx.redirectTo({
               url: '../../../index/index',
             })

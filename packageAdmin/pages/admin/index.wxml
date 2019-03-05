@@ -21,13 +21,13 @@
 </i-row>
 <i-panel title="查询某用户的DISC测评报告">
 </i-panel>
- <form bindsubmit='showDiscResult'>
+ <form bindsubmit='showUserList'>
 <i-row>
   <i-col  span="16">
       
     <view>
       
-      <i-input name="userId" value="" placeholder="请输入用户名" />
+      <i-input name="username" value="" placeholder="请输入用户名" />
     </view>
   </i-col>
   <i-col   span="8">
@@ -39,13 +39,12 @@
 
 </i-row>
   </form>
+<view class='comment-toprow' wx:for="{{userlist}}">
 
+<i-card title="{{item.username}}" extra="查看测评报告" thumb="{{item.picId}}" bindtap='showDiscResult' id="{{item.userId}}">
+</i-card>
 
-
-
- 
-
-
+</view>
 
 
 <!--圆形点击框  -->

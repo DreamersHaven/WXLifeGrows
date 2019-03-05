@@ -5,6 +5,8 @@ Page({
     currentTab: 'isMGraph',
     //用于控制页面中保存按钮的状态
     isNoSave: true,
+    //用于判断是否为管理员查看某个用户的历史测评报告信息
+    antherUserId:'',
     discA: '',
     discM: '',
     discL: '',
@@ -1425,6 +1427,12 @@ Page({
       pageStyle = options.pageStyle
     }
 
+    //判断是否为管理员用户查询其他用户的测评结果
+    var antherUserId=''
+    if (options.antherUserId != null && options.antherUserId != '' && options.antherUserId != undefined) {
+      antherUserId = options.antherUserId
+    }
+
     //判断是否通过他人分享，进入的小程序页面
     var isShareOthers = false
     if (options.isShareOthers != undefined) {
@@ -1440,7 +1448,8 @@ Page({
       discL: options.L,
       isNoSave: isNoSave,
       pageStyle: pageStyle,
-      isShareOthers: isShareOthers
+      isShareOthers: isShareOthers,
+      antherUserId:antherUserId
     })
 
     this.getMGraph('myCanvas')
@@ -1897,12 +1906,17 @@ Page({
 
   /**
     * 查看历史测评报告
+    * 分为两种类型（1、自己查看自己的历史测评报告；2、管理员查看某用户的测评报告）
     * 
     */
   getDiscHistoryResult: function () {
     var that = this
+    var condition=""
+    if(that.data.antherUserId!=''){
+      condition = "?antherUserId=" + that.data.antherUserId
+    }
     wx.navigateTo({
-      url: '/packageDISC/pages/discResults/index',
+      url: '/packageDISC/pages/discResults/index' + condition,
     })
   },
   /**
