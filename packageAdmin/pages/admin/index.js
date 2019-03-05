@@ -173,9 +173,27 @@ Page({
         wx.hideLoading();
         if (res.data.status == 200) {
           //userlist
+          if (res.data.data==null){
+            wx.showModal({
+              title: '提示',
+              content: '没有查询到该用户是否重新输入？',
+              success: function (res) {
+                console.log(res)
+                if (res.confirm) {
+                  console.log('用户点击了确定')
+
+                } else {
+
+                  console.log('用户点击了取消')
+                }
+              }
+            })
+          }
+
           me.setData({
             userlist: res.data.data
           })
+          
         }
       }
     })

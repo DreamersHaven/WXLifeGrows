@@ -16,7 +16,7 @@
     <i-icon type="businesscard_fill" slot="icon" />
   </i-cell>
   -->
-  <i-cell title="统计查询" is-link bindtap='showAdminResult'>
+  <i-cell title="统计查询" is-link wx:if="{{isAdmin}}" bindtap='showAdminResult'>
     <i-icon type="search"  slot="icon" />
   </i-cell>
 

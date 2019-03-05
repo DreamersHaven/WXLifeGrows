@@ -1844,6 +1844,8 @@ Page({
       this.goDiscPage()
     } else if (detail.key == "browse"){
       this.getDiscHistoryResult()
+    } else if (detail.key == "back"){
+      this.goBack()
     }
 
     this.setData({
@@ -1903,7 +1905,25 @@ Page({
       url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA + '&pageStyle=onlyReport',
     })
   },
+  /**
+   * 返回按钮，依据页面参数，返回到不同页面
+   */
+  goBack:function(){
+    //如果是管理员查看某个用户的测试报告，返回到管理员操作页面
+    var antherUserId = this.data.antherUserId
+    if (antherUserId!=null){
+      wx.redirectTo({
+        url: '/packageAdmin/pages/admin/index',
+      })
+      return
+    }
+    //如果是用户查看自己的测试报告，返回到个人中心
+    var isQueryResults = this.data.isQueryResults
+    if (isQueryResults!=null){
 
+    }
+
+  },
   /**
     * 查看历史测评报告
     * 分为两种类型（1、自己查看自己的历史测评报告；2、管理员查看某用户的测评报告）

@@ -4,7 +4,9 @@ const app = getApp()
 Page({
   data: {
     faceUrl: "",
-    isMe: true
+    isMe: true,
+    //判断用户是否为管理员用户
+    isAdmin:false
 
   },
 
@@ -21,13 +23,19 @@ Page({
     if (user.picId != null && user.picId != '' && user.picId != undefined) {
       faceUrl = user.picId;
     }
+    //用户所属部门若为1（管理部），即为管理员身份
+    var isAdmin=false
+    if (user.deptId != null && user.deptId == '1' && user.deptId != undefined) {
+      isAdmin = true;
+    }
     me.setData({
       userId: userId,
       faceUrl: faceUrl,
       nickname: user.username,
       isMe: isMe,
       //publisherId: publisherId,
-      serverUrl: app.serverUrl
+      serverUrl: app.serverUrl,
+      isAdmin: isAdmin
     });
   },
 
