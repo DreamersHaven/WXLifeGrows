@@ -3,7 +3,7 @@
 <i-row>
   <i-col i-class="color-col" span="12">
     <i-card i-class="color">
-      <view slot="content" class="color-item primary">
+      <view slot="content" class="color-item primary" bindtap='showAllUserInfo'>
         <view class="color-item-title">{{usersNum}}</view>
         <view class="color-item-content">总用户数</view>
       </view>

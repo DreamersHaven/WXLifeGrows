@@ -4,7 +4,7 @@
     "pages/userLogin/login",
     "pages/mine/mine",
     "pages/userRegist/regist",
-    "pages/discReport/index" 
+    "pages/discReport/index"
   ],
   "subPackages": [
     {
@@ -18,7 +18,8 @@
     {
       "root": "packageAdmin",
       "pages": [
-        "pages/admin/index"
+        "pages/admin/index",
+        "pages/userInfo/index"
       ]
     }
   ],
