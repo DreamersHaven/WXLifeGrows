@@ -67,8 +67,19 @@ Page({
   showDiscResult: function (e) {
     util.showDiscResult(e)
   },
-
-
+  /**
+   * 页面加载
+   */
+  onLoad: function (options) {
+    this.setData({
+      searchPageNum: 1,   //第一次加载，设置1
+      searchSongList: [],  //放置返回数据的数组,设为空
+      isFromSearch: true,  //第一次加载，设置true
+      searchLoading: true,  //把"上拉加载"的变量设为true，显示
+      searchLoadingComplete: false //把“没有数据”设为false，隐藏
+    })
+    this.fetchSearchList();
+  },
   //滚动到底部触发事件
   searchScrollLower: function () {
     let that = this;

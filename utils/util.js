@@ -5,14 +5,16 @@ const app = getApp();
  */
 function getSearchUser(keyword, pageindex, callbackcount, callback) {
   var serverUrl = app.serverUrl;
-   
+
   console.log('分页查询用户信息，当前页码：' + pageindex)
-  
+
   wx.request({
-    url: serverUrl + '/user/queryAllUsers?currentPage=' + pageindex + '&pageSize=' + callbackcount,
+    url: serverUrl + '/user/queryAllUsers?currentPage=' + pageindex + '&pageSize=' + callbackcount + '&username=' + keyword,
     method: 'POST',
-    header: { 'content-Type': 'application/json' },
-    success: function (res) {
+    header: {
+      'content-Type': 'application/json'
+    },
+    success: function(res) {
       if (res.statusCode == 200) {
         callback(res.data);
       }
@@ -20,13 +22,13 @@ function getSearchUser(keyword, pageindex, callbackcount, callback) {
   })
 }
 /**
-* 显示用户最新的DISC测评结果
-* 1、依据用户ID查询DISC测评结果
-* 2、跳转到DISC图形展示页面，显示该用户的DISC测评结果
-*
-*/
-function showDiscResult (e) {
-  
+ * 显示用户最新的DISC测评结果
+ * 1、依据用户ID查询DISC测评结果
+ * 2、跳转到DISC图形展示页面，显示该用户的DISC测评结果
+ *
+ */
+function showDiscResult(e) {
+
   var serverUrl = app.serverUrl;
   var userId = e.target.id;
   wx.showLoading({
@@ -39,7 +41,7 @@ function showDiscResult (e) {
     header: {
       'content-type': 'application/json' // 默认值
     },
-    success: function (res) {
+    success: function(res) {
       console.log(res.data);
       wx.hideLoading();
       if (res.data.status == 200) {
@@ -51,9 +53,9 @@ function showDiscResult (e) {
 
 
 /**
-     * 依据用户的最新DISC测试结果，跳转到查看DISC测试结果的详细页面
-     */
-function goDiscResultPage  (info) {
+ * 依据用户的最新DISC测试结果，跳转到查看DISC测试结果的详细页面
+ */
+function goDiscResultPage(info) {
   var mresult = ''
   var aresult = ''
   var lresult = ''
@@ -70,11 +72,11 @@ function goDiscResultPage  (info) {
       url: '/packageDISC/pages/amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult + '&fromPage=mine&antherUserId=' + antherUserId,
 
     })
-  } else {//如果用户还没有进行DISC测试，提示还未进行DISC测试，是否进行测试
+  } else { //如果用户还没有进行DISC测试，提示还未进行DISC测试，是否进行测试
     wx.showModal({
       title: '提示',
       content: '没有查询到该用户的DISC测评结果，是否重新输入？',
-      success: function (res) {
+      success: function(res) {
         console.log(res)
         if (res.confirm) {
           console.log('用户点击了确定')

@@ -4,7 +4,8 @@
     "pages/userLogin/login",
     "pages/mine/mine",
     "pages/userRegist/regist",
-    "pages/discReport/index"
+    "pages/discReport/index",
+    "pages/about/index"
   ],
   "subPackages": [
     {

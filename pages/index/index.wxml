@@ -24,7 +24,7 @@
 </i-row>
 
     </view>
-    <view class="view.block">
+    <view class="view.block" bindtap="goAboutDISC">
         <image  mode='widthFix'  src="../resource/images/dsp.jpg" style='width=600rpx'></image>
     </view>
     

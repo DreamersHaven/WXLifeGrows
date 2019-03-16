@@ -1,5 +1,6 @@
 const app = getApp();
 
+
 Page({
   data: {
     faceUrl: "../resource/images/noneface.png",
@@ -20,6 +21,7 @@ Page({
   onLoad: function() {
     //app.editTabBar();//添加tabBar数据  
     var me = this;
+    
     var user = app.getGlobalUserInfo();
    
     //如果用户已经登录
@@ -44,6 +46,15 @@ Page({
 
     
   },
+  /**
+   * 跳转到关于DISC测试页面
+   */
+  goAboutDISC: function (res){
+    wx.navigateTo({
+      url: '../about/index',
+    })
+  },
+
   onShareAppMessage: function(res) {
     return {
       title: '超实用的性格测试，你也来试试吧！',

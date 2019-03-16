@@ -1,0 +1,33 @@
+<!--关于DISC测试，显示视频及大体的介绍-->
+<view class="logo">
+    <image src="../resource/images/dsp.jpg" mode="aspectFit"></image>
+</view>
+
+
+<i-panel title="DISC能告诉你什么？">
+    <i-cell-group>
+        <i-cell title="• 你喜欢的思考、做事和决策的方法" ></i-cell>
+        <i-cell title="• 什么东西激励你做事，你的强项和可能有的盲点和你在受压时的行为" ></i-cell>
+        <i-cell title="• DISC 看的是你的喜好与倾向,不是能力" ></i-cell>
+        <i-cell title="• 了解别人的性格特质，增加你的待人相处和沟通能力" ></i-cell>
+    </i-cell-group>
+</i-panel>
+
+<i-panel title="温馨提示">
+    <i-cell-group>
+        <i-cell title="• 没有好与坏，每个人都有自己的特点，了解自已以后更能拥抱自己的个性。" ></i-cell>
+        <i-cell title="• 性格随着时间和经历可能会改变，但是没办法刻意的改变。" ></i-cell>
+        <i-cell title="• 人处理事情的方式是可以选择的，了解自己的个性了以后可以选择更好的处理方式。" ></i-cell>
+        <i-cell title="• 在你身边出现的人都是缘分，能成为知心好友更是难得，了解对方个性可以更好相处，避免不必要的冲突。" ></i-cell>
+    </i-cell-group>
+</i-panel>
+
+<i-panel title="DISC是什么？">
+    <i-cell-group>
+        <i-cell title="• Dominanc 支配： 关于个人对控制，权力和进取的取向" ></i-cell>
+        <i-cell title="• Influence 影响： 关于与人相处与沟通的方法" ></i-cell>
+        <i-cell title="• Steadiness 稳健： 关于个人的耐性、坚持和体贴的特性" ></i-cell>
+        <i-cell title="• Compliance 谨慎： 关于做事时的架构、组织性" ></i-cell>
+    </i-cell-group>
+</i-panel>
+ 
