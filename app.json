@@ -19,8 +19,7 @@
     {
       "root": "packageAdmin",
       "pages": [
-        "pages/admin/index",
-        "pages/userInfo/index"
+        "pages/admin/index" 
       ]
     }
   ],

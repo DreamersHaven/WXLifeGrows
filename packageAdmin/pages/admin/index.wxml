@@ -3,7 +3,7 @@
 <i-row>
   <i-col i-class="color-col" span="12">
     <i-card i-class="color">
-      <view slot="content" class="color-item primary" bindtap='showAllUserInfo'>
+      <view slot="content" class="color-item primary" >
         <view class="color-item-title">{{usersNum}}</view>
         <view class="color-item-content">总用户数</view>
       </view>
@@ -19,32 +19,30 @@
   </i-col>
 
 </i-row>
-<i-panel title="查询某用户的DISC测评报告">
+<i-panel title="查询用户的DISC测评报告">
 </i-panel>
- <form bindsubmit='showUserList'>
-<i-row>
-  <i-col  span="16">
-      
-    <view>
-      
-      <i-input name="username" value="" placeholder="请输入用户名" />
+<view class="search">
+  <view class="search-bar">
+    <view class="search-wrap">
+        <icon type="search" size="16" class="icon-search" />
+        <input type="text" placeholder="请输入搜索内容" class="search-input" name="searchKeyword" bindinput="bindKeywordInput" value="{{searchKeyword}}" />
     </view>
-  </i-col>
-  <i-col   span="8">
-     <!--按钮-->
-    <view>
-      <button class="button.small" form-type='submit'>查询</button>
-    </view>
-  </i-col>
-
-</i-row>
-  </form>
-<view class='comment-toprow' wx:for="{{userlist}}">
-
-<i-card title="{{item.username}}" extra="查看测评报告" thumb="{{item.picId}}" bindtap='showDiscResult' id="{{item.userId}}">
+    <view class="search-cancel" bindtap="keywordSearch">搜索</view>
+  </view>
+  <view class="search-result">
+    <scroll-view scroll-y="true" bindscrolltolower="searchScrollLower">
+      <view class="result-item" wx:for="{{searchSongList}}" wx:key="unique"  data-data="{{item}}" >
+        
+    <i-card title="{{item.username}}" extra="查看测评报告" thumb="{{item.picId}}" bindtap='showDiscResult' id="{{item.userId}}">
 </i-card>
-
+ 
+      </view>
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+    </scroll-view>  
+  </view>
 </view>
+
 
 
 <!--圆形点击框  -->

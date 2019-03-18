@@ -9,7 +9,15 @@ Page({
     userName: '',
     usersNum:0,
     testsNum:0,
-    userlist:[]
+    userlist:[],
+
+    searchKeyword: '',  //需要搜索的字符
+    searchSongList: [], //放置返回数据的数组
+    isFromSearch: true,   // 用于判断searchSongList数组是不是空数组，默认true，空的数组
+    searchPageNum: 1,   // 设置加载的第几次，默认是第一次
+    callbackcount: 15,      //返回数据的个数
+    searchLoading: false, //"上拉加载"的变量，默认false，隐藏
+    searchLoadingComplete: false  //“没有数据”的变量，默认false，隐藏
 
   },
 
@@ -18,6 +26,16 @@ Page({
    */
   onLoad: function (options) {
     var me=this
+    
+    me.setData({
+      searchPageNum: 1,   //第一次加载，设置1
+      searchSongList: [],  //放置返回数据的数组,设为空
+      isFromSearch: true,  //第一次加载，设置true
+      searchLoading: true,  //把"上拉加载"的变量设为true，显示
+      searchLoadingComplete: false //把“没有数据”设为false，隐藏
+    })
+    me.fetchSearchList();
+    
     var user = app.getGlobalUserInfo();
     var userId = user.userId;
     var serverUrl = app.serverUrl;
@@ -56,6 +74,8 @@ Page({
         }
       }
     })
+
+ 
   },
 
   /**
@@ -162,15 +182,7 @@ Page({
       }
     })
   },
-  /**
-   * 管理员用户，可以查看所有的用户信息
-   */
-  showAllUserInfo: function(e) {
-    wx.navigateTo({
-    
-      url: '../../pages/userInfo/index',
-    })
-  },
+
   /**
    * 显示用户最新的DISC测评结果
    * 1、依据用户ID查询DISC测评结果
@@ -179,5 +191,71 @@ Page({
    */
   showDiscResult: function (e) {
    util.showDiscResult(e)
+  },
+
+  //输入框事件，每输入一个字符，就会触发一次
+  bindKeywordInput: function (e) {
+    console.log("输入框事件")
+    this.setData({
+      searchKeyword: e.detail.value
+    })
+  },
+  //搜索，访问网络
+  fetchSearchList: function () {
+    let that = this;
+    let searchKeyword = that.data.searchKeyword,//输入框字符串作为参数
+      searchPageNum = that.data.searchPageNum,//把第几次加载次数作为参数
+      callbackcount = that.data.callbackcount; //返回数据的个数
+    //访问网络
+    util.getSearchUser(searchKeyword, searchPageNum, callbackcount, function (data) {
+      console.log("分页查询所用用户信息：")
+      console.log(data)
+      //判断是否有数据，有则取数据
+      if (data.data.length != 0) {
+        let searchList = [];
+        //如果isFromSearch是true从data中取出数据，否则先从原来的数据继续添加
+        that.data.isFromSearch ? searchList = data.data : searchList = that.data.searchSongList.concat(data.data)
+        that.setData({
+          searchSongList: searchList, //获取数据数组
+          searchLoading: true   //把"上拉加载"的变量设为false，显示
+        });
+
+      }
+
+
+      //如果取出的数据长度小于设定的数据长度，把“没有数据”显示，把“上拉加载”隐藏
+      //没有数据了，把“没有数据”显示，把“上拉加载”隐藏
+      if (data.data.length < callbackcount) {
+        that.setData({
+          searchLoadingComplete: true, //把“没有数据”设为true，显示
+          searchLoading: false  //把"上拉加载"的变量设为false，隐藏
+        });
+
+      }
+
+    })
+  },
+  //点击搜索按钮，触发事件
+  keywordSearch: function (e) {
+    this.setData({
+      searchPageNum: 1,   //第一次加载，设置1
+      searchSongList: [],  //放置返回数据的数组,设为空
+      isFromSearch: true,  //第一次加载，设置true
+      searchLoading: true,  //把"上拉加载"的变量设为true，显示
+      searchLoadingComplete: false //把“没有数据”设为false，隐藏
+    })
+    this.fetchSearchList();
+  },
+
+  //滚动到底部触发事件
+  searchScrollLower: function () {
+    let that = this;
+    if (that.data.searchLoading && !that.data.searchLoadingComplete) {
+      that.setData({
+        searchPageNum: that.data.searchPageNum + 1,  //每次触发上拉事件，把searchPageNum+1
+        isFromSearch: false  //触发到上拉事件，把isFromSearch设为为false
+      });
+      that.fetchSearchList();
+    }
   }
 })
