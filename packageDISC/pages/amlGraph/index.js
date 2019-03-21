@@ -23,7 +23,7 @@ Page({
     y: 0,
     hidden: true,
     windowWidth: 0,
-    windowHeight: 0,
+    windowHeight: 500,
     pixelRatio: 0,
     bgWIDTH: 311,
     bgHEIGHT: 483,
@@ -1403,18 +1403,18 @@ Page({
    */
   onLoad: function(options) {
     var that = this
-    wx.getSystemInfo({
-      success: function(res) {
-        that.setData({
-          // windowWidth: res.windowWidth,
-          windowWidth: that.data.bgWIDTH,
-          //windowHeight: res.windowHeight,
-          windowHeight: that.data.bgHEIGHT,
-          pixelRatio: res.pixelRatio
-        })
+    // wx.getSystemInfo({
+    //   success: function(res) {
+    //     that.setData({
+    //       // windowWidth: res.windowWidth,
+    //       windowWidth: that.data.bgWIDTH,
+    //       //windowHeight: res.windowHeight,
+    //       windowHeight: that.data.bgHEIGHT,
+    //       pixelRatio: res.pixelRatio
+    //     })
 
-      },
-    })
+    //   },
+    // })
 
     console.log("开始绘制DISC测试结果图，用户的DISC数据为：" + options.A)
 

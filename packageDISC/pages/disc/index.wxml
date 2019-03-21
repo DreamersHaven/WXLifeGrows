@@ -5,6 +5,7 @@
 
 <view class="topic-text"><text>*每道选择题，您仅能够选择一项"最符合"和一项"最不符合"</text></view>
 
+
 <i-page i-class="cell-page-demo" current="{{ current }}" total="{{ topicsNum }}" bind:change="handleChange">
     <view slot="prev">
         <i-icon type="return" color="#5cadff"></i-icon>
