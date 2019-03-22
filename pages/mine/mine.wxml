@@ -1,6 +1,6 @@
 
 <view class='comment-toprow'>
-<i-card title="{{nickname}}" extra="查看详细" thumb="{{faceUrl}}" bindtap=''>
+<i-card title="{{nickname}}" extra="" thumb="{{faceUrl}}" bindtap=''>
   
 </i-card>
 
