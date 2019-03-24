@@ -19,7 +19,12 @@
 </i-tabs>
 </view>
 
+
+ 
+<view>
  <text class="caption-title">{{discType}}{{cname}}</text>
+
+
 
 <view class="caption-wrap" wx:if="{{isQuerySuss}}">
   
@@ -58,3 +63,9 @@
     </i-collapse-item>
   </i-collapse>
 </view>
+</view>
+
+
+
+
+

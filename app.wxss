@@ -14,6 +14,12 @@
   box-sizing: border-box;
 } 
 
+
+
+
+
+
+
 .comment-title {
 	/*border: 1px solid black;*/
 	display: flex;
@@ -127,6 +133,7 @@
 }
 
 .caption-title{
+  
   font-weight: bold;
   padding:20px 10px;
 }

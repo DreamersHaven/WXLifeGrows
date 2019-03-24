@@ -5,7 +5,8 @@
     "pages/mine/mine",
     "pages/userRegist/regist",
     "pages/discReport/index",
-    "pages/about/index"
+    "pages/about/index",
+    "pages/simpleReport/index"
   ],
   "subPackages": [
     {
@@ -19,7 +20,7 @@
     {
       "root": "packageAdmin",
       "pages": [
-        "pages/admin/index" 
+        "pages/admin/index"
       ]
     }
   ],

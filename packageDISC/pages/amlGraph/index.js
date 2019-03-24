@@ -1,8 +1,10 @@
+
 const app = getApp()
 Page({
   data: {
     current: '',
     currentTab: 'isMGraph',
+    tab:0,
     //用于控制页面中保存按钮的状态
     isNoSave: true,
     //用于判断是否为管理员查看某个用户的历史测评报告信息
@@ -27,6 +29,8 @@ Page({
     pixelRatio: 0,
     bgWIDTH: 311,
     bgHEIGHT: 483,
+    /**设置绘制线条的宽度 */
+    canvasLineWidth:1.5,
 
 
     D: {
@@ -1452,15 +1456,18 @@ Page({
       antherUserId:antherUserId
     })
 
-    this.getMGraph('myCanvas')
+    this.getMGraph('myCanvasSelfM')
 
     //记录自我形象的DISC坐标值，用于生成测评报告
     that.data.yvalueM = that.data.D.y / 2 + "," + that.data.I.y + "," + that.data.S.y + "," + that.data.C.y
-
+    this.getAGraph('myCanvasSelfA')
+    this.getLGraph('myCanvasSelfL')
+    
     if (that.data.pageStyle == 'shareMeReport' || that.data.pageStyle == 'onlyPic') {
+      this.getMGraph('myCanvas')
       this.getAGraph('myCanvasA')
       this.getLGraph('myCanvasL')
-    }
+     }
 
 
 
@@ -1485,6 +1492,7 @@ Page({
   getLGraph: function(canvasName) {
     const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
+    ctx.setLineWidth(this.data.canvasLineWidth)
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
 
     var d = 0
@@ -1582,6 +1590,7 @@ Page({
   getMGraph: function(canvasName) {
     const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
+    ctx.setLineWidth(this.data.canvasLineWidth)
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
 
     var d = 0
@@ -1680,6 +1689,7 @@ Page({
   getAGraph: function(canvasName) {
     const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
+    ctx.setLineWidth(this.data.canvasLineWidth)
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
 
     var d = 0
@@ -1815,15 +1825,44 @@ Page({
   tabshandleChange({
     detail
   }) {
-    this.setData({
-      currentTab: detail.key
-    });
+    var tab=0;
     if (detail.key == "isAGraph") {
-      this.getAGraph('myCanvas')
+      //this.getAGraph('myCanvas')
+      tab=1;
     } else if (detail.key == "isMGraph") {
-      this.getMGraph('myCanvas')
+      tab = 0;
+      //this.getMGraph('myCanvas')
     } else if (detail.key == "isLGraph") {
-      this.getLGraph('myCanvas')
+      //this.getLGraph('myCanvas')
+      tab = 2;
+    }
+
+    this.setData({
+      currentTab: detail.key,
+      tab: tab
+    });
+  },
+
+  tab_slide: function (e) {//滑动切换tab 
+    if (e.detail.source == 'touch') {
+    var that = this;
+
+    var currentTab = e.detail.current;
+    var currentTabKey=''
+    
+    if (currentTab == 0) {
+      currentTabKey = "isMGraph"
+    } else if (currentTab == 1) {
+      currentTabKey ="isAGraph"
+    } else if (currentTab == 2) {
+      currentTabKey = "isLGraph"
+    }
+    
+    
+    this.setData({
+      currentTab: currentTabKey,
+      tab: currentTab
+    });
     }
   },
   handleChange({detail}) {
@@ -1863,13 +1902,14 @@ Page({
    */
   toggleRightShareModle() {
     if (this.data.showRighShareModle) {
-      this.getMGraph("myCanvas")
+      this.getMGraph("myCanvasSelfM")
 
 
     }
     this.setData({
       showRighShareModle: !this.data.showRighShareModle,
-      currentTab: 'isMGraph'
+      currentTab: 'isMGraph',
+      tab:0
     });
   },
 

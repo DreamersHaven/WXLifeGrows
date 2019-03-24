@@ -6,7 +6,9 @@ Page({
     faceUrl: "",
     isMe: true,
     //判断用户是否为管理员用户
-    isAdmin:false
+    isAdmin:false,
+    //查看用户最新测评结果所跳转的不同的页面
+    discUrl:'/packageDISC/pages/amlGraph/index'
 
   },
 
@@ -188,6 +190,15 @@ Page({
       url: '/packageAdmin/pages/admin/index',
     })
   },
+
+  /**
+ * 显示统计查询页面
+ */
+  showSimpleResult: function () {
+    wx.redirectTo({
+      url: '/pages/simpleReport/index',
+    })
+  },
   /**
    * 依据用户的最新DISC测试结果，跳转到查看DISC测试结果的详细页面
    */
@@ -195,14 +206,18 @@ Page({
     var mresult = ''
     var aresult = ''
     var lresult = ''
+    var discType=''
     if (info != undefined) {
       mresult = info.mresult
       lresult = info.lresult
       aresult = info.aresult
+      discType = info.discType
+
+      var url = this.data.discUrl + '?M=' + mresult + '&L=' + lresult + '&A=' + aresult + '&fromPage=mine&discType=' + discType
 
       // 页面跳转
       wx.redirectTo({
-        url: '/packageDISC/pages/amlGraph/index?M=' + mresult + '&L=' + lresult + '&A=' + aresult + '&fromPage=mine',
+        url: url ,
 
       })
     } else {//如果用户还没有进行DISC测试，提示还未进行DISC测试，是否进行测试
@@ -232,8 +247,14 @@ Page({
    * 3、将该用户最新的DISC测评结果加入缓存，注意在保存新报告的时候，
    *    该缓存信息需要被清除，从新获取数据
    */
-  showDiscResult: function () {
+  showDiscResult: function (e) {
+
     var me = this
+    /**依据请求控件来源不同，跳转到不同的页面 */
+    var targetId = e.currentTarget.id;
+    if (targetId != undefined && targetId =='simpleReport'){
+      this.data.discUrl ='/pages/simpleReport/index'
+    }
     var user = app.getGlobalUserInfo();
     var serverUrl = app.serverUrl;
 
@@ -267,17 +288,5 @@ Page({
       }
     })
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 })

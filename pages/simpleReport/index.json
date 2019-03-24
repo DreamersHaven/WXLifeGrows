@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "独特的你",
+  "usingComponents": {
+    "ec-canvas": "../../ec-canvas/ec-canvas",
+    "i-icon": "../../dist/icon/index"
+  }
+}
+

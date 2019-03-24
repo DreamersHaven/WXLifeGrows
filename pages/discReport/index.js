@@ -1,4 +1,5 @@
 // packageDISC/pages/discReport/index.js
+ 
 const app = getApp();
 Page({
 
@@ -22,8 +23,13 @@ Page({
     aresult: "",
     pageStyle: 'picAndReport',
     //是否通过他人分享，进入的小程序页面
-    isShareOthers: false
+    isShareOthers: false,
+    
   },
+
+
+ 
+
   /**
    * 设置页面值
    */

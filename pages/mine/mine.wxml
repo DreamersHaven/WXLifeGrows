@@ -1,13 +1,12 @@
-
 <view class='comment-toprow'>
-<i-card title="{{nickname}}" extra="" thumb="{{faceUrl}}" bindtap=''>
+<i-card title="{{nickname}}" extra="Who am I?" thumb="{{faceUrl}}" bindtap='showDiscResult' id="simpleReport">
   
 </i-card>
 
 </view>
 
 <i-panel i-class="cell-panel-demo">
-  <i-cell title="DISC测评结果" is-link bindtap='showDiscResult'>
+  <i-cell title="DISC测评结果(详细解读)" is-link id="detailedReport" bindtap='showDiscResult'>
     <i-icon type="activity_fill" slot="icon" />
   </i-cell>
 

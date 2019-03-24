@@ -1,0 +1,21 @@
+
+
+<view class="container">
+  <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}" bind:init="echartInit"></ec-canvas>
+</view>
+<view style='height:250px'>
+</view>
+{{discText}}
+ <!--按钮-->
+            <view>
+                <button class='button.bluebutton'  hover-class="hover.bluebutton" bindtap="goDiscPage">详细解读</button>
+            </view>
+
+            <view>
+                <button class="button.yellowbutton" hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
+            </view>
+
+            <!--圆形点击框  -->
+<view class="round-click" bindtap="goBack">
+  <i-icon type="undo" slot="icon" size='40' color="#f8f8f9" />
+</view>

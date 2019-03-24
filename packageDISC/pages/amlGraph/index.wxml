@@ -72,10 +72,11 @@
 
 <view wx:if="{{pageStyle=='shareMeReport'||pageStyle=='onlyPic'}}">
   <text class='collapse-item-title'>自我形象图</text>
-</view>
-<view class='view.canvas' wx:if="{{showRighShareModle==false}}">
+   <view class='view.canvas' wx:if="{{showRighShareModle==false}}">
   <canvas canvas-id="myCanvas" style="width:100%;height:{{windowHeight}}px;" />
 </view>
+</view>
+
 
 <view wx:if="{{pageStyle=='shareMeReport'||pageStyle=='onlyPic'}}">
   <text class='collapse-item-title'>外在形象图</text>
@@ -83,5 +84,24 @@
   <text class='collapse-item-title'>受压图</text>
   <canvas canvas-id="myCanvasL" style="width:100%;height:{{windowHeight}}px;" />
 </view>
+
+
+
+ <swiper current="{{tab}}" class="swiper-box" duration="300" style="height:500px" bindchange="tab_slide"  wx:if="{{pageStyle=='meReport'}}">
+    <swiper-item>
+   <view class='view.canvas' wx:if="{{showRighShareModle==false}}">
+  <canvas canvas-id="myCanvasSelfM" style="width:100%;height:{{windowHeight}}px;" />
+</view>
+    </swiper-item>
+ 
+    <swiper-item>
+     <canvas canvas-id="myCanvasSelfA" style="width:100%;height:{{windowHeight}}px;" />
+    </swiper-item>
+     <swiper-item>
+     <canvas canvas-id="myCanvasSelfL" style="width:100%;height:{{windowHeight}}px;" />
+    </swiper-item>
+
+  </swiper>
+
 
  
