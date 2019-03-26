@@ -3,14 +3,20 @@
 <view class="container">
   <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}" bind:init="echartInit"></ec-canvas>
 </view>
-<view style='height:250px'>
+<view style='height:300px'>
 </view>
+<view class="center-item-title">
 {{discText}}
+</view>
+
+
+
  <!--按钮-->
+            <!-->
             <view>
                 <button class='button.bluebutton'  hover-class="hover.bluebutton" bindtap="goDiscPage">详细解读</button>
             </view>
-
+-->
             <view>
                 <button class="button.yellowbutton" hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
             </view>

@@ -24,10 +24,17 @@
 </i-row>
 
     </view>
+   
     <view class="view.block" bindtap="goAboutDISC">
         <image  mode='widthFix'  src="../resource/images/dsp.jpg" style='width=600rpx'></image>
+        
     </view>
-    
+      <view class="invite">
+    <i-notice-bar  loop speed="800" backgroundcolor="#f8f8f9" color="#495060">
+        Hi!欢迎来到DISC测评~DISC通过测试帮助人们评估和认识自己，进而改善行为方式。点击上图可查看更多介绍~
+    </i-notice-bar>
+    </view>
+   
 
             <!--按钮-->
             <view>

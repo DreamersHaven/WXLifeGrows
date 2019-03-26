@@ -15,7 +15,7 @@ function initChart(canvas, width, height,d,i,s,c) {
     series: [{
       label: {
         normal: {
-          fontSize: 14,
+          fontSize: 20,
           formatter: '{d}% \n {b}'
 
         }
@@ -55,7 +55,7 @@ function initChart(canvas, width, height,d,i,s,c) {
 Page({
   onShareAppMessage: function (res) {
     return {
-      title: '刚测出我是天生的领袖、活泼的团队活动组织者，你也测测吧',
+      title: this.data.titleText,
       path: '/pages/index/index',
       success: function () { },
       fail: function () { }
@@ -68,6 +68,7 @@ Page({
     cvalue: 0,
     discType:"",
     discText:'',
+    titleText:'',
     discText: [
       {
         key: 'C',
@@ -117,11 +118,13 @@ Page({
     var discTypes = params.discType.split("")
     var discTexts=me.data.discText
     var discText = '你是' + params.discType+'主导的'
+    var titleText = '刚测出我是'
     for (var i = 0, len = discTypes.length; i < len; i++) {
       var type = discTypes[i]
       for (var j = 0, len = discTexts.length; j < len; j++) {
         if (type == discTexts[j].key){
           discText = discText + discTexts[j].text+";"
+          titleText = titleText + discTexts[j].text + ";"
           break
         }
       }
@@ -130,7 +133,8 @@ Page({
     console.log("用户主导类型描述：" + discText)
 
     me.setData({
-      discText: discText
+      discText: discText,
+      titleText: titleText+"你也试试吧~"
     });
 
   }

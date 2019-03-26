@@ -47,7 +47,7 @@
 
 /* border-radius: 98rpx;是控制按钮边变圆 */
 .button.yellowbutton {
-  margin-top: 30px;
+  margin-top: 20px;
   width: 40%;
   background-color: rgb(252, 126, 67);
   color: white;
@@ -63,7 +63,7 @@
 
 /* border-radius: 98rpx;是控制按钮边变圆 */
 .button.bluebutton {
-  margin-top: 30px;
+  margin-top: 20px;
   width: 40%;
   background-color:#2d8cf0;
   color: white;
@@ -144,8 +144,42 @@
   font-weight: bold;
 }
 
+.center-item-title{
+  font-size: 14px;
+  color: #737373;
+  font-weight: bold;
+  text-align: center;
+}
+
 .collapse-item-content{
   font-size: 14px;
   color: #444444;
+}
+
+.invite {
+  /* display: none; */
+  width: 70%;
+  font-size: 25rpx;
+  height: 80rpx;
+  line-height: 50rpx;
+  padding-left: 20rpx;
+  position: relative;
+  margin: 1rpx auto 0 120rpx;
+  background-color: #f8f8f9;
+  border: 1px solid #dddee1;
+  border-radius: 5px;
+  
+}
+.invite:after {
+  content: '';
+  width: 20rpx;
+  height: 20rpx;
+  position: absolute;
+  top: -11rpx;
+  left: 20rpx;
+  transform: rotate(45deg);
+  background-color: #f8f8f9;
+  border: 1px #dddee1;
+  border-style: solid none none solid ;
 }
  

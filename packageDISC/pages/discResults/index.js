@@ -202,6 +202,8 @@ Page({
           //更新本地缓存信息
           that.setData({
             list: list, //将表中查询出来的信息传给list
+            toggle: that.data.toggle ? false : true
+            
           })
           wx.setStorageSync(key, list)
           //清除缓存的最新测评结果

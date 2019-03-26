@@ -1,6 +1,7 @@
 // pages/disc/disc.js
 //const app = getApp();
 const { $Toast } = require('../../../dist/base/index');
+const { $Message } = require('../../../dist/base/index');
  
 Page({
 
@@ -1033,7 +1034,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    $Message({
+      content: '当你回答问题时，请想象你是身处于平常工作生活中的某一场景。根据第一直觉诚实回答即可~准备好了吗？开始吧~',
+      duration: 8
+    });
   },
 
   /**
