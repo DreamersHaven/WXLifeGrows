@@ -8,7 +8,9 @@ Page({
     //判断用户是否为管理员用户
     isAdmin:false,
     //查看用户最新测评结果所跳转的不同的页面
-    discUrl:'/packageDISC/pages/amlGraph/index'
+    discUrl:'/packageDISC/pages/amlGraph/index',
+    //判断是否为超级管理员
+    isSYSAdmin:false
 
   },
 
@@ -30,6 +32,12 @@ Page({
     if (user.deptId != null && user.deptId == '1' && user.deptId != undefined) {
       isAdmin = true;
     }
+
+   var isSYSAdmin=false
+    if (user.wxId != null && user.wxId == 'oWs2o5WAv1v9LrnWjwWzKbO2PggY' && user.wxId != undefined) {
+      isSYSAdmin = true;
+    }
+
     me.setData({
       userId: userId,
       faceUrl: faceUrl,
@@ -37,7 +45,8 @@ Page({
       isMe: isMe,
       //publisherId: publisherId,
       serverUrl: app.serverUrl,
-      isAdmin: isAdmin
+      isAdmin: isAdmin,
+      isSYSAdmin: isSYSAdmin
     });
   },
 
@@ -192,7 +201,15 @@ Page({
   },
 
   /**
- * 显示统计查询页面
+   * 显示系统设置页面
+   */
+  showSysSetUp: function() {
+    wx.redirectTo({
+      url: '/packageAdmin/pages/syssetup/index',
+    })
+  },
+  /**
+ * 显示Who am I 页面
  */
   showSimpleResult: function () {
     wx.redirectTo({

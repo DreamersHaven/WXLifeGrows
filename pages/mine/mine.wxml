@@ -19,8 +19,12 @@
     <i-icon type="search"  slot="icon" />
   </i-cell>
 
+  <i-cell title="管理设置" is-link wx:if="{{isSYSAdmin}}" bindtap='showSysSetUp'>
+    <i-icon type="setup"  slot="icon" />
+  </i-cell>
+
   <i-cell title="退出登录" bindtap='logout'>
-    <i-icon type="setup_fill" slot="icon" />
+    <i-icon type="addressbook_fill" slot="icon" />
   </i-cell>
 
 

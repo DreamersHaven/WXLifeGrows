@@ -1,0 +1,35 @@
+<i-cell-group>
+    
+    <i-cell title="收费设置">
+        <i-switch value="{{switch1}}" size="large" bind:change="onChange" slot="footer">
+            <view slot="open">开启</view>
+            <view slot="close">关闭</view>
+        </i-switch>
+    </i-cell>
+    <i-cell title="转发分享后，允许查看详细测试报告">
+        <i-switch value="{{switch1}}" bind:change="onChange" size="large" slot="footer">
+            <view slot="open">开启</view>
+            <view slot="close">关闭</view>
+        </i-switch>
+    </i-cell>
+
+   
+
+</i-cell-group>
+
+<i-row>
+    
+    <i-col span="12" i-class="col-class">
+       <button class='but.noborder' bindtap="goWxAlipay">
+    <i-icon type="interactive" size="28" color="#19be6b"  />
+    <view>支付接口测试</view>
+    
+    </button>
+     </i-col>
+    <i-col span="12" i-class="col-class"> 
+      
+     
+    
+    </i-col>
+    
+</i-row>

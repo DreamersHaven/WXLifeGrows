@@ -20,7 +20,8 @@
     {
       "root": "packageAdmin",
       "pages": [
-        "pages/admin/index"
+        "pages/admin/index",
+        "pages/syssetup/index"
       ]
     }
   ],
