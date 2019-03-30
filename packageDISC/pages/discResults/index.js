@@ -1,4 +1,5 @@
 // packageDISC/pages/discResults/index.js
+var util = require('../../../utils/util.js')
 const app = getApp();
 
 Page({
@@ -45,36 +46,27 @@ Page({
       title: '用户【' + userId + '】的历史测评结果加载中，请稍后...',
     });
     // 调用后端
-    wx.request({
-      url: serverUrl + '/queryDiscHistoryResult?userId=' + userId,
-      method: "POST",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.data.status == 200) {
-          console.info("该用户[" + userId + "]的历史测评报告已经从数据库加载到本地缓存")
-          me.setData({
-            list: res.data.data, //将表中查询出来的信息传给list
-          })
-          wx.setStorageSync(key, res.data.data)
+    var data = {
+    }
+    var url = serverUrl + '/queryDiscHistoryResult?userId=' + userId
 
-        } else if (res.data.status == 502) {
-          wx.showToast({
-            title: res.data.msg,
-            duration: 3000,
-            icon: "none",
-            success: function () {
-              wx.redirectTo({
-                url: '../../index/index',
-              })
-            }
-          })
-        }
-      }
+    util.post(url, data).then((res) => {
+      console.log(res.data);
+      wx.hideLoading();
+      console.info("该用户[" + userId + "]的历史测评报告已经从数据库加载到本地缓存")
+      me.setData({
+        list: res.data.data, //将表中查询出来的信息传给list
+      })
+      wx.setStorageSync(key, res.data.data)
+    }).catch((errMsg) => {
+      // 失败弹出框
+      wx.showToast({
+        title: errMsg,
+        icon: 'none',
+        duration: 3000
+      })
     })
+
   },
 
   /**
@@ -174,62 +166,51 @@ Page({
     var user = app.getGlobalUserInfo();
     var userId = user.userId
     var key = "reportList_" + userId
+    //调用后端
+    var data = {
+       
+    }
+    var url = serverUrl + '/delDiscHistoryResult?id=' + delIds[1]
 
-    wx.request({
-      url: serverUrl + '/delDiscHistoryResult?id=' + delIds[1],
-      method: "POST",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        if (res.data.status == 200) {
+    util.post(url, data).then((res) => {
+      wx.showToast({
+        title: "删除操作执行成功！",
+        icon: 'none',
+        duration: 3000
+      })
+      console.info("该用户[" + userId + "]的历史测评报告【" + delIds[1] + "】已经从数据库删除")
 
-          wx.showToast({
-            title: "删除操作执行成功！",
-            icon: 'none',
-            duration: 3000
-          })
-          console.info("该用户[" + userId + "]的历史测评报告【" + delIds[1] + "】已经从数据库删除")
-
-          var list = that.data.list
-          //依据数组对象唯一标识ID，定位到List相关信息
-          for (var i = 0, len = list.length; i < len; i++) {
-            if (delIds[1] == list[i].id) {
-              list.splice(i, 1)
-              break
-            }
-          }
-          //更新本地缓存信息
-          that.setData({
-            list: list, //将表中查询出来的信息传给list
-            toggle: that.data.toggle ? false : true
-            
-          })
-          wx.setStorageSync(key, list)
-          //清除缓存的最新测评结果
-          var newkey = "newDiscResult_" + userId
-          wx.removeStorageSync(newkey)
-          //如果最后一条测评报告也被删除，跳转到主页
-          if (list.length == 0) {
-            wx.redirectTo({
-              url: '../../../index/index',
-            })
-          }
-
-
-        } else if (res.data.status == 502) {
-          wx.showToast({
-            title: res.data.msg,
-            duration: 3000,
-            icon: "none",
-            success: function () {
-              wx.redirectTo({
-                url: '../../../index/index',
-              })
-            }
-          })
+      var list = that.data.list
+      //依据数组对象唯一标识ID，定位到List相关信息
+      for (var i = 0, len = list.length; i < len; i++) {
+        if (delIds[1] == list[i].id) {
+          list.splice(i, 1)
+          break
         }
       }
+      //更新本地缓存信息
+      that.setData({
+        list: list, //将表中查询出来的信息传给list
+        toggle: that.data.toggle ? false : true
+
+      })
+      wx.setStorageSync(key, list)
+      //清除缓存的最新测评结果
+      var newkey = "newDiscResult_" + userId
+      wx.removeStorageSync(newkey)
+      //如果最后一条测评报告也被删除，跳转到主页
+      if (list.length == 0) {
+        wx.redirectTo({
+          url: '/pages/index/index',
+        })
+      }
+    }).catch((errMsg) => {
+      // 失败弹出框
+      wx.showToast({
+        title: errMsg,
+        icon: 'none',
+        duration: 3000
+      })
     })
   },
 

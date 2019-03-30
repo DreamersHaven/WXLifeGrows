@@ -1,5 +1,5 @@
 // packageDISC/pages/discReport/index.js
- 
+var util = require('../../utils/util.js')
 const app = getApp();
 Page({
 
@@ -24,17 +24,17 @@ Page({
     pageStyle: 'picAndReport',
     //是否通过他人分享，进入的小程序页面
     isShareOthers: false,
-    
+
   },
 
 
- 
+
 
   /**
    * 设置页面值
    */
   setreportInfo: function (options, reportInfo) {
-    var me=this
+    var me = this
     var yvalue = options.yvalue
     var mresult = options.mresult
     var lresult = options.lresult
@@ -106,47 +106,36 @@ Page({
       me.setreportInfo(options, info)
       return
     }
- 
+
     wx.showLoading({
       title: '报告生成中，请稍后...',
     });
     var serverUrl = app.serverUrl;
     // 调用后端
-    wx.request({
-      url: serverUrl + '/disc/querydisctype',
-      method: "POST",
-      data: {
-        yvalue: yvalue,
-        mresult: mresult
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.data.status == 200) {
-          var reportInfo = res.data.data;
-          //将从数据库获取的内容信息，设置到本地缓存中
-          console.log("从数据中获取数据，并缓存到本地")
-          me.setreportInfo(options, reportInfo)
+    var data = {
+      yvalue: yvalue,
+      mresult: mresult
+    }
+    var url = serverUrl + '/disc/querydisctype'
 
-          wx.setStorageSync(key, reportInfo)
-        } else if (res.data.status == 502) {
-          wx.showToast({
-            title: res.data.msg,
-            duration: 3000,
-            icon: "none",
-            success: function () {
-              wx.redirectTo({
-                url: '../../index/index',
-              })
-            }
-          })
-        }
-      }
+    util.post(url, data).then((res) => {
+      console.log(res.data);
+      wx.hideLoading();
+
+      var reportInfo = res.data.data;
+      //将从数据库获取的内容信息，设置到本地缓存中
+      console.log("从数据中获取数据，并缓存到本地")
+      me.setreportInfo(options, reportInfo)
+
+      wx.setStorageSync(key, reportInfo)
+    }).catch((errMsg) => {
+      // 失败弹出框
+      wx.showToast({
+        title: errMsg,
+        icon: 'none',
+        duration: 3000
+      })
     })
-
   },
 
   /**

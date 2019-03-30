@@ -1,16 +1,17 @@
 
 const app = getApp()
+var util = require('../../utils/util.js')
 
 Page({
   data: {
     faceUrl: "",
     isMe: true,
     //判断用户是否为管理员用户
-    isAdmin:false,
+    isAdmin: false,
     //查看用户最新测评结果所跳转的不同的页面
-    discUrl:'/packageDISC/pages/amlGraph/index',
+    discUrl: '/packageDISC/pages/amlGraph/index',
     //判断是否为超级管理员
-    isSYSAdmin:false
+    isSYSAdmin: false
 
   },
 
@@ -28,12 +29,12 @@ Page({
       faceUrl = user.picId;
     }
     //用户所属部门若为1（管理部），即为管理员身份
-    var isAdmin=false
+    var isAdmin = false
     if (user.deptId != null && user.deptId == '1' && user.deptId != undefined) {
       isAdmin = true;
     }
 
-   var isSYSAdmin=false
+    var isSYSAdmin = false
     if (user.wxId != null && user.wxId == 'oWs2o5WAv1v9LrnWjwWzKbO2PggY' && user.wxId != undefined) {
       isSYSAdmin = true;
     }
@@ -91,32 +92,31 @@ Page({
       title: '请等待...',
     });
     // 调用后端
-    wx.request({
-      url: serverUrl + '/logout?userId=' + user.userId,
-      method: "POST",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.data.status == 200) {
-          // 登录成功跳转 
-          wx.showToast({
-            title: '注销成功',
-            icon: 'success',
-            duration: 2000
-          });
-          // app.userInfo = null;
-          // 注销以后，清空缓存
-          wx.removeStorageSync("userInfo")
-          // 页面跳转
-          wx.redirectTo({
-            url: '../index/index',
-          })
-        }
-      }
+    var data = {
+
+    }
+    var url = serverUrl + '/logout?userId=' + user.userId
+    util.post(url, data).then((res) => {
+      console.log(res.data);
+      wx.hideLoading();
+      // 登录成功跳转 
+      wx.showToast({
+        title: '注销成功',
+        icon: 'success',
+        duration: 2000
+      });
+
+      // 注销以后，清空缓存
+      wx.removeStorageSync("userInfo")
+      // 页面跳转
+      wx.redirectTo({
+        url: '../index/index',
+      })
+    }).catch((errMsg) => {
+      console.log(errMsg)
     })
+
+
   },
 
   changeFace: function () {
@@ -194,7 +194,7 @@ Page({
   /**
    * 显示统计查询页面
    */
-  showAdminResult:function(){
+  showAdminResult: function () {
     wx.redirectTo({
       url: '/packageAdmin/pages/admin/index',
     })
@@ -203,11 +203,11 @@ Page({
   /**
    * 显示系统设置页面
    */
-  showSysSetUp: function() {
+  showSysSetUp: function () {
     wx.navigateTo({
       url: '/packageAdmin/pages/syssetup/index',
     })
-   
+
   },
   /**
  * 显示Who am I 页面
@@ -224,7 +224,7 @@ Page({
     var mresult = ''
     var aresult = ''
     var lresult = ''
-    var discType=''
+    var discType = ''
     if (info != undefined) {
       mresult = info.mresult
       lresult = info.lresult
@@ -235,7 +235,7 @@ Page({
 
       // 页面跳转
       wx.redirectTo({
-        url: url ,
+        url: url,
 
       })
     } else {//如果用户还没有进行DISC测试，提示还未进行DISC测试，是否进行测试
@@ -270,8 +270,8 @@ Page({
     var me = this
     /**依据请求控件来源不同，跳转到不同的页面 */
     var targetId = e.currentTarget.id;
-    if (targetId != undefined && targetId =='simpleReport'){
-      this.data.discUrl ='/pages/simpleReport/index'
+    if (targetId != undefined && targetId == 'simpleReport') {
+      this.data.discUrl = '/pages/simpleReport/index'
     }
     var user = app.getGlobalUserInfo();
     var serverUrl = app.serverUrl;
@@ -286,25 +286,22 @@ Page({
     wx.showLoading({
       title: '请等待...',
     });
+    
     // 调用后端
-    wx.request({
-      url: serverUrl + '/queryDiscResult?userId=' + user.userId,
-      method: "POST",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.data.status == 200) {
-          me.goDiscResultPage(res.data.data)
-          if (res.data.data != undefined) {
-            console.log('从服务器中获取该用户最新的DISC测评结果，并缓存到本地')
-            wx.setStorageSync(key, res.data.data)
-          }
-        }
+    var data = {
+
+    }
+    var url = serverUrl + '/queryDiscResult?userId=' + user.userId
+    util.post(url, data).then((res) => {
+      console.log(res.data);
+      wx.hideLoading();
+      me.goDiscResultPage(res.data.data)
+      if (res.data.data != undefined) {
+        console.log('从服务器中获取该用户最新的DISC测评结果，并缓存到本地')
+        wx.setStorageSync(key, res.data.data)
       }
+    }).catch((errMsg) => {
+      console.log(errMsg)
     })
   }
-
 })

@@ -202,8 +202,10 @@ Page({
     let searchKeyword = that.data.searchKeyword, //输入框字符串作为参数
       searchPageNum = that.data.searchPageNum, //把第几次加载次数作为参数
       callbackcount = that.data.callbackcount; //返回数据的个数
+    var serverUrl = app.serverUrl;
+    var url = serverUrl + '/user/queryAllUsers'
     //访问网络
-    util.getSearchUser(searchKeyword, searchPageNum, callbackcount, function (data) {
+    util.getSearchUser(url,searchKeyword, searchPageNum, callbackcount, function (data) {
       console.log("分页查询所用用户信息：")
       console.log(data)
       //判断是否有数据，有则取数据

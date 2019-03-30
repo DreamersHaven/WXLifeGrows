@@ -1,4 +1,5 @@
 const app = getApp()
+var util = require('../../../utils/util.js')
 Page({
   data: {
     current: '',
@@ -1406,18 +1407,7 @@ Page({
    */
   onLoad: function(options) {
     var that = this
-    // wx.getSystemInfo({
-    //   success: function(res) {
-    //     that.setData({
-    //       // windowWidth: res.windowWidth,
-    //       windowWidth: that.data.bgWIDTH,
-    //       //windowHeight: res.windowHeight,
-    //       windowHeight: that.data.bgHEIGHT,
-    //       pixelRatio: res.pixelRatio
-    //     })
 
-    //   },
-    // })
 
     console.log("开始绘制DISC测试结果图，用户的DISC数据为：" + options.A)
 
@@ -2045,50 +2035,44 @@ Page({
     wx.showLoading({
       title: '请等待...',
     });
-    wx.request({
-      url: serverUrl + '/saveDiscResult',
-      method: "POST",
-      data: {
-        userId: userId,
-        username: username,
-        mresult: this.data.discM,
-        lresult: this.data.discL,
-        aresult: this.data.discA,
-        discType: this.data.discType,
-        yvalue: this.data.yvalueM
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function(res) {
-        console.log(res.data);
-        wx.hideLoading();
-        var status = res.data.status;
-        if (status == 200) {
-          wx.showToast({
-            title: "DISC结果保存成功，可以在【个人中心】查看测试结果",
-            icon: 'none',
-            duration: 3000
-          })
-          that.setData({
-            isNoSave: false
 
-          })
-          //此次要清空已经缓存的用户测评历史结果、以及最新的DISC测评结果
-          var key = "reportList_" + userId
-          wx.removeStorageSync(key)
-          var keyDiscResult = "newDiscResult_" + userId
-          wx.removeStorageSync(keyDiscResult)
+    //调用后端
+    var data= {
+      userId: userId,
+      username: username,
+      mresult: this.data.discM,
+      lresult: this.data.discL,
+      aresult: this.data.discA,
+      discType: this.data.discType,
+      yvalue: this.data.yvalueM
+  }
+    var url = serverUrl + '/saveDiscResult'
+    util.post(url, data).then((res) => {
+      console.log(res.data);
+      wx.hideLoading();
+      wx.showToast({
+        title: "DISC结果保存成功，可以在【个人中心】查看测试结果",
+        icon: 'none',
+        duration: 3000
+      })
+      that.setData({
+        isNoSave: false
 
-        } else if (status == 500) {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none',
-            duration: 3000
-          })
-        }
-      }
+      })
+      //此次要清空已经缓存的用户测评历史结果、以及最新的DISC测评结果
+      var key = "reportList_" + userId
+      wx.removeStorageSync(key)
+      var keyDiscResult = "newDiscResult_" + userId
+      wx.removeStorageSync(keyDiscResult)
+
+    }).catch((errMsg) => {
+      wx.showToast({
+        title: errMsg,
+        icon: 'none',
+        duration: 3000
+      })
     })
+
   }
 
 })

@@ -3,23 +3,18 @@ const app = getApp();
 /**
  * 获取后台数据
  */
-function getSearchUser(keyword, pageindex, callbackcount, callback) {
-  var serverUrl = app.serverUrl;
-
+function getSearchUser(url,keyword, pageindex, callbackcount, callback) {
+   
   console.log('分页查询用户信息，当前页码：' + pageindex)
-
-  wx.request({
-    url: serverUrl + '/user/queryAllUsers?currentPage=' + pageindex + '&pageSize=' + callbackcount + '&username=' + keyword,
-    method: 'POST',
-    header: {
-      'content-Type': 'application/json'
-    },
-    success: function(res) {
-      if (res.statusCode == 200) {
-        callback(res.data);
-      }
-    }
-  })
+  var data = {
+    
+  }
+  url = url + '?currentPage=' + pageindex + '&pageSize=' + callbackcount + '&username=' + keyword
+  this.post(url, data).then((res) => {
+    callback(res.data);
+  }).catch((errMsg) => {
+    console.log(errMsg)
+  }) 
 }
 /**
  * 显示用户最新的DISC测评结果
@@ -34,22 +29,17 @@ function showDiscResult(e) {
     title: '请等待...',
   });
   // 调用后端
-  
-
-  wx.request({
-    url: serverUrl + '/queryDiscResult?userId=' + userId,
-    method: "POST",
-    header: {
-      'content-type': 'application/json' // 默认值
-    },
-    success: function(res) {
-      console.log(res.data);
-      wx.hideLoading();
-      if (res.data.status == 200) {
-        goDiscResultPage(res.data.data)
-      }
-    }
-  })
+  var data = {
+    
+  }
+  var url = serverUrl + '/queryDiscResult?userId=' + userId
+  this.post(url, data).then((res) => {
+    console.log(res.data);
+    wx.hideLoading();
+    goDiscResultPage(res.data.data)
+  }).catch((errMsg) => {
+    console.log(errMsg)
+  }) 
 }
 
 
@@ -130,10 +120,10 @@ const post = (url, data) => {
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {//服务器返回数据
-        if (res.statusCode == 200) {
+        if (res.data.status == 200) {
           resolve(res);
         } else {//返回错误提示信息
-          reject(res.data);
+          reject(res.data.msg);
         }
       },
       error: function (e) {

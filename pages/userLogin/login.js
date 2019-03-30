@@ -1,4 +1,5 @@
 const app = getApp()
+var util = require('../../utils/util.js')
 
 Page({
   data: {
@@ -37,53 +38,46 @@ Page({
         title: '请等待...',
       });
       // 调用后端
-      wx.request({
-        url: serverUrl + '/login',
-        method: "POST",
-        data: {
-          username: username,
-          password: password
-        },
-        header: {
-          'content-type': 'application/json' // 默认值
-        },
-        success: function (res) {
-          console.log(res.data);
-          wx.hideLoading();
-          if (res.data.status == 200) {
-            // 登录成功跳转 
-            wx.showToast({
-              title: '登录成功',
-              icon: 'success',
-              duration: 2000
-            });
-            // app.userInfo = res.data.data;
-            // fixme 修改原有的全局对象为本地缓存
-            app.setGlobalUserInfo(res.data.data);
-            // 页面跳转
+      // 调用后端
+      var data = {
+        username: username,
+        password: password
+      }
+      var url = serverUrl + '/login'
+      util.post(url, data).then((res) => {
+        console.log(res.data);
+        wx.hideLoading();
+        // 登录成功跳转 
+        wx.showToast({
+          title: '登录成功',
+          icon: 'success',
+          duration: 2000
+        });
+        
+        app.setGlobalUserInfo(res.data.data);
+        // 页面跳转
 
-            var redirectUrl = me.redirectUrl;
-            if (redirectUrl != null && redirectUrl != undefined && redirectUrl != '') {
-              wx.redirectTo({
-                url: redirectUrl,
-              })
-            } else {
-              wx.redirectTo({
-                //要跳转的页面是动态设置的
-                url: '../index/index',
-              })
-            }
-            
-          } else if (res.data.status == 500) {
-            // 失败弹出框
-            wx.showToast({
-              title: res.data.msg,
-              icon: 'none',
-              duration: 3000
-            })
-          }
+        var redirectUrl = me.redirectUrl;
+        if (redirectUrl != null && redirectUrl != undefined && redirectUrl != '') {
+          wx.redirectTo({
+            url: redirectUrl,
+          })
+        } else {
+          wx.redirectTo({
+            //要跳转的页面是动态设置的
+            url: '../index/index',
+          })
         }
+      }).catch((errMsg) => {
+        // 失败弹出框
+        wx.showToast({
+          title: errMsg,
+          icon: 'none',
+          duration: 3000
+        })
       })
+
+      
     }
   },
 
@@ -106,41 +100,45 @@ Page({
       wx.login({
         success: function (res) {
           if (res.code) {
-            wx.request({
-              url: serverUrl + '/wxlogin',
-              method: "POST",
-              data: {
-                code: res.code,
-                nickName: info.detail.userInfo.nickName,
-                city: info.detail.userInfo.city,
-                province: info.detail.userInfo.province,
-                avatarUrl: info.detail.userInfo.avatarUrl
-              },
-              header: {
-                'content-type': 'application/json' // 默认值
-              },
-              success: function (res) {
-                // 登录成功跳转 
-                wx.showToast({
-                  title: '微信授权登录成功',
-                  icon: 'success',
-                  duration: 2000
-                });
-                app.setGlobalUserInfo(res.data.data);
+            //调用后台
+            var data= {
+              code: res.code,
+              nickName: info.detail.userInfo.nickName,
+              city: info.detail.userInfo.city,
+              province: info.detail.userInfo.province,
+              avatarUrl: info.detail.userInfo.avatarUrl
+            }
+            var url = serverUrl + '/wxlogin'
+            util.post(url, data).then((res) => {
+              // 登录成功跳转 
+              wx.showToast({
+                title: '微信授权登录成功',
+                icon: 'success',
+                duration: 2000
+              });
+              app.setGlobalUserInfo(res.data.data);
 
-                var redirectUrl = me.redirectUrl;
-                if (redirectUrl != null && redirectUrl != undefined && redirectUrl != '') {
-                  wx.redirectTo({
-                    url: redirectUrl,
-                  })
-                } else {
-                  wx.redirectTo({
-                    //要跳转的页面是动态设置的
-                    url: '../index/index',
-                  })
-                }
+              var redirectUrl = me.redirectUrl;
+              if (redirectUrl != null && redirectUrl != undefined && redirectUrl != '') {
+                wx.redirectTo({
+                  url: redirectUrl,
+                })
+              } else {
+                wx.redirectTo({
+                  //要跳转的页面是动态设置的
+                  url: '../index/index',
+                })
               }
+            }).catch((errMsg) => {
+              // 失败弹出框
+              wx.showToast({
+                title: '授权失败',
+                icon: 'none',
+                duration: 3000
+              })
             })
+
+
           } else {
             console.log("授权失败");
           }
