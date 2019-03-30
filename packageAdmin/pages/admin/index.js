@@ -7,17 +7,17 @@ Page({
    */
   data: {
     userName: '',
-    usersNum:0,
-    testsNum:0,
-    userlist:[],
+    usersNum: 0,
+    testsNum: 0,
+    userlist: [],
 
-    searchKeyword: '',  //需要搜索的字符
+    searchKeyword: '', //需要搜索的字符
     searchSongList: [], //放置返回数据的数组
-    isFromSearch: true,   // 用于判断searchSongList数组是不是空数组，默认true，空的数组
-    searchPageNum: 1,   // 设置加载的第几次，默认是第一次
-    callbackcount: 15,      //返回数据的个数
+    isFromSearch: true, // 用于判断searchSongList数组是不是空数组，默认true，空的数组
+    searchPageNum: 1, // 设置加载的第几次，默认是第一次
+    callbackcount: 15, //返回数据的个数
     searchLoading: false, //"上拉加载"的变量，默认false，隐藏
-    searchLoadingComplete: false  //“没有数据”的变量，默认false，隐藏
+    searchLoadingComplete: false //“没有数据”的变量，默认false，隐藏
 
   },
 
@@ -25,17 +25,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var me=this
-    
+    var me = this
+
     me.setData({
-      searchPageNum: 1,   //第一次加载，设置1
-      searchSongList: [],  //放置返回数据的数组,设为空
-      isFromSearch: true,  //第一次加载，设置true
-      searchLoading: true,  //把"上拉加载"的变量设为true，显示
+      searchPageNum: 1, //第一次加载，设置1
+      searchSongList: [], //放置返回数据的数组,设为空
+      isFromSearch: true, //第一次加载，设置true
+      searchLoading: true, //把"上拉加载"的变量设为true，显示
       searchLoadingComplete: false //把“没有数据”设为false，隐藏
     })
     me.fetchSearchList();
-    
+
     var user = app.getGlobalUserInfo();
     var userId = user.userId;
     var serverUrl = app.serverUrl;
@@ -43,39 +43,29 @@ Page({
       title: '正在获取统计信息，请稍后...',
     });
     // 调用后端
-    wx.request({
-      url: serverUrl + '/statDisc?userId=' + userId,
-      method: "POST",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.data.status == 200) {
-          console.info("管理员用户从服务器获取相关统计信息")
-          me.setData({
-            usersNum: res.data.data.usersNum,
-            testsNum: res.data.data.testsNum
-          })
-          
-
-        } else if (res.data.status == 502) {
-          wx.showToast({
-            title: res.data.msg,
-            duration: 3000,
-            icon: "none",
-            success: function () {
-              wx.redirectTo({
-                url: '/pages/index/index',
-              })
-            }
+    var data = {
+      userId: userId
+    }
+    var url = serverUrl + '/statDisc'
+    util.post(url, data).then((res) => {
+      wx.hideLoading();
+      console.info("管理员用户从服务器获取相关统计信息")
+      me.setData({
+        usersNum: res.data.data.usersNum,
+        testsNum: res.data.data.testsNum
+      })
+    }).catch((errMsg) => {
+      wx.showToast({
+        title: errMsg,
+        duration: 3000,
+        icon: "none",
+        success: function () {
+          wx.redirectTo({
+            url: '/pages/index/index',
           })
         }
-      }
+      })
     })
-
- 
   },
 
   /**
@@ -126,17 +116,17 @@ Page({
   onShareAppMessage: function () {
 
   },
-  goBack:function(){
+  goBack: function () {
     wx.redirectTo({
       url: '/pages/mine/mine',
     })
   },
-  
-  
+
+
   /**
    * 依据查询条件显示用户信息
    */
-  showUserList:function(e){
+  showUserList: function (e) {
     var me = this
     var serverUrl = app.serverUrl;
     var formObject = e.detail.value;
@@ -145,41 +135,47 @@ Page({
     wx.showLoading({
       title: '请等待...',
     });
+
     // 调用后端
-    wx.request({
-      url: serverUrl + '/user/queryUsers?username=' + userId,
-      method: "POST",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.data.status == 200) {
-          //userlist
-          if (res.data.data==null){
-            wx.showModal({
-              title: '提示',
-              content: '没有查询到该用户是否重新输入？',
-              success: function (res) {
-                console.log(res)
-                if (res.confirm) {
-                  console.log('用户点击了确定')
+    var data = {
+      username: userId
+    }
+    var url = serverUrl + '/queryUsers'
+    util.post(url, data).then((res) => {
+      wx.hideLoading();
+      //userlist
+      if (res.data.data == null) {
+        wx.showModal({
+          title: '提示',
+          content: '没有查询到该用户是否重新输入？',
+          success: function (res) {
+            console.log(res)
+            if (res.confirm) {
+              console.log('用户点击了确定')
 
-                } else {
+            } else {
 
-                  console.log('用户点击了取消')
-                }
-              }
-            })
+              console.log('用户点击了取消')
+            }
           }
-
-          me.setData({
-            userlist: res.data.data
-          })
-          
-        }
+        })
       }
+
+      me.setData({
+        userlist: res.data.data
+      })
+
+    }).catch((errMsg) => {
+      wx.showToast({
+        title: errMsg,
+        duration: 3000,
+        icon: "none",
+        success: function () {
+          wx.redirectTo({
+            url: '/pages/index/index',
+          })
+        }
+      })
     })
   },
 
@@ -190,7 +186,7 @@ Page({
    *
    */
   showDiscResult: function (e) {
-   util.showDiscResult(e)
+    util.showDiscResult(e)
   },
 
   //输入框事件，每输入一个字符，就会触发一次
@@ -203,8 +199,8 @@ Page({
   //搜索，访问网络
   fetchSearchList: function () {
     let that = this;
-    let searchKeyword = that.data.searchKeyword,//输入框字符串作为参数
-      searchPageNum = that.data.searchPageNum,//把第几次加载次数作为参数
+    let searchKeyword = that.data.searchKeyword, //输入框字符串作为参数
+      searchPageNum = that.data.searchPageNum, //把第几次加载次数作为参数
       callbackcount = that.data.callbackcount; //返回数据的个数
     //访问网络
     util.getSearchUser(searchKeyword, searchPageNum, callbackcount, function (data) {
@@ -217,7 +213,7 @@ Page({
         that.data.isFromSearch ? searchList = data.data : searchList = that.data.searchSongList.concat(data.data)
         that.setData({
           searchSongList: searchList, //获取数据数组
-          searchLoading: true   //把"上拉加载"的变量设为false，显示
+          searchLoading: true //把"上拉加载"的变量设为false，显示
         });
 
       }
@@ -228,7 +224,7 @@ Page({
       if (data.data.length < callbackcount) {
         that.setData({
           searchLoadingComplete: true, //把“没有数据”设为true，显示
-          searchLoading: false  //把"上拉加载"的变量设为false，隐藏
+          searchLoading: false //把"上拉加载"的变量设为false，隐藏
         });
 
       }
@@ -238,10 +234,10 @@ Page({
   //点击搜索按钮，触发事件
   keywordSearch: function (e) {
     this.setData({
-      searchPageNum: 1,   //第一次加载，设置1
-      searchSongList: [],  //放置返回数据的数组,设为空
-      isFromSearch: true,  //第一次加载，设置true
-      searchLoading: true,  //把"上拉加载"的变量设为true，显示
+      searchPageNum: 1, //第一次加载，设置1
+      searchSongList: [], //放置返回数据的数组,设为空
+      isFromSearch: true, //第一次加载，设置true
+      searchLoading: true, //把"上拉加载"的变量设为true，显示
       searchLoadingComplete: false //把“没有数据”设为false，隐藏
     })
     this.fetchSearchList();
@@ -252,8 +248,8 @@ Page({
     let that = this;
     if (that.data.searchLoading && !that.data.searchLoadingComplete) {
       that.setData({
-        searchPageNum: that.data.searchPageNum + 1,  //每次触发上拉事件，把searchPageNum+1
-        isFromSearch: false  //触发到上拉事件，把isFromSearch设为为false
+        searchPageNum: that.data.searchPageNum + 1, //每次触发上拉事件，把searchPageNum+1
+        isFromSearch: false //触发到上拉事件，把isFromSearch设为为false
       });
       that.fetchSearchList();
     }

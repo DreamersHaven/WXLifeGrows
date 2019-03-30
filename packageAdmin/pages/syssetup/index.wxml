@@ -1,20 +1,12 @@
 <i-cell-group>
-    
-    <i-cell title="收费设置">
-        <i-switch value="{{switch1}}" size="large" bind:change="onChange" slot="footer">
+    <view class="" wx:for="{{list}}">
+    <i-cell title="{{item.keyname}}">
+        <i-switch value="{{item.isopen}}" id="{{item.keyvalue}}" size="large" bind:change="onChange" slot="footer">
             <view slot="open">开启</view>
             <view slot="close">关闭</view>
         </i-switch>
     </i-cell>
-    <i-cell title="转发分享后，允许查看详细测试报告">
-        <i-switch value="{{switch1}}" bind:change="onChange" size="large" slot="footer">
-            <view slot="open">开启</view>
-            <view slot="close">关闭</view>
-        </i-switch>
-    </i-cell>
-
-   
-
+    </view>
 </i-cell-group>
 
 <i-row>

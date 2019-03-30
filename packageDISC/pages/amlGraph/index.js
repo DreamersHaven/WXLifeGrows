@@ -1,14 +1,13 @@
-
 const app = getApp()
 Page({
   data: {
     current: '',
     currentTab: 'isMGraph',
-    tab:0,
+    tab: 0,
     //用于控制页面中保存按钮的状态
     isNoSave: true,
     //用于判断是否为管理员查看某个用户的历史测评报告信息
-    antherUserId:'',
+    antherUserId: '',
     discA: '',
     discM: '',
     discL: '',
@@ -30,7 +29,7 @@ Page({
     bgWIDTH: 311,
     bgHEIGHT: 483,
     /**设置绘制线条的宽度 */
-    canvasLineWidth:1.5,
+    canvasLineWidth: 1.5,
 
 
     D: {
@@ -1432,7 +1431,7 @@ Page({
     }
 
     //判断是否为管理员用户查询其他用户的测评结果
-    var antherUserId=''
+    var antherUserId = ''
     if (options.antherUserId != null && options.antherUserId != '' && options.antherUserId != undefined) {
       antherUserId = options.antherUserId
     }
@@ -1453,7 +1452,7 @@ Page({
       isNoSave: isNoSave,
       pageStyle: pageStyle,
       isShareOthers: isShareOthers,
-      antherUserId:antherUserId
+      antherUserId: antherUserId
     })
 
     this.getMGraph('myCanvasSelfM')
@@ -1462,12 +1461,12 @@ Page({
     that.data.yvalueM = that.data.D.y / 2 + "," + that.data.I.y + "," + that.data.S.y + "," + that.data.C.y
     this.getAGraph('myCanvasSelfA')
     this.getLGraph('myCanvasSelfL')
-    
+
     if (that.data.pageStyle == 'shareMeReport' || that.data.pageStyle == 'onlyPic') {
       this.getMGraph('myCanvas')
       this.getAGraph('myCanvasA')
       this.getLGraph('myCanvasL')
-     }
+    }
 
 
 
@@ -1825,10 +1824,10 @@ Page({
   tabshandleChange({
     detail
   }) {
-    var tab=0;
+    var tab = 0;
     if (detail.key == "isAGraph") {
       //this.getAGraph('myCanvas')
-      tab=1;
+      tab = 1;
     } else if (detail.key == "isMGraph") {
       tab = 0;
       //this.getMGraph('myCanvas')
@@ -1843,29 +1842,31 @@ Page({
     });
   },
 
-  tab_slide: function (e) {//滑动切换tab 
+  tab_slide: function(e) { //滑动切换tab 
     if (e.detail.source == 'touch') {
-    var that = this;
+      var that = this;
 
-    var currentTab = e.detail.current;
-    var currentTabKey=''
-    
-    if (currentTab == 0) {
-      currentTabKey = "isMGraph"
-    } else if (currentTab == 1) {
-      currentTabKey ="isAGraph"
-    } else if (currentTab == 2) {
-      currentTabKey = "isLGraph"
-    }
-    
-    
-    this.setData({
-      currentTab: currentTabKey,
-      tab: currentTab
-    });
+      var currentTab = e.detail.current;
+      var currentTabKey = ''
+
+      if (currentTab == 0) {
+        currentTabKey = "isMGraph"
+      } else if (currentTab == 1) {
+        currentTabKey = "isAGraph"
+      } else if (currentTab == 2) {
+        currentTabKey = "isLGraph"
+      }
+
+
+      this.setData({
+        currentTab: currentTabKey,
+        tab: currentTab
+      });
     }
   },
-  handleChange({detail}) {
+  handleChange({
+    detail
+  }) {
 
     if (detail.key == "homepage") {
       this.goHomePage()
@@ -1881,10 +1882,14 @@ Page({
       this.toggleRightShareModle()
     } else if (detail.key == "scan") {
       this.goDiscPage()
-    } else if (detail.key == "browse"){
+    } else if (detail.key == "browse") {
       this.getDiscHistoryResult()
-    } else if (detail.key == "back"){
+    } else if (detail.key == "back") {
       this.goBack()
+    } else if (detail.key == "more") {
+      wx.navigateTo({
+        url: '/packageDISC/pages/moreFun/index',
+      })
     }
 
     this.setData({
@@ -1909,7 +1914,7 @@ Page({
     this.setData({
       showRighShareModle: !this.data.showRighShareModle,
       currentTab: 'isMGraph',
-      tab:0
+      tab: 0
     });
   },
 
@@ -1948,10 +1953,10 @@ Page({
   /**
    * 返回按钮，依据页面参数，返回到不同页面
    */
-  goBack:function(){
+  goBack: function() {
     //如果是管理员查看某个用户的测试报告，返回到管理员操作页面
     var antherUserId = this.data.antherUserId
-    if (antherUserId!=null){
+    if (antherUserId != null) {
       wx.redirectTo({
         url: '/packageAdmin/pages/admin/index',
       })
@@ -1959,20 +1964,20 @@ Page({
     }
     //如果是用户查看自己的测试报告，返回到个人中心
     var isQueryResults = this.data.isQueryResults
-    if (isQueryResults!=null){
+    if (isQueryResults != null) {
 
     }
 
   },
   /**
-    * 查看历史测评报告
-    * 分为两种类型（1、自己查看自己的历史测评报告；2、管理员查看某用户的测评报告）
-    * 
-    */
-  getDiscHistoryResult: function () {
+   * 查看历史测评报告
+   * 分为两种类型（1、自己查看自己的历史测评报告；2、管理员查看某用户的测评报告）
+   * 
+   */
+  getDiscHistoryResult: function() {
     var that = this
-    var condition=""
-    if(that.data.antherUserId!=''){
+    var condition = ""
+    if (that.data.antherUserId != '') {
       condition = "?antherUserId=" + that.data.antherUserId
     }
     wx.navigateTo({

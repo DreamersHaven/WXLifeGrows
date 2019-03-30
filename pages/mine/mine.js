@@ -204,9 +204,10 @@ Page({
    * 显示系统设置页面
    */
   showSysSetUp: function() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/packageAdmin/pages/syssetup/index',
     })
+   
   },
   /**
  * 显示Who am I 页面
