@@ -1445,20 +1445,22 @@ Page({
       antherUserId: antherUserId
     })
 
-    this.getMGraph('myCanvasSelfM')
-
-    //记录自我形象的DISC坐标值，用于生成测评报告
-    that.data.yvalueM = that.data.D.y / 2 + "," + that.data.I.y + "," + that.data.S.y + "," + that.data.C.y
-    this.getAGraph('myCanvasSelfA')
-    this.getLGraph('myCanvasSelfL')
-
     if (that.data.pageStyle == 'shareMeReport' || that.data.pageStyle == 'onlyPic') {
       this.getMGraph('myCanvas')
+      //记录自我形象的DISC坐标值，用于生成测评报告
+      that.data.yvalueM = that.data.D.y / 2 + "," + that.data.I.y + "," + that.data.S.y + "," + that.data.C.y
       this.getAGraph('myCanvasA')
       this.getLGraph('myCanvasL')
+
+    } else {
+      this.getMGraph('myCanvasSelfM')
+      //记录自我形象的DISC坐标值，用于生成测评报告
+      that.data.yvalueM = that.data.D.y / 2 + "," + that.data.I.y + "," + that.data.S.y + "," + that.data.C.y
+      this.getAGraph('myCanvasSelfA')
+      this.getLGraph('myCanvasSelfL')
+      //绘制对比图
+      this.getMALGraph('myCanvasSelfMAL')
     }
-
-
 
     console.log("自我形象的DISC值为：" + that.data.discM)
     console.log("自我形象的Y坐标轴值为：" + that.data.yvalueM)
@@ -1475,25 +1477,60 @@ Page({
   },
 
   /**
-   * 通过最不符合的DISC结果，绘制受压形象的DISC图
-   * 
+   * 绘制三图对比图，不同颜色，三条线绘制在同一个画布之上
    */
-  getLGraph: function(canvasName) {
+  getMALGraph: function(canvasName) {
     const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
     ctx.setLineWidth(this.data.canvasLineWidth)
     ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
-
+    
     var d = 0
     var i = 0
     var s = 0
     var c = 0
-
+    
+    ctx.beginPath()
+    ctx.setStrokeStyle('#19be6b')
     var discTemp = this.data.discL.split(",")
     d = discTemp[0]
     i = discTemp[1]
     s = discTemp[2]
     c = discTemp[3]
+    this.drawLine_L(ctx, d, i, s, c)
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.setStrokeStyle('#ed3f14') 
+    var discTemp = this.data.discM.split(",")
+    d = discTemp[0]
+    i = discTemp[1]
+    s = discTemp[2]
+    c = discTemp[3]
+    this.drawLine_M(ctx, d, i, s, c)
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.setStrokeStyle('#2d8cf0') 
+    var discTemp = this.data.discA.split(",")
+    d = discTemp[0]
+    i = discTemp[1]
+    s = discTemp[2]
+    c = discTemp[3]
+    this.drawLine_A(ctx, d, i, s, c)
+    ctx.stroke()
+    
+    ctx.draw()
+
+
+
+
+  },
+  /**
+   * 画最不符合DISC结果的线条
+     参数为画布对象、受压情况下的DISC值
+   */
+  drawLine_L: function(ctx, d, i, s, c) {
     if (d == 0) this.data.D = this.data.COORDS_L['D28']
     if (d == 1) this.data.D = this.data.COORDS_L['D28']
     if (d == 2) this.data.D = this.data.COORDS_L['D27']
@@ -1567,16 +1604,12 @@ Page({
     ctx.lineTo(this.data.I.x / 2, this.data.I.y / 2)
     ctx.lineTo(this.data.S.x / 2, this.data.S.y / 2)
     ctx.lineTo(this.data.C.x / 2, this.data.C.y / 2)
-    ctx.stroke()
-    ctx.draw()
-
   },
-
   /**
-   * 通过最符合的DISC结果，绘制自我形象的DISC图
+   * 通过最不符合的DISC结果，绘制受压形象的DISC图
    * 
    */
-  getMGraph: function(canvasName) {
+  getLGraph: function(canvasName) {
     const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
     ctx.setLineWidth(this.data.canvasLineWidth)
@@ -1587,11 +1620,21 @@ Page({
     var s = 0
     var c = 0
 
-    var discTemp = this.data.discM.split(",")
+    var discTemp = this.data.discL.split(",")
     d = discTemp[0]
     i = discTemp[1]
     s = discTemp[2]
     c = discTemp[3]
+    this.drawLine_L(ctx, d, i, s, c)
+    ctx.stroke()
+    ctx.draw()
+
+  },
+  /**
+   * 画最最符合DISC结果的线条
+     参数为画布对象、受压情况下的DISC值
+   */
+  drawLine_M: function(ctx, d, i, s, c) {
     //获得D的坐标位置
     if (d == 0) this.data.D = this.data.COORDS_M['D3']
     if (d == 1) this.data.D = this.data.COORDS_M['D5']
@@ -1659,23 +1702,16 @@ Page({
     if (c > 12) this.data.C = this.data.COORDS_M['C28']
 
     //找到坐标点后，判断所属类型，按照y坐标进行由高到底的排序
-
-
     ctx.moveTo(this.data.D.x / 2, this.data.D.y / 2)
     ctx.lineTo(this.data.I.x / 2, this.data.I.y / 2)
     ctx.lineTo(this.data.S.x / 2, this.data.S.y / 2)
     ctx.lineTo(this.data.C.x / 2, this.data.C.y / 2)
-    ctx.stroke()
-    ctx.draw()
-
   },
-
-
-
   /**
-   * 通过A的DISC结果，绘制自我形象DISC图
+   * 通过最符合的DISC结果，绘制自我形象的DISC图
+   * 
    */
-  getAGraph: function(canvasName) {
+  getMGraph: function(canvasName) {
     const ctx = wx.createCanvasContext(canvasName)
     var url = '../resource/bg-sm.jpg'
     ctx.setLineWidth(this.data.canvasLineWidth)
@@ -1686,13 +1722,22 @@ Page({
     var s = 0
     var c = 0
 
-    var discTemp = this.data.discA.split(",")
+    var discTemp = this.data.discM.split(",")
     d = discTemp[0]
     i = discTemp[1]
     s = discTemp[2]
     c = discTemp[3]
+    this.drawLine_M(ctx, d, i, s, c)
+    ctx.stroke()
+    ctx.draw()
 
+  },
 
+  /**
+     * 画自我形象DISC结果的线条
+       参数为画布对象、受压情况下的DISC值
+     */
+  drawLine_A: function(ctx, d, i, s, c) {
     if (d >= 27) this.data.D = this.data.COORDS['D28']
     if (d < 27 && d > 9) this.data.D = this.data.COORDS['D27']
     if (d == 9) this.data.D = this.data.COORDS['D26']
@@ -1796,14 +1841,34 @@ Page({
     if (c == -11) this.data.C = this.data.COORDS['C3']
     if (c < -11 && c > -26) this.data.C = this.data.COORDS['C2']
     if (c <= -26) this.data.C = this.data.COORDS['C1']
-
-
-
-
     ctx.moveTo(this.data.D.x / 2, this.data.D.y / 2)
     ctx.lineTo(this.data.I.x / 2, this.data.I.y / 2)
     ctx.lineTo(this.data.S.x / 2, this.data.S.y / 2)
     ctx.lineTo(this.data.C.x / 2, this.data.C.y / 2)
+  },
+
+  /**
+   * 通过A的DISC结果，绘制自我形象DISC图
+   */
+  getAGraph: function(canvasName) {
+    const ctx = wx.createCanvasContext(canvasName)
+    var url = '../resource/bg-sm.jpg'
+    ctx.setLineWidth(this.data.canvasLineWidth)
+    ctx.drawImage(url, 0, 0, this.data.bgWIDTH, this.data.bgHEIGHT); // 直接使用图片路径
+
+    var d = 0
+    var i = 0
+    var s = 0
+    var c = 0
+
+    var discTemp = this.data.discA.split(",")
+    d = discTemp[0]
+    i = discTemp[1]
+    s = discTemp[2]
+    c = discTemp[3]
+    this.drawLine_A(ctx, d, i, s, c)
+
+
     ctx.stroke()
     ctx.draw()
   },
@@ -1816,14 +1881,17 @@ Page({
   }) {
     var tab = 0;
     if (detail.key == "isAGraph") {
-      //this.getAGraph('myCanvas')
+
       tab = 1;
     } else if (detail.key == "isMGraph") {
       tab = 0;
-      //this.getMGraph('myCanvas')
+
     } else if (detail.key == "isLGraph") {
-      //this.getLGraph('myCanvas')
+
       tab = 2;
+    } else if (detail.key == "isMALGraph") {
+
+      tab = 3;
     }
 
     this.setData({
@@ -1845,6 +1913,8 @@ Page({
         currentTabKey = "isAGraph"
       } else if (currentTab == 2) {
         currentTabKey = "isLGraph"
+      } else if (currentTab == 3) {
+        currentTabKey = "isMALGraph"
       }
 
 
@@ -2037,7 +2107,7 @@ Page({
     });
 
     //调用后端
-    var data= {
+    var data = {
       userId: userId,
       username: username,
       mresult: this.data.discM,
@@ -2045,7 +2115,7 @@ Page({
       aresult: this.data.discA,
       discType: this.data.discType,
       yvalue: this.data.yvalueM
-  }
+    }
     var url = serverUrl + '/saveDiscResult'
     util.post(url, data).then((res) => {
       console.log(res.data);

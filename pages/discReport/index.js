@@ -129,6 +129,8 @@ Page({
 
       wx.setStorageSync(key, reportInfo)
     }).catch((errMsg) => {
+      console.log("获取测试报告信息出错")
+      console.log(errMsg)
       // 失败弹出框
       wx.showToast({
         title: errMsg,

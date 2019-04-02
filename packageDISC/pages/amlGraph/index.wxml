@@ -21,7 +21,7 @@
       <view>测评报告+结果图</view>
     </button>
 
-     <button id='cancel' class='but.noborder' bindtap='toggleRightShareModle'>
+    <button id='cancel' class='but.noborder' bindtap='toggleRightShareModle'>
       <i-icon type="close" size="28" color="#5cadff" />
       <view>取消</view>
     </button>
@@ -40,16 +40,17 @@
 
     <i-tab-bar-item key="share" icon="interactive" current-icon="interactive_fill" title="分享" wx:if="{{antherUserId==''}}"></i-tab-bar-item>
 
-      <i-tab-bar-item key="back" icon="undo"  current-icon="undo" title="返回" wx:if="{{antherUserId!=''}}"></i-tab-bar-item>
-    <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill"  title="查看历史"></i-tab-bar-item>
+    <i-tab-bar-item key="back" icon="undo" current-icon="undo" title="返回" wx:if="{{antherUserId!=''}}"></i-tab-bar-item>
+    <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill" title="查看历史"></i-tab-bar-item>
 
-    <i-tab-bar-item key="more" icon="switch" current-icon="switch"  title="更多"></i-tab-bar-item>
+    <i-tab-bar-item key="more" icon="switch" current-icon="switch" title="更多"></i-tab-bar-item>
   </i-tab-bar>
 
   <i-tabs current="{{ currentTab }}" bindchange="tabshandleChange">
-    <i-tab key="isMGraph" title="自我形象"></i-tab>
+    <i-tab key="isMGraph" title="自我形象" >  </i-tab>
     <i-tab key="isAGraph" title="向外形象"></i-tab>
     <i-tab key="isLGraph" title="受压形象"></i-tab>
+    <i-tab key="isMALGraph" title="三图对比"></i-tab>
   </i-tabs>
 
 </view>
@@ -61,7 +62,7 @@
     <i-tab-bar-item key="scan" icon="dynamic" current-icon="dynamic_fill" title="我要测试"></i-tab-bar-item>
 
   </i-tab-bar>
- 
+
 </view>
 
 <view wx:if="{{pageStyle=='shareMeReport'}}">
@@ -74,9 +75,9 @@
 
 <view wx:if="{{pageStyle=='shareMeReport'||pageStyle=='onlyPic'}}">
   <text class='collapse-item-title'>自我形象图</text>
-   <view class='view.canvas' wx:if="{{showRighShareModle==false}}">
-  <canvas canvas-id="myCanvas" style="width:100%;height:{{windowHeight}}px;" />
-</view>
+  <view class='view.canvas' wx:if="{{showRighShareModle==false}}">
+    <canvas canvas-id="myCanvas" style="width:100%;height:{{windowHeight}}px;" />
+  </view>
 </view>
 
 
@@ -89,21 +90,52 @@
 
 
 
- <swiper current="{{tab}}" class="swiper-box" duration="300" style="height:500px" bindchange="tab_slide"  wx:if="{{pageStyle=='meReport'}}">
-    <swiper-item>
-   <view class='view.canvas' wx:if="{{showRighShareModle==false}}">
-  <canvas canvas-id="myCanvasSelfM" style="width:100%;height:{{windowHeight}}px;" />
-</view>
-    </swiper-item>
- 
-    <swiper-item>
-     <canvas canvas-id="myCanvasSelfA" style="width:100%;height:{{windowHeight}}px;" />
-    </swiper-item>
-     <swiper-item>
-     <canvas canvas-id="myCanvasSelfL" style="width:100%;height:{{windowHeight}}px;" />
-    </swiper-item>
+<swiper current="{{tab}}" class="swiper-box" duration="300" style="height:500px" bindchange="tab_slide" wx:if="{{pageStyle=='meReport'}}">
+  <swiper-item>
+    <view class='view.canvas' wx:if="{{showRighShareModle==false}}">
+      <canvas canvas-id="myCanvasSelfM" style="width:100%;height:{{windowHeight}}px;" />
+    </view>
+  </swiper-item>
 
-  </swiper>
+  <swiper-item>
+    <canvas canvas-id="myCanvasSelfA" style="width:100%;height:{{windowHeight}}px;" />
+  </swiper-item>
+  
+  <swiper-item>
+    <canvas canvas-id="myCanvasSelfL" style="width:100%;height:{{windowHeight}}px;" />
+  </swiper-item>
 
+  <swiper-item>
+  <i-row>
+    <i-col i-class="color-col" span="6">
+        <i-card i-class="color">
+            <view slot="content" class="color-item error">
+                <view class="color-item-title"></view>
+              
+            </view>
+        </i-card>
+    </i-col>
+    <i-col i-class="color-col" span="6">
+        <i-card i-class="color">
+            <view slot="content" class="color-item primary">
+                <view class="color-item-title"></view>
+                
+            </view>
+        </i-card>
+    </i-col>
+    <i-col i-class="color-col" span="6">
+        <i-card i-class="color">
+            <view slot="content" class="color-item success">
+                <view class="color-item-title"></view>
+              
+            </view>
+        </i-card>
+    </i-col>
+    
+    <i-col i-class="color-col" span="6">
+     </i-col>
+</i-row>
+    <canvas canvas-id="myCanvasSelfMAL" style="width:100%;height:{{windowHeight}}px;" />
+  </swiper-item>
 
- 
+</swiper>
