@@ -178,7 +178,14 @@ Page({
       })
     })
   },
-
+  /**
+   * 显示测试结果的详细统计信息
+   */
+  showDetailedStatInfo:function(e){
+    wx.navigateTo({
+      url: '/packageAdmin/pages/stat/index',
+    }) 
+  },
   /**
    * 显示用户最新的DISC测评结果
    * 1、依据用户ID查询DISC测评结果

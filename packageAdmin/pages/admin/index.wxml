@@ -11,7 +11,7 @@
   </i-col>
   <i-col i-class="color-col" span="12">
     <i-card i-class="color">
-      <view slot="content" class="color-item success">
+      <view slot="content" class="color-item success" bindtap="showDetailedStatInfo">
         <view class="color-item-title">{{testsNum}}</view>
         <view class="color-item-content">总测试数</view>
       </view>

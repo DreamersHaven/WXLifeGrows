@@ -22,7 +22,8 @@
       "root": "packageAdmin",
       "pages": [
         "pages/admin/index",
-        "pages/syssetup/index"
+        "pages/syssetup/index",
+        "pages/stat/index"
       ]
     }
   ],
