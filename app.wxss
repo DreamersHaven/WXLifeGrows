@@ -6,19 +6,12 @@
   bottom: 0;
   left: 0;
   right: 0;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
 } 
-
-
-
-
-
-
 
 .comment-title {
 	/*border: 1px solid black;*/

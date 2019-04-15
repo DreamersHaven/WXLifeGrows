@@ -183,7 +183,7 @@ Page({
    */
   showDetailedStatInfo:function(e){
     wx.navigateTo({
-      url: '/packageAdmin/pages/stat/index',
+      url: '/packageAdmin/pages/statbydisctype/index',
     }) 
   },
   /**

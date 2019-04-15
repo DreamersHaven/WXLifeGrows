@@ -88,6 +88,8 @@ Page({
   data: {
     yAxisdata:null,
     seriesdata:null,
+    yAxisdata1: null,
+    seriesdata1: null,
 
     ec: {
       
@@ -97,11 +99,18 @@ Page({
 
     initChart(e.detail.canvas, e.detail.width, e.detail.height,this.data.yAxisdata,this.data.seriesdata);
   },
+
+  echartInit1(e) {
+
+    initChart(e.detail.canvas, e.detail.width, e.detail.height, this.data.yAxisdata1, this.data.seriesdata1);
+  },
   /**页面加载，为柱状图的DISC统计数据赋值 */
   onLoad: function (params) {
     var me=this
     var yAxisdata=[]
     var seriesdata=[]
+    var yAxisdata1 = []
+    var seriesdata1 = []
     //调用后台接口 statNumByDiscType
     var serverUrl = app.serverUrl;
     var user = app.getGlobalUserInfo();
@@ -114,13 +123,21 @@ Page({
       //依据后台的结果生成柱状图的名称和数值列表
       var discTypes = res.data.data
       for (var i = 0, len = discTypes.length; i < len; i++) {
+        if (i<10){
         yAxisdata.push(discTypes[i].discType)
         seriesdata.push(discTypes[i].num)
+        }else{
+          yAxisdata1.push(discTypes[i].discType)
+          seriesdata1.push(discTypes[i].num)
+        }
       }
+ 
 
       me.setData({
         yAxisdata: yAxisdata,
-        seriesdata: seriesdata
+        seriesdata: seriesdata,
+        yAxisdata1: yAxisdata1,
+        seriesdata1: seriesdata1
       })
       
     }).catch((errMsg) => {
@@ -134,9 +151,9 @@ Page({
   },
 
   onReady() {
-    // setTimeout(function () {
-    //   // 获取 chart 实例的方式
-    //   console.log(chart)
-    // }, 500);
+    setTimeout(function () {
+    // 获取 chart 实例的方式
+    console.log(chart)
+    }, 500);
   }
 });

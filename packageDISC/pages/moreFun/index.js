@@ -11,11 +11,11 @@ Page({
   },
   data: {
     charts: [{
-      id: 'bar',
-      name: '柱状图'
+      id: 'parallel',
+      name: '历史对比'
     }, {
       id: 'scatter',
-      name: '散点图'
+      name: '导成PDF'
     }, {
       id: 'pie',
       name: '饼图'
@@ -48,7 +48,7 @@ Page({
       name: '旭日图'
     }, {
       id: 'map',
-      name: '地图'
+        name: '线下自我探索'
     }, {
       id: 'graph',
       name: '关系图'

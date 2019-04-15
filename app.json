@@ -7,6 +7,7 @@
     "pages/discReport/index",
     "pages/about/index",
     "pages/simpleReport/index"
+    
   ],
   "subPackages": [
     {
@@ -15,7 +16,8 @@
         "pages/amlGraph/index",
         "pages/disc/index",
         "pages/discResults/index",
-        "pages/moreFun/index"
+        "pages/moreFun/index",
+        "pages/parallel/index"
       ]
     },
     {
@@ -23,7 +25,8 @@
       "pages": [
         "pages/admin/index",
         "pages/syssetup/index",
-        "pages/stat/index"
+        "pages/stat/index",
+        "pages/statbydisctype/index"
       ]
     }
   ],
