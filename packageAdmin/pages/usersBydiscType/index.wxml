@@ -1,0 +1,12 @@
+
+<i-panel title="[{{discType}}]类型的小伙伴们"></i-panel>
+
+ 
+<view class="panel">
+  <view class="chart-with-img" wx:for="{{list}}" wx:for-item="chart" wx:key="{{chart.userId}}">
+    <image src="{{chart.picId}}" mode="aspectFit"  data-chart="{{chart}}"></image>
+   
+    {{chart.username}}
+  </view>
+ 
+</view>

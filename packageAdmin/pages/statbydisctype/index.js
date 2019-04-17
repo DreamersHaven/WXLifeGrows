@@ -94,5 +94,16 @@ Page({
     this.setData({
       list: newArray.reverse()
     })
+  },
+  /**
+   * 显示某一测试类型下的用户信息
+   */
+  showUserInfoByDiscType:function(e){
+   
+    var discType = e.target.id
+    console.log('显示某一测试类型下的用户信息：' + discType)
+    wx.navigateTo({
+      url: '/packageAdmin/pages/usersBydiscType/index?discType=' + discType,
+    })
   }
 });

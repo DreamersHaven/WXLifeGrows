@@ -48,7 +48,7 @@ Page({
       name: '旭日图'
     }, {
       id: 'map',
-        name: '线下自我探索'
+        name: '线下工作坊'
     }, {
       id: 'graph',
       name: '关系图'

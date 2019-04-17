@@ -2047,20 +2047,26 @@ Page({
   /**
    * 用户点击右上角分享
    * 
+   * 
    */
   onShareAppMessage: function(res) {
 
     var that = this
+    //将分享人的用户ID和用户昵称信息也传递给分享页面
+    //被分享的对象可以收藏该测评报告
+    var user = app.getGlobalUserInfo()
+    var userId = user.userId
+    var username = user.username
     var shareType = "picAndReport"
-    var title = '这是我的DISC性格测评结果，分享给你呦'
-    var path = '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA
+    var title = 'Hi,我是[' + username+'],这是我的DISC性格测评结果，分享给你呦'
+    var path = '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA + '&collectuserId=' + userId
     var imageUrl = '/pages/resource/images/dsp.jpg'
     if (res.from = "button") {
       shareType = res.target.id
       console.log('用户进行分享测试报告的操作:' + shareType)
       //只分享测试结果
       if (shareType == 'onlyPic') {
-        path = '/packageDISC/pages/amlGraph/index?pageStyle=onlyPic&M=' + that.data.discM + '&L=' + that.data.discL + '&A=' + that.data.discA
+        path = '/packageDISC/pages/amlGraph/index?pageStyle=onlyPic&M=' + that.data.discM + '&L=' + that.data.discL + '&A=' + that.data.discA + '&collectuserId=' + userId
       } else {
         path = path + '&pageStyle=' + shareType
       }

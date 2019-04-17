@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我关注的人",
+  "usingComponents": {
+    
+    "i-card": "../../dist/card/index",
+    "i-icon": "../../dist/icon/index"
+  }
+}

@@ -1,6 +1,5 @@
 <view class='comment-toprow'>
 <i-card title="{{nickname}}" extra="Who am I?" thumb="{{faceUrl}}" bindtap='showDiscResult' id="simpleReport">
-  
 </i-card>
 
 </view>
@@ -8,6 +7,10 @@
 <i-panel i-class="cell-panel-demo">
   <i-cell title="DISC测评结果(详细解读)" is-link id="detailedReport" bindtap='showDiscResult'>
     <i-icon type="activity_fill" slot="icon" />
+  </i-cell>
+
+   <i-cell title="关注的人" is-link id="collectList" bindtap='showCollectList'>
+    <i-icon type="collection_fill" slot="icon" />
   </i-cell>
 
   <!--

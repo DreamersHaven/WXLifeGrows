@@ -1,0 +1,6 @@
+<!--pages/collection/index.wxml-->
+<text>pages/collection/index.wxml</text>
+<!--圆形点击框  -->
+<view class="round-click" bindtap="goBack">
+  <i-icon type="undo" slot="icon" size='40' color="#f8f8f9" />
+</view>

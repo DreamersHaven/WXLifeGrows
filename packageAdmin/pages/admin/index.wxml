@@ -33,8 +33,10 @@
     <scroll-view scroll-y="true" bindscrolltolower="searchScrollLower">
       <view class="result-item" wx:for="{{searchSongList}}" wx:key="unique"  data-data="{{item}}" >
         
-    <i-card title="{{item.username}}" extra="查看测评报告" thumb="{{item.picId}}" bindtap='showDiscResult' id="{{item.userId}}">
-</i-card>
+    <i-card title="{{item.username}}"   thumb="{{item.picId}}">
+    <view slot="content" bindtap='showDiscResult' id="{{item.userId}}" >查看测评报告</view>
+    <view slot="footer" bindtap='collect'>+关注</view>
+    </i-card>
  
       </view>
       <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>

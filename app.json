@@ -6,8 +6,8 @@
     "pages/userRegist/regist",
     "pages/discReport/index",
     "pages/about/index",
-    "pages/simpleReport/index"
-    
+    "pages/simpleReport/index",
+    "pages/collection/index"
   ],
   "subPackages": [
     {
@@ -26,7 +26,8 @@
         "pages/admin/index",
         "pages/syssetup/index",
         "pages/stat/index",
-        "pages/statbydisctype/index"
+        "pages/statbydisctype/index",
+        "pages/usersBydiscType/index"
       ]
     }
   ],

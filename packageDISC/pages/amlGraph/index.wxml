@@ -62,6 +62,8 @@
 
     <i-tab-bar-item key="scan" icon="dynamic" current-icon="dynamic_fill" title="我要测试"></i-tab-bar-item>
 
+     <i-tab-bar-item key="collect" icon="collection" current-icon="collection_fill" title="+关注"></i-tab-bar-item>
+     
   </i-tab-bar>
 
 </view>

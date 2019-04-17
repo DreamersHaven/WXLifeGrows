@@ -195,6 +195,13 @@ Page({
   showDiscResult: function (e) {
     util.showDiscResult(e)
   },
+  /**
+   * 关注某用户
+   */
+  collect: function (e) {
+    console.log("关注该用户")
+    
+  },
 
   //输入框事件，每输入一个字符，就会触发一次
   bindKeywordInput: function (e) {

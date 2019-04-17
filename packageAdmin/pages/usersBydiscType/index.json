@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "小伙伴们...",
+  "usingComponents": {
+   
+    "i-panel": "../../../dist/panel/index"
+  }
+}

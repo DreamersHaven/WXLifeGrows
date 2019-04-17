@@ -81,7 +81,15 @@ Page({
 
   },
 
-
+  /**
+   * 显示关注的人列表信息
+   */
+  showCollectList:function(){
+    // 页面跳转
+    wx.redirectTo({
+      url: '../collection/index',
+    })
+  },
 
   logout: function () {
     // var user = app.userInfo;
