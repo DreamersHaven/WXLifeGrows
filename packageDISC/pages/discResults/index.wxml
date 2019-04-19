@@ -15,11 +15,11 @@
 
       <view slot="button" class="i-swipeout-demo-button-group" style="background:#2db7f5;">
 
-        <button class='i-swipeout-demo-button' style="width:60px" open-type='share' id='share_{{item.id}}'>
+        <button class='i-swipeout-demo-button' style="width:60px" open-type='share' id='share_{{item.id}}' disabled='{{isantherUserId}}'>
           <i-icon size="32" type="share_fill"></i-icon>
         </button>
 
-        <button class="i-swipeout-demo-button" style="width:60px" bindtap="delDiscResult" id='del_{{item.id}}'>
+        <button class="i-swipeout-demo-button" style="width:60px" bindtap="delDiscResult" id='del_{{item.id}}' disabled='{{isantherUserId}}'>
           <i-icon size="32" type="delete_fill"></i-icon>
         </button>
       </view>

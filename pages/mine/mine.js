@@ -61,6 +61,8 @@ Page({
     if (user) {
       console.log('从本地缓存中获取用户信息：' + user)
       me.setMineInfo(params, user)
+      //加载用户关注人的列表信息，并加入到缓存
+      
       return
     }
     //如果没有查询到本地用户缓存信息，提示用户session过期，是否重新登录

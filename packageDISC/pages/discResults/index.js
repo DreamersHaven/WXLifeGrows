@@ -12,7 +12,8 @@ Page({
     visible2: false,
     toggle2: false,
     toggle: false,
-    list: [] //将list的数据传到前台wxml页面中 
+    list: [], //将list的数据传到前台wxml页面中
+    isantherUserId:false
   },
 
   /**
@@ -26,9 +27,13 @@ Page({
     //是否为管理员查看其他用户的测评报告
     var antherUserId = ""
     var userId = ''
+    var isantherUserId=false
     if (options.antherUserId != undefined) {
+      //如果是管理员或者查看关注的人的测评报告，页面上不能进行分享和删除操作
+
       antherUserId = options.antherUserId
       userId = antherUserId
+      isantherUserId=true
     }
     if (antherUserId == "") {
       userId = user.userId
@@ -38,6 +43,7 @@ Page({
         console.info("该用户[" + userId + "]的历史测评报告已经缓存，直接从本地缓存中获取数据")
         me.setData({
           list: reportList, //将表中查询出来的信息传给list
+          isantherUserId: isantherUserId
         })
         return
       }
@@ -56,6 +62,7 @@ Page({
       console.info("该用户[" + userId + "]的历史测评报告已经从数据库加载到本地缓存")
       me.setData({
         list: res.data.data, //将表中查询出来的信息传给list
+        isantherUserId: isantherUserId //用于控制页面上删除和分享的按钮是否可用
       })
       wx.setStorageSync(key, res.data.data)
     }).catch((errMsg) => {

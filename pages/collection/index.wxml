@@ -1,5 +1,11 @@
-<!--pages/collection/index.wxml-->
-<text>pages/collection/index.wxml</text>
+<i-panel title="您关注的小伙伴们"></i-panel>
+<view class="panel">
+  <view class="chart-with-img" wx:for="{{list}}" wx:for-item="chart" wx:key="{{chart.userId}}" >
+    <image src="{{chart.picId}}"  bindtap='showDiscResult' id="{{chart.userId}}" mode="aspectFit"  data-chart="{{chart}}"></image>
+    {{chart.username}}
+  </view>
+ 
+</view>
 <!--圆形点击框  -->
 <view class="round-click" bindtap="goBack">
   <i-icon type="undo" slot="icon" size='40' color="#f8f8f9" />

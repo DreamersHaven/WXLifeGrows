@@ -35,7 +35,7 @@
         
     <i-card title="{{item.username}}"   thumb="{{item.picId}}">
     <view slot="content" bindtap='showDiscResult' id="{{item.userId}}" >查看测评报告</view>
-    <view slot="footer" bindtap='collect'>+关注</view>
+    <view slot="footer" bindtap='collect' id="{{item.userId}}|{{item.username}}">+关注</view>
     </i-card>
  
       </view>

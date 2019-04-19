@@ -36,14 +36,14 @@
 
     <i-tab-bar-item key="save" icon="task" dot current-icon="task_fill" title="保存" wx:if="{{isNoSave}}"></i-tab-bar-item>
 
-    <i-tab-bar-item key="save" icon="task" current-icon="task_fill" title="已保存" wx:elif="{{isNoSave==false}}"></i-tab-bar-item>
+    <i-tab-bar-item key="save" icon="task" current-icon="task_fill" title="已保存" wx:elif="{{isNoSave==false&&antherUserId==''}}"></i-tab-bar-item>
 
     <i-tab-bar-item key="share" icon="interactive" current-icon="interactive_fill" title="分享" wx:if="{{antherUserId==''}}"></i-tab-bar-item>
 
     <i-tab-bar-item key="back" icon="undo" current-icon="undo" title="返回" wx:if="{{antherUserId!=''}}"></i-tab-bar-item>
     <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill" title="查看历史"></i-tab-bar-item>
     
-    <i-tab-bar-item key="more" icon="switch" current-icon="switch" title="更多"></i-tab-bar-item>
+    <i-tab-bar-item key="more" icon="switch" current-icon="switch" title="更多" wx:if="{{antherUserId==''}}"></i-tab-bar-item>
  
   </i-tab-bar>
 

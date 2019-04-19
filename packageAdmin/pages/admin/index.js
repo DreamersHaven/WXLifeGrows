@@ -17,7 +17,8 @@ Page({
     searchPageNum: 1, // 设置加载的第几次，默认是第一次
     callbackcount: 15, //返回数据的个数
     searchLoading: false, //"上拉加载"的变量，默认false，隐藏
-    searchLoadingComplete: false //“没有数据”的变量，默认false，隐藏
+    searchLoadingComplete: false, //“没有数据”的变量，默认false，隐藏
+    //是否关注的提示
 
   },
 
@@ -193,13 +194,46 @@ Page({
    *
    */
   showDiscResult: function (e) {
-    util.showDiscResult(e)
+    var fromurl ='/packageAdmin/pages/admin/index'
+    util.showDiscResult(e, fromurl)
   },
   /**
    * 关注某用户
+   * /disc/collectDiscReport
    */
   collect: function (e) {
     console.log("关注该用户")
+    var user = app.getGlobalUserInfo();
+    var userId = user.userId;
+    var serverUrl = app.serverUrl;
+    var collectuserIdAndName = e.target.id
+    var infos = collectuserIdAndName.split("|")
+    var url = serverUrl +"/disc/collectDiscReport"
+    wx.showLoading({
+      title: '操作中...',
+    });
+    // 调用后端
+    var data = {
+      userId: userId,
+      collectuserId: infos[0],
+      collectuserName: infos[1],
+      reportType:'all'
+    }
+    
+    util.post(url, data).then((res) => {
+      wx.hideLoading();
+     
+
+    }).catch((errMsg) => {
+
+      // 失败弹出框
+      wx.showToast({
+        title: errMsg,
+        icon: 'none',
+        duration: 3000
+      })
+    })
+  
     
   },
 

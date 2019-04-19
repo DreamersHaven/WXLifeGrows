@@ -9,6 +9,8 @@ Page({
     isNoSave: true,
     //用于判断是否为管理员查看某个用户的历史测评报告信息
     antherUserId: '',
+    //用于判断是从哪个页面访问到的该页面，返回时返回到相应的页面
+    fromUrl:'',
     discA: '',
     discM: '',
     discL: '',
@@ -1426,6 +1428,12 @@ Page({
       antherUserId = options.antherUserId
     }
 
+    //设置请求的来源页面
+    var fromUrl = ''
+    if (options.fromUrl != null && options.fromUrl != '' && options.fromUrl != undefined) {
+      fromUrl = options.fromUrl
+    }
+
     //判断是否通过他人分享，进入的小程序页面
     var isShareOthers = false
     if (options.isShareOthers != undefined) {
@@ -1442,7 +1450,8 @@ Page({
       isNoSave: isNoSave,
       pageStyle: pageStyle,
       isShareOthers: isShareOthers,
-      antherUserId: antherUserId
+      antherUserId: antherUserId,
+      fromUrl: fromUrl
     })
 
     if (that.data.pageStyle == 'shareMeReport' || that.data.pageStyle == 'onlyPic') {
@@ -2016,9 +2025,10 @@ Page({
   goBack: function() {
     //如果是管理员查看某个用户的测试报告，返回到管理员操作页面
     var antherUserId = this.data.antherUserId
+    var fromUrl=this.data.fromUrl
     if (antherUserId != null) {
       wx.redirectTo({
-        url: '/packageAdmin/pages/admin/index',
+        url: fromUrl,
       })
       return
     }
