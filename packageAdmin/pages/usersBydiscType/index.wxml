@@ -4,7 +4,7 @@
  
 <view class="panel">
   <view class="chart-with-img" wx:for="{{list}}" wx:for-item="chart" wx:key="{{chart.userId}}">
-    <image src="{{chart.picId}}" mode="aspectFit"  data-chart="{{chart}}"></image>
+    <image src="{{chart.picId}}" mode="aspectFit"  data-chart="{{chart}}" bindtap='showDiscResult' id="{{chart.userId}}"></image>
    
     {{chart.username}}
   </view>

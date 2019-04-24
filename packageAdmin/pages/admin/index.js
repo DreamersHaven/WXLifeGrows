@@ -202,39 +202,16 @@ Page({
    * /disc/collectDiscReport
    */
   collect: function (e) {
-    console.log("关注该用户")
-    var user = app.getGlobalUserInfo();
-    var userId = user.userId;
-    var serverUrl = app.serverUrl;
     var collectuserIdAndName = e.target.id
     var infos = collectuserIdAndName.split("|")
-    var url = serverUrl +"/disc/collectDiscReport"
-    wx.showLoading({
-      title: '操作中...',
-    });
-    // 调用后端
-    var data = {
-      userId: userId,
-      collectuserId: infos[0],
-      collectuserName: infos[1],
-      reportType:'all'
+    if (infos[2] == "已关注") {
+      return
     }
     
-    util.post(url, data).then((res) => {
-      wx.hideLoading();
-     
+    util.collect(infos[0])
+    //更改对应对象的值为“已关注”待实现
 
-    }).catch((errMsg) => {
-
-      // 失败弹出框
-      wx.showToast({
-        title: errMsg,
-        icon: 'none',
-        duration: 3000
-      })
-    })
-  
-    
+      
   },
 
   //输入框事件，每输入一个字符，就会触发一次
@@ -259,8 +236,28 @@ Page({
       //判断是否有数据，有则取数据
       if (data.data.length != 0) {
         let searchList = [];
+        //遍历取得的数据，判断用户是否在已关注的列表中，如果在已关注列表中，更改+关注的状态
+        var results = data.data
+        var collections = util.getGlobalCollectionInfo()
+        
+        for (var i = 0, len = results.length; i < len; i++) {
+         
+          var iscollection = false
+          for (var j = 0, len1 = collections.length; j < len1; j++) {
+            if (results[i].userId == collections[j].userId) {
+              results[i].name = "已关注"
+              iscollection = true
+              break
+            }
+           
+          }
+          if (!iscollection) {
+            results[i].name = "+关注"
+          }
+        }
         //如果isFromSearch是true从data中取出数据，否则先从原来的数据继续添加
-        that.data.isFromSearch ? searchList = data.data : searchList = that.data.searchSongList.concat(data.data)
+        that.data.isFromSearch ? searchList = results : searchList = that.data.searchSongList.concat(results)
+        
         that.setData({
           searchSongList: searchList, //获取数据数组
           searchLoading: true //把"上拉加载"的变量设为false，显示

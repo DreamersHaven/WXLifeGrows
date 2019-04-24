@@ -19,13 +19,26 @@ Page({
     var serverUrl = app.serverUrl;
     var user = app.getGlobalUserInfo();
     var userId = user.userId
-    var url = serverUrl + '/user/queryUserInfoByDiscType?userId=' + userId + '&discType=' + options.discType
+
+    //将discType放置到本地缓存中，如果参数没有携带discType则从本地缓存中获取
+    var discType=''
+    if (options.discType != undefined){
+      
+      wx.clearStorageSync("admin_discType")
+      wx.setStorageSync("admin_discType", options.discType)
+      
+    }
+
+    discType = wx.getStorageSync("admin_discType")
+    console.log(options.discType)
+    var url = serverUrl + '/user/queryUserInfoByDiscType?userId=' + userId + '&discType=' + discType
+
     var data = {
     }
     util.post(url, data).then((res) => {
       me.setData({
         list: res.data.data,
-        discType: options.discType
+        discType: discType
       })
 
     }).catch((errMsg) => {
@@ -36,6 +49,17 @@ Page({
         duration: 3000
       })
     })
+  },
+
+  /**
+ * 显示用户最新的DISC测评结果
+ * 1、依据用户ID查询DISC测评结果
+ * 2、跳转到DISC图形展示页面，显示该用户的DISC测评结果
+ *
+ */
+  showDiscResult: function (e) {
+    var fromUrl = '/packageAdmin/pages/usersBydiscType/index'
+    util.showDiscResult(e, fromUrl)
   },
 
   /**

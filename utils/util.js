@@ -39,21 +39,28 @@ function getGlobalCollectionInfo() {
     var serverUrl = app.serverUrl;
     var user = app.getGlobalUserInfo();
     var userId = user.userId;
-    var data = {
-    }
-    var url = serverUrl + '/disc/querycollectDiscReport?userId=' + userId
-    this.post(url, data).then((res) => {
-      console.log(res.data);
-      console.info("该用户[" + userId + "]的关注列表信息已经从数据库加载到本地缓存")
-      wx.setStorageSync("collectionInfo", res.data.data)
-    }).catch((errMsg) => {
-      // 失败弹出框
-      wx.showToast({
-        title: errMsg,
-        icon: 'none',
-        duration: 3000
+    //如果用户已经登录成功
+    if (userId != null && userId != '' && userId != undefined) {
+      var data = {
+      }
+      var url = serverUrl + '/disc/querycollectDiscReport?userId=' + userId
+      this.post(url, data).then((res) => {
+        console.log(res.data);
+        console.info("该用户[" + userId + "]的关注列表信息已经从数据库加载到本地缓存")
+        wx.setStorageSync("collectionInfo", res.data.data)
+        return res.data.data;
+
+      }).catch((errMsg) => {
+        // 失败弹出框
+        wx.showToast({
+          title: errMsg,
+          icon: 'none',
+          duration: 3000
+        })
       })
-    })
+
+    }
+    
   }
 }
 
@@ -86,6 +93,29 @@ function showDiscResult(e, fromUrl) {
   }) 
 }
 
+/**
+ * 取消关注操作
+ */
+function cancelFocus(userId){
+  var serverUrl = app.serverUrl;
+  wx.showLoading({
+    title: '请等待...',
+  });
+  // 调用后端
+  var data = {
+
+  }
+  var url = serverUrl + '/disc/delcollectDiscReport?userId=' + userId
+  this.post(url, data).then((res) => {
+    console.log(res.data);
+    wx.hideLoading();
+    this.reloadGlobalCollectionInfo()
+    
+  }).catch((errMsg) => {
+    console.log(errMsg)
+  }) 
+
+}
 
 /**
  * 依据用户的最新DISC测试结果，跳转到查看DISC测试结果的详细页面
@@ -203,7 +233,53 @@ const get = (url, data) => {
   });
   return promise;
 }
+
+/**
+ * 关注某个用户
+ */
+function collect(collectuserId){
+
+  var user = app.getGlobalUserInfo();
+  //如果用户没有登录，则给予提示并跳转到登录页面
+  var userId = user.userId;
+  if (userId != null && userId != '' && userId != undefined) {
+   
+    var serverUrl = app.serverUrl;
+    var url = serverUrl + "/disc/collectDiscReport"
+    wx.showLoading({
+      title: '操作中...',
+    });
+    // 调用后端
+    var data = {
+      userId: userId,
+      collectuserId: collectuserId,
+      //collectuserName: infos[1],
+      reportType: 'all'
+    }
+    this.post(url, data).then((res) => {
+      wx.hideLoading();
+      //更新本地缓存中的关注列表信息
+      this.reloadGlobalCollectionInfo();
+
+    }).catch((errMsg) => {
+      // 失败弹出框
+      wx.showToast({
+        title: errMsg,
+        icon: 'none',
+        duration: 3000
+      })
+    })   
+  } else {
+    console.log("用户未登录，跳转到授权登录页面...")
+    wx.redirectTo({
+      url: '/pages/userLogin/login?redirectUrl=/packageDISC/pages/disc/index',
+    })
+  }
+
+   
+
  
+}
 
 module.exports = {
   getSearchUser: getSearchUser,
@@ -212,5 +288,8 @@ module.exports = {
   get,
   getLocationPromisified,
   showModalPromisified,
-  getGlobalCollectionInfo: getGlobalCollectionInfo
+  getGlobalCollectionInfo: getGlobalCollectionInfo,
+  reloadGlobalCollectionInfo: reloadGlobalCollectionInfo,
+  cancelFocus: cancelFocus,
+  collect: collect
 }

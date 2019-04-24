@@ -33,6 +33,10 @@ Page({
     bgHEIGHT: 483,
     /**设置绘制线条的宽度 */
     canvasLineWidth: 1.5,
+    //分享的用户ID
+    collectuserId: '',
+    //页面“关注”的提示
+    collectionTitle: '+关注',
 
 
     D: {
@@ -1422,6 +1426,12 @@ Page({
       pageStyle = options.pageStyle
     }
 
+    //如果是其他用户分享，获取分享人的用户ID
+    var collectuserId=''
+    if (options.collectuserId != null && options.collectuserId != '' && options.collectuserId != undefined) {
+      collectuserId = options.collectuserId
+    }
+
     //判断是否为管理员用户查询其他用户的测评结果
     var antherUserId = ''
     if (options.antherUserId != null && options.antherUserId != '' && options.antherUserId != undefined) {
@@ -1451,7 +1461,8 @@ Page({
       pageStyle: pageStyle,
       isShareOthers: isShareOthers,
       antherUserId: antherUserId,
-      fromUrl: fromUrl
+      fromUrl: fromUrl,
+      collectuserId: collectuserId
     })
 
     if (that.data.pageStyle == 'shareMeReport' || that.data.pageStyle == 'onlyPic') {
@@ -1959,6 +1970,14 @@ Page({
       wx.navigateTo({
         url: '/packageDISC/pages/moreFun/index',
       })
+    } else if (detail.key =="collect"){
+      if (this.data.collectionTitle == '已关注') {
+        return
+      }
+      util.collect(this.data.collectuserId)
+      this.setData({
+        collectionTitle:"已关注"
+      })
     }
 
     this.setData({
@@ -1996,8 +2015,14 @@ Page({
 
     if (detail.key == "discReport") {
       var that = this
+      var url = '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA + '&isShareOthers=' + that.data.isShareOthers
+      //如果传递了分享人用户ID，需要传递给测试报告图页面
+      var collectuserId = that.data.collectuserId
+      if (collectuserId != '') {
+        url = url + '&collectuserId=' + collectuserId
+      }
       wx.redirectTo({
-        url: '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA + '&isShareOthers=' + that.data.isShareOthers,
+        url: url,
       })
 
     } else if (detail.key == "picMGraph") {
@@ -2026,6 +2051,7 @@ Page({
     //如果是管理员查看某个用户的测试报告，返回到管理员操作页面
     var antherUserId = this.data.antherUserId
     var fromUrl=this.data.fromUrl
+    console.log(fromUrl)
     if (antherUserId != null) {
       wx.redirectTo({
         url: fromUrl,
@@ -2070,6 +2096,7 @@ Page({
     var shareType = "picAndReport"
     var title = 'Hi,我是[' + username+'],这是我的DISC性格测评结果，分享给你呦'
     var path = '/pages/discReport/index?yvalue=' + that.data.yvalueM + '&mresult=' + that.data.discM + '&lresult=' + that.data.discL + '&aresult=' + that.data.discA + '&collectuserId=' + userId
+    
     var imageUrl = '/pages/resource/images/dsp.jpg'
     if (res.from = "button") {
       shareType = res.target.id
@@ -2080,6 +2107,8 @@ Page({
       } else {
         path = path + '&pageStyle=' + shareType
       }
+
+      console.log('shareUrl:' + path)
       return {
         title: title,
         path: path + '&isShareOthers=true',

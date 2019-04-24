@@ -1,11 +1,16 @@
 <i-panel title="您关注的小伙伴们"></i-panel>
 <view class="panel">
   <view class="chart-with-img" wx:for="{{list}}" wx:for-item="chart" wx:key="{{chart.userId}}" >
-    <image src="{{chart.picId}}"  bindtap='showDiscResult' id="{{chart.userId}}" mode="aspectFit"  data-chart="{{chart}}"></image>
+    <image src="{{chart.picId}}"  bindtap='multipleTap' bindlongpress="longTap" id="{{chart.userId}}" mode="aspectFit"  data-chart="{{chart}}" bindtouchstart="touchStart" bindtouchend="touchEnd"></image>
     {{chart.username}}
   </view>
  
 </view>
+
+<i-modal title="我要" visible="{{ visibleMore }}" actions="{{ actionsMore }}" bind:click="moreFun">
+    
+</i-modal>
+
 <!--圆形点击框  -->
 <view class="round-click" bindtap="goBack">
   <i-icon type="undo" slot="icon" size='40' color="#f8f8f9" />

@@ -24,6 +24,10 @@ Page({
     pageStyle: 'picAndReport',
     //是否通过他人分享，进入的小程序页面
     isShareOthers: false,
+    //分享的用户ID
+    collectuserId: '',
+    //页面“关注”的提示
+    collectionTitle: '+关注'
 
   },
 
@@ -44,6 +48,11 @@ Page({
     if (options.pageStyle != undefined) {
       pageStyle = options.pageStyle
     }
+    //获取分享人的userId 
+    var collectuserId = ""
+    if (options.collectuserId != undefined) {
+      collectuserId = options.collectuserId
+    }
     //判断是否通过他人分享，进入的小程序页面
     var isShareOthers = false
     if (options.isShareOthers != undefined) {
@@ -51,6 +60,7 @@ Page({
     }
 
     if (reportInfo != undefined) {
+
       me.setData({
 
         discType: reportInfo.discType,
@@ -62,12 +72,14 @@ Page({
         ability: reportInfo.ability,
         superiority: reportInfo.superiority,
         vulnerable: reportInfo.vulnerable,
+        collectuserId: collectuserId,
         yvalue: yvalue,
         mresult: mresult,
         lresult: lresult,
         aresult: aresult,
         pageStyle: pageStyle,
-        isShareOthers: isShareOthers
+        isShareOthers: isShareOthers,
+
 
       });
     } else {
@@ -87,7 +99,8 @@ Page({
 
   /**
    * 生命周期函数--监听页面加载
-   */
+   *  
+   * */
   onLoad: function (options) {
 
 
@@ -138,13 +151,15 @@ Page({
         duration: 3000
       })
     })
+    //如果用户已经登录，加载该用户的关注人列表信息
+    //util.getGlobalCollectionInfo()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
@@ -201,8 +216,16 @@ Page({
     if (detail.key == "discReport") {
 
     } else if (detail.key == "picMGraph") {
+
+      var url = '/packageDISC/pages/amlGraph/index?pageStyle=shareMeReport&M=' + this.data.mresult + '&L=' + this.data.lresult + '&A=' + this.data.aresult + '&isShareOthers=' + this.data.isShareOthers
+      //如果传递了分享人用户ID，需要传递给测试报告图页面
+      var collectuserId = that.data.collectuserId
+      if (collectuserId != '') {
+        url = url + '&collectuserId=' + collectuserId
+      }
+
       wx.redirectTo({
-        url: '/packageDISC/pages/amlGraph/index?pageStyle=shareMeReport&M=' + this.data.mresult + '&L=' + this.data.lresult + '&A=' + this.data.aresult + '&isShareOthers=' + this.data.isShareOthers,
+        url: url,
       })
     }
 
@@ -213,11 +236,23 @@ Page({
   tabbarHandleChange({
     detail
   }) {
+    var that = this
 
     if (detail.key == "homepage") {
       this.goHomePage()
     } else if (detail.key == "scan") {
       this.goDiscPage()
+    } else if (detail.key == "collect") {
+
+      if (that.data.collectionTitle=='已关注'){
+        return
+      }
+      //用户进行关注的操作，判断当前用户是否登录，如果没有登录提示用户先登录再进行操作
+      
+      util.collect(that.data.collectuserId)
+      this.setData({
+        collectionTitle: "已关注"
+      })
     }
 
   },

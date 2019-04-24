@@ -42,9 +42,9 @@
 
     <i-tab-bar-item key="back" icon="undo" current-icon="undo" title="返回" wx:if="{{antherUserId!=''}}"></i-tab-bar-item>
     <i-tab-bar-item key="browse" icon="browse" current-icon="browse_fill" title="查看历史"></i-tab-bar-item>
-    
+    <!-->
     <i-tab-bar-item key="more" icon="switch" current-icon="switch" title="更多" wx:if="{{antherUserId==''}}"></i-tab-bar-item>
- 
+     -->
   </i-tab-bar>
 
   <i-tabs current="{{ currentTab }}" bindchange="tabshandleChange">
@@ -62,7 +62,7 @@
 
     <i-tab-bar-item key="scan" icon="dynamic" current-icon="dynamic_fill" title="我要测试"></i-tab-bar-item>
 
-     <i-tab-bar-item key="collect" icon="collection" current-icon="collection_fill" title="+关注"></i-tab-bar-item>
+     <i-tab-bar-item key="collect" icon="collection" current-icon="collection_fill" title="{{collectionTitle}}"></i-tab-bar-item>
      
   </i-tab-bar>
 
