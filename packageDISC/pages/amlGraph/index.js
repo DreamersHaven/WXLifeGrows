@@ -1453,6 +1453,9 @@ Page({
     if (isQueryResults != null && isQueryResults != '' && isQueryResults != undefined) {
       isNoSave = false
     }
+
+  
+
     that.setData({
       discA: options.A,
       discM: options.M,
@@ -1485,7 +1488,11 @@ Page({
     console.log("自我形象的DISC值为：" + that.data.discM)
     console.log("自我形象的Y坐标轴值为：" + that.data.yvalueM)
 
-
+    //如果测试记录没有保存，则自动保存
+    if (isNoSave == true) {
+      this.doSaveResult()
+      //isNoSave = false
+    }
 
   },
 
