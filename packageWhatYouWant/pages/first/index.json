@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "What do you want?",
+  "usingComponents": {
+    "i-drawer": "../../../dist/drawer/index",
+    "i-button": "../../../dist/button/index",
+    "i-steps": "../../../dist/steps/index",
+    "i-step": "../../../dist/step/index",
+    "i-input": "../../../dist/input/index",
+    "i-panel": "../../../dist/panel/index"
+  }
+
+  
+}

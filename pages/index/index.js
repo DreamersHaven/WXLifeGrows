@@ -57,7 +57,7 @@ Page({
 
   onShareAppMessage: function(res) {
     return {
-      title: '超实用的性格测试，你也来试试吧！',
+      title: '超实用的自我探索工具箱，你也来试试吧！',
       path: '/pages/index/index',
       success: function() {},
       fail: function() {}
@@ -98,5 +98,18 @@ Page({
       })
     }
 
+  } ,
+
+  /**
+   * dongyaxin 20200315
+   * 在主页添加其他自我探索工具
+   * 左右滑动可以切换探索工具
+   */
+
+  goWhatYouWant: function (res) {
+    wx.redirectTo({
+      url: '/packageWhatYouWant/pages/first/index',
+    })
   }
+
 });
