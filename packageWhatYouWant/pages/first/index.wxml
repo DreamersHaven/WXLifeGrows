@@ -1,93 +1,134 @@
-<i-steps current="{{current}}">
-  <i-step>
-    <view slot="title">
-      细化需求
-    </view>
-    <view slot="content">
-      点击上列5类基本需求，每类写出7项你的更具体需求
-    </view>
-  </i-step>
-  <i-step>
-    <view slot="title">
-      筛选需求
-    </view>
-    <view slot="content">
-      请在35项需求中，选出12项你更想要的
-    </view>
-  </i-step>
-  <i-step>
-    <view slot="title">
-      生成结果
-    </view>
-    <view slot="content">
-      系统将自动生成 你的需求排序
-    </view>
-  </i-step>
-</i-steps>
-<i-button inline bindclick="handleClick">上一步</i-button>
-<i-button inline bindclick="handleClick">下一步</i-button>
-<i-button inline bindclick="">暂存</i-button>
-<i-button inline bindclick="">专属海报</i-button>
-
-<view class="demo">
-  <i-button bind:click="toggleLeft1" type="primary">生存</i-button>
-  <i-button bind:click="toggleLeft2" type="info">爱与归属</i-button>
-  <i-button bind:click="toggleRight1" type="warning">权利</i-button>
-  <i-button bind:click="toggleRight2" type="success">自由</i-button>
-  <i-button bind:click="toggleLeft3" type="primary">乐趣</i-button>
-
-  <i-drawer mode="left" visible="{{showLeft1}}" bind:close="toggleLeft1">
-
-    <i-input value=" " title="生存1" placeholder="例如：够用的钱" />
-    <i-input value=" " title="生存2" />
-    <i-input value=" " title="生存3" />
-    <i-input value=" " title="生存4" />
-    <i-input value=" " title="生存5" />
-    <i-input value=" " title="生存6" />
-    <i-input value=" " title="生存7" />
-
-
-  </i-drawer>
-
-  <i-drawer mode="right" visible="{{showLeft2}}" bind:close="toggleLeft2">
-    <i-input value=" " title="爱与归属1" placeholder="例如：有爱我的人" />
-    <i-input value=" " title="爱与归属2" />
-    <i-input value=" " title="爱与归属3" />
-    <i-input value=" " title="爱与归属4" />
-    <i-input value=" " title="爱与归属5" />
-    <i-input value=" " title="爱与归属6" />
-    <i-input value=" " title="爱与归属7" />
-  </i-drawer>
-
-  <i-drawer mode="left" visible="{{showRight1}}" bind:close="toggleRight1">
-    <i-input value=" " title="权利1" placeholder="例如：有爱我的人" />
-    <i-input value=" " title="权利2" />
-    <i-input value=" " title="权利3" />
-    <i-input value=" " title="权利4" />
-    <i-input value=" " title="权利5" />
-    <i-input value=" " title="权利6" />
-    <i-input value=" " title="权利7" />
-  </i-drawer>
-
-  <i-drawer mode="right" visible="{{showRight2}}" bind:close="toggleRight2">
-    <i-input value=" " title="自由1" placeholder="例如：有爱我的人" />
-    <i-input value=" " title="自由2" />
-    <i-input value=" " title="自由3" />
-    <i-input value=" " title="自由4" />
-    <i-input value=" " title="自由5" />
-    <i-input value=" " title="自由6" />
-    <i-input value=" " title="自由7" />
-  </i-drawer>
-
-   <i-drawer mode="left" visible="{{showLeft3}}" bind:close="toggleLeft3">
-    <i-input value=" " title="乐趣1" placeholder="例如：有爱我的人" />
-    <i-input value=" " title="乐趣2" />
-    <i-input value=" " title="乐趣3" />
-    <i-input value=" " title="乐趣4" />
-    <i-input value=" " title="乐趣5" />
-    <i-input value=" " title="乐趣6" />
-    <i-input value=" " title="乐趣7" />
-  </i-drawer>
-
-
+<form bindsubmit='handleGoClick'>
+<view class=".view.block">
+  <i-steps current="{{current}}">
+    <i-step>
+      <view slot="title">
+        细化需求
+      </view>
+      <view slot="content">
+        点击下列5类基本需求，每类写出7项你的更具体需求
+      </view>
+    </i-step>
+    <i-step>
+      <view slot="title">
+        筛选需求
+      </view>
+      <view slot="content">
+        请在35项需求中，选出12项你更想要的
+      </view>
+    </i-step>
+    <i-step>
+      <view slot="title">
+        生成结果
+      </view>
+      <view slot="content">
+        系统将自动生成 你的需求排序
+      </view>
+    </i-step>
+  </i-steps>
 </view>
+
+<view class=".view.block">
+  <i-row>
+    <i-col span="8">
+      <button class="button.small" bindtap="handleBackClick">上一步</button>
+    </i-col>
+    <i-col span="8">
+      <button class="button.small" form-type="submit">下一步</button>
+    </i-col>
+    <i-col span="8">
+      <button class="button.small" bindtap="">暂存</button>
+    </i-col>
+   
+  </i-row>
+
+  </view>
+
+
+
+  <view class=".view.block" hidden="{{isfirstShow}}">
+
+    <i-button bind:click="toggleLeft1" type="primary">生存</i-button>
+    <i-button bind:click="toggleLeft2" type="info">爱与归属</i-button>
+    <i-button bind:click="toggleRight1" type="warning">权利</i-button>
+    <i-button bind:click="toggleRight2" type="success">自由</i-button>
+    <i-button bind:click="toggleLeft3" type="primary">乐趣</i-button>
+
+
+    <i-drawer mode="left" visible="{{showLeft1}}" bind:close="toggleLeft1">
+
+      <i-input name="alive1" value=" " title="生存1" />
+      <i-input name="alive2" value=" " title="生存2" />
+      <i-input name="alive3" value=" " title="生存3" />
+      <i-input name="alive4" value=" " title="生存4" />
+      <i-input name="alive5" value=" " title="生存5" />
+      <i-input name="alive6" value=" " title="生存6" />
+      <i-input name="alive7" value=" " title="生存7" />
+
+
+    </i-drawer>
+
+    <i-drawer mode="right" visible="{{showLeft2}}" bind:close="toggleLeft2">
+      <i-input name="love1" value=" " title="爱与归属1" placeholder="例如：有爱我的人" />
+      <i-input name="love2" value=" " title="爱与归属2" />
+      <i-input name="love3" value=" " title="爱与归属3" />
+      <i-input name="love4" value=" " title="爱与归属4" />
+      <i-input name="love5" value=" " title="爱与归属5" />
+      <i-input name="love6" value=" " title="爱与归属6" />
+      <i-input name="love7" value=" " title="爱与归属7" />
+    </i-drawer>
+
+    <i-drawer mode="left" visible="{{showRight1}}" bind:close="toggleRight1">
+      <i-input name="power1" value=" " title="权利1" placeholder="例如：有爱我的人" />
+      <i-input name="power2" value=" " title="权利2" />
+      <i-input name="power3" value=" " title="权利3" />
+      <i-input name="power4" value=" " title="权利4" />
+      <i-input name="power5" value=" " title="权利5" />
+      <i-input name="power6" value=" " title="权利6" />
+      <i-input name="power7" value=" " title="权利7" />
+    </i-drawer>
+
+    <i-drawer mode="right" visible="{{showRight2}}" bind:close="toggleRight2">
+      <i-input name="free1" value=" " title="自由1" placeholder="例如：有爱我的人" />
+      <i-input name="free2" value=" " title="自由2" />
+      <i-input name="free3" value=" " title="自由3" />
+      <i-input name="free4" value=" " title="自由4" />
+      <i-input name="free5" value=" " title="自由5" />
+      <i-input name="free6" value=" " title="自由6" />
+      <i-input name="free7" value=" " title="自由7" />
+    </i-drawer>
+
+    <i-drawer mode="left" visible="{{showLeft3}}" bind:close="toggleLeft3">
+      <i-input name="fun1" value=" " title="乐趣1" placeholder="例如：有爱我的人" />
+      <i-input name="fun2" value=" " title="乐趣2" />
+      <i-input name="fun3" value=" " title="乐趣3" />
+      <i-input name="fun4" value=" " title="乐趣4" />
+      <i-input name="fun5" value=" " title="乐趣5" />
+      <i-input name="fun6" value=" " title="乐趣6" />
+      <i-input name="fun7" value=" " title="乐趣7" />
+    </i-drawer>
+
+
+  </view>
+
+  <view class=".view.block" hidden="{{isSecondShow}}">
+
+
+
+    <i-cell-group>
+      <view class="" wx:for="{{list}}">
+        <i-cell title="{{item.value}}">
+          <i-switch value="{{item.isChoose}}" id="{{item.key}}" size="large" bind:change="" slot="footer">
+            <view slot="open">保留</view>
+            <view slot="close">删除</view>
+          </i-switch>
+        </i-cell>
+      </view>
+    </i-cell-group>
+  </view>
+
+  <view class=".view.block" hidden="{{isThirdShow}}">
+    我是第三步骤
+  </view>
+
+</form>
