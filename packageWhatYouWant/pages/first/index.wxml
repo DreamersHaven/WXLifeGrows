@@ -34,10 +34,10 @@
       <button class="button.small" bindtap="handleBackClick">上一步</button>
     </i-col>
     <i-col span="8">
-      <button class="button.small" form-type="submit">下一步</button>
+      <button id="nextButton" class="button.small" form-type="submit">下一步</button>
     </i-col>
     <i-col span="8">
-      <button class="button.small" bindtap="">暂存</button>
+      <button class="button.small" id='saveBut' form-type="submit">暂存</button>
     </i-col>
    
   </i-row>
@@ -57,55 +57,55 @@
 
     <i-drawer mode="left" visible="{{showLeft1}}" bind:close="toggleLeft1">
 
-      <i-input name="alive1" value=" " title="生存1" />
-      <i-input name="alive2" value=" " title="生存2" />
-      <i-input name="alive3" value=" " title="生存3" />
-      <i-input name="alive4" value=" " title="生存4" />
-      <i-input name="alive5" value=" " title="生存5" />
-      <i-input name="alive6" value=" " title="生存6" />
-      <i-input name="alive7" value=" " title="生存7" />
+      <i-input name="alive1" value="{{list[0].value}}" title="生存1" />
+      <i-input name="alive2" value="{{list[1].value}}" title="生存2" />
+      <i-input name="alive3" value="{{list[2].value}}" title="生存3" />
+      <i-input name="alive4" value="{{list[3].value}}" title="生存4" />
+      <i-input name="alive5" value="{{list[4].value}}" title="生存5" />
+      <i-input name="alive6" value="{{list[5].value}}" title="生存6" />
+      <i-input name="alive7" value="{{list[6].value}}" title="生存7" />
 
 
     </i-drawer>
 
     <i-drawer mode="right" visible="{{showLeft2}}" bind:close="toggleLeft2">
-      <i-input name="love1" value=" " title="爱与归属1" placeholder="例如：有爱我的人" />
-      <i-input name="love2" value=" " title="爱与归属2" />
-      <i-input name="love3" value=" " title="爱与归属3" />
-      <i-input name="love4" value=" " title="爱与归属4" />
-      <i-input name="love5" value=" " title="爱与归属5" />
-      <i-input name="love6" value=" " title="爱与归属6" />
-      <i-input name="love7" value=" " title="爱与归属7" />
+      <i-input name="love1" value="{{list[7].value}}" title="爱与归属1" placeholder="例如：有爱我的人" />
+      <i-input name="love2" value="{{list[8].value}}" title="爱与归属2" />
+      <i-input name="love3" value="{{list[9].value}}" title="爱与归属3" />
+      <i-input name="love4" value="{{list[10].value}}" title="爱与归属4" />
+      <i-input name="love5" value="{{list[11].value}}" title="爱与归属5" />
+      <i-input name="love6" value="{{list[12].value}}" title="爱与归属6" />
+      <i-input name="love7" value="{{list[13].value}}" title="爱与归属7" />
     </i-drawer>
 
     <i-drawer mode="left" visible="{{showRight1}}" bind:close="toggleRight1">
-      <i-input name="power1" value=" " title="权利1" placeholder="例如：有爱我的人" />
-      <i-input name="power2" value=" " title="权利2" />
-      <i-input name="power3" value=" " title="权利3" />
-      <i-input name="power4" value=" " title="权利4" />
-      <i-input name="power5" value=" " title="权利5" />
-      <i-input name="power6" value=" " title="权利6" />
-      <i-input name="power7" value=" " title="权利7" />
+      <i-input name="power1" value="{{list[14].value}}" title="权利1" placeholder="例如：有爱我的人" />
+      <i-input name="power2" value="{{list[15].value}}" title="权利2" />
+      <i-input name="power3" value="{{list[16].value}}" title="权利3" />
+      <i-input name="power4" value="{{list[17].value}}" title="权利4" />
+      <i-input name="power5" value="{{list[18].value}}" title="权利5" />
+      <i-input name="power6" value="{{list[19].value}}" title="权利6" />
+      <i-input name="power7" value="{{list[20].value}}" title="权利7" />
     </i-drawer>
 
     <i-drawer mode="right" visible="{{showRight2}}" bind:close="toggleRight2">
-      <i-input name="free1" value=" " title="自由1" placeholder="例如：有爱我的人" />
-      <i-input name="free2" value=" " title="自由2" />
-      <i-input name="free3" value=" " title="自由3" />
-      <i-input name="free4" value=" " title="自由4" />
-      <i-input name="free5" value=" " title="自由5" />
-      <i-input name="free6" value=" " title="自由6" />
-      <i-input name="free7" value=" " title="自由7" />
+      <i-input name="free1" value="{{list[21].value}}" title="自由1" placeholder="例如：有爱我的人" />
+      <i-input name="free2" value="{{list[22].value}}" title="自由2" />
+      <i-input name="free3" value="{{list[23].value}}" title="自由3" />
+      <i-input name="free4" value="{{list[24].value}}" title="自由4" />
+      <i-input name="free5" value="{{list[25].value}}" title="自由5" />
+      <i-input name="free6" value="{{list[26].value}}" title="自由6" />
+      <i-input name="free7" value="{{list[27].value}}" title="自由7" />
     </i-drawer>
 
     <i-drawer mode="left" visible="{{showLeft3}}" bind:close="toggleLeft3">
-      <i-input name="fun1" value=" " title="乐趣1" placeholder="例如：有爱我的人" />
-      <i-input name="fun2" value=" " title="乐趣2" />
-      <i-input name="fun3" value=" " title="乐趣3" />
-      <i-input name="fun4" value=" " title="乐趣4" />
-      <i-input name="fun5" value=" " title="乐趣5" />
-      <i-input name="fun6" value=" " title="乐趣6" />
-      <i-input name="fun7" value=" " title="乐趣7" />
+      <i-input name="fun1" value="{{list[28].value}}" title="乐趣1" placeholder="例如：有爱我的人" />
+      <i-input name="fun2" value="{{list[29].value}}" title="乐趣2" />
+      <i-input name="fun3" value="{{list[30].value}}" title="乐趣3" />
+      <i-input name="fun4" value="{{list[31].value}}" title="乐趣4" />
+      <i-input name="fun5" value="{{list[32].value}}" title="乐趣5" />
+      <i-input name="fun6" value="{{list[33].value}}" title="乐趣6" />
+      <i-input name="fun7" value="{{list[34].value}}" title="乐趣7" />
     </i-drawer>
 
 
@@ -118,9 +118,9 @@
     <i-cell-group>
       <view class="" wx:for="{{list}}">
         <i-cell title="{{item.value}}">
-          <i-switch value="{{item.isChoose}}" id="{{item.key}}" size="large" bind:change="" slot="footer">
-            <view slot="open">保留</view>
-            <view slot="close">删除</view>
+          <i-switch value="{{item.isChoose}}" id="{{item.key}}" size="large" bind:change="onChange" slot="footer">
+            <view slot="true">保留</view>
+            <view slot="false">删除</view>
           </i-switch>
         </i-cell>
       </view>
