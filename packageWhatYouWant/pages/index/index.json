@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "What do you want?",
+  "usingComponents": {
+
+    "i-notice-bar": "../../../dist/notice-bar/index"
+  }
+}

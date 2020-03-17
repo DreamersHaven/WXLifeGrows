@@ -34,7 +34,8 @@
       "root": "packageWhatYouWant",
       "pages": [
         "pages/first/index",
-        "pages/tree/index"
+        "pages/tree/index",
+        "pages/index/index"
       ]
     }
   ],

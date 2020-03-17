@@ -47,7 +47,7 @@
             </view>
     </swiper-item>
 
-    <swiper-item>
+    <swiper-item wx:if="{{isSYSAdmin}}">
     <view class="view.block" >
         <image  mode='widthFix'  src="../resource/images/whatDoYouWant.png" style='width=600rpx'></image>
         
@@ -65,7 +65,7 @@
             </view>
 
             <view>
-                <button class="button.yellowbutton" hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
+                <button class="button.yellowbutton" id='shareWhatDoYouBut' hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
             </view>
     </swiper-item>
 

@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "DISC 性格测试",
   "usingComponents": {
     "i-tabs": "../../dist/tabs/index",
     "i-tab": "../../dist/tab/index",

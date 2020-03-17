@@ -8,7 +8,9 @@ Page({
     nickname: "游客",
     isMember: false,
     numOfTest: 0,
-    buttonName: "登录"
+    buttonName: "登录",
+    //判断是否为超级管理员
+    isSYSAdmin: false
 
 
   },
@@ -21,13 +23,14 @@ Page({
   onLoad: function() {
     //app.editTabBar();//添加tabBar数据  
     var me = this;
-    
+
     var user = app.getGlobalUserInfo();
-   
+
     //如果用户已经登录
-    if (user == undefined || user=='' || user.userId == undefined) {
+    if (user == undefined || user == '' || user.userId == undefined) {
       me.setData({
-        isLogin: false
+        isLogin: false,
+        isSYSAdmin: false
       })
     } else {
       console.log("用户已登录，用户名称" + user.username + ",用户头像：" + user.picId)
@@ -35,33 +38,52 @@ Page({
       if (user.picId != null && user.picId != '' && user.picId != undefined) {
         faceUrl = user.picId;
       }
+      var isSYSAdmin = false
+      if (user.wxId != null && user.wxId == 'oWs2o5WAv1v9LrnWjwWzKbO2PggY' && user.wxId != undefined) {
+        isSYSAdmin = true;
+      }
       me.setData({
         faceUrl: faceUrl,
         nickname: user.username,
         buttonName: "个人中心",
-        isLogin: true
+        isLogin: true,
+        isSYSAdmin: isSYSAdmin
       });
-      
+
     }
 
-    
+
   },
   /**
    * 跳转到关于DISC测试页面
    */
-  goAboutDISC: function (res){
+  goAboutDISC: function(res) {
     wx.navigateTo({
       url: '../about/index',
     })
   },
 
   onShareAppMessage: function(res) {
-    return {
-      title: '超实用的自我探索工具箱，你也来试试吧！',
-      path: '/pages/index/index',
-      success: function() {},
-      fail: function() {}
+
+    //判断要执行什么操作
+    console.log(res)
+    var buttonName = res.target.id
+    if (buttonName == 'shareWhatDoYouBut') {
+      return {
+        title: '超实用的自我探索工具箱，你也来试试吧！',
+        path: '/packageWhatYouWant/pages/index/index',
+        success: function() {},
+        fail: function() {}
+      }
+    } else {
+      return {
+        title: '超实用的DISC性格测试，你也来试试吧！',
+        path: '/pages/index/index',
+        success: function() {},
+        fail: function() {}
+      }
     }
+
   },
   data: {
 
@@ -98,7 +120,7 @@ Page({
       })
     }
 
-  } ,
+  },
 
   /**
    * dongyaxin 20200315
@@ -106,7 +128,7 @@ Page({
    * 左右滑动可以切换探索工具
    */
 
-  goWhatYouWant: function (res) {
+  goWhatYouWant: function(res) {
     wx.redirectTo({
       url: '/packageWhatYouWant/pages/first/index',
     })

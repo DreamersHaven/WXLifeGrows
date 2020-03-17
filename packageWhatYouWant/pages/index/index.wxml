@@ -1,0 +1,19 @@
+<view class="view.block">
+  <image mode='widthFix' src="../../../pages/resource/images/whatDoYouWant.png" style='width=600rpx'></image>
+
+</view>
+
+<view class="invite">
+  <i-notice-bar loop speed="800" backgroundcolor="#f8f8f9" color="#495060">
+    Hi!我是一款可以帮你快速找到内心深处需求的小工具~
+  </i-notice-bar>
+</view>
+
+<!--按钮-->
+<view>
+  <button class='button.bluebutton' hover-class="hover.bluebutton" bindtap="goWhatYouWant">我要探索</button>
+</view>
+
+<view>
+  <button class="button.yellowbutton" hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
+</view>
