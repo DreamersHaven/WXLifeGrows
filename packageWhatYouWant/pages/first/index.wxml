@@ -22,7 +22,7 @@
           生成结果
         </view>
         <view slot="content">
-          系统将自动生成 你的需求排序
+          系统将自动生成 你的需求树状图
         </view>
       </i-step>
     </i-steps>
@@ -116,7 +116,7 @@
 
 
     <i-cell-group>
-      <view class="" wx:for="{{list}}">
+      <view class="" wx:for="{{secondWants}}">
         <i-cell title="{{item.value}}">
           <i-switch value="{{item.isChoose}}" id="{{item.key}}" size="large" bind:change="onChange" slot="footer">
             <view slot="true">保留</view>
@@ -128,9 +128,15 @@
   </view>
 
   <view class=".view.block" hidden="{{isThirdShow}}">
+
     
-     
-  
+    <view class=".view.block" bindtap="showWantResult">
+       
+          <image mode='aspectFit' src="../img/tree.png"></image>
+        
+
+    </view>
+    
   </view>
 
 

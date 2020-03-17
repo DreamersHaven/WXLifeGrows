@@ -10,7 +10,7 @@ function initChart(canvas, width, height, wants) {
   });
   canvas.setChart(chart);
   var data1 = {
-    "name": "你的需求",
+    "name": "需求",
     "children": [{
         "name": "生存",
         "children": []
@@ -34,11 +34,13 @@ function initChart(canvas, width, height, wants) {
   for (var i = 0, len = wants.length; i < len; i++) {
     //如果需求为用户选择的12项
     if (wants[i].isChoose) {
-
+      //判断需求项所属的需求类别
       var wantsType = wants[i].key.substring(0, 3)
-       
+      //设置新增的节点信息 
       var child={"name":""}
       child.name = wants[i].value
+
+      //将节点加入到树形图中
       if (wantsType == 'ali') {
         data1.children[0].children.push(child)
       } else if (wantsType == 'lov') {
@@ -54,30 +56,25 @@ function initChart(canvas, width, height, wants) {
 
   }
   
-  
-
   var option = {
     series: [{
       type: 'tree',
-
       initialTreeDepth: -1,
-
       name: 'tree1',
-
       data: [data1],
 
       top: '5%',
-      left: '20%',
+      left: '10%',
       bottom: '2%',
-      right: '15%',
+      right: '10%',
 
-      symbolSize: 10,
+      symbolSize: 5,
       symbol: 'circle',
 
       label: {
         normal: {
           position: 'left',
-          verticalAlign: 'middle',
+          verticalAlign: 'left',
           align: 'right',
           color: 'black'
         }

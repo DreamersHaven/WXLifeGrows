@@ -1,7 +1,7 @@
 {
 	"description": "梦享邦成长计划",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": false,
 		"minified": false,

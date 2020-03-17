@@ -225,8 +225,9 @@ Page({
         isChoose: false
 
       }
-    ]
-
+    ],
+    //第二步显示的数组（不显示空需求，随机打乱顺序）
+    secondWants: []
 
   },
   /**
@@ -298,6 +299,11 @@ Page({
 
 
     if (this.data.current == 2) {
+      wx.showToast({
+        title: '亲，这已经是最后一步啦~',
+        icon: 'none',
+        duration: 2000
+      })
       return
     }
 
@@ -315,18 +321,56 @@ Page({
       //1、如果用户输入的需求数不足35个，给予温馨提示，
       //不强行限制，允许用户在输入不满35条的时,仍可以进行后续的操作
       //2、随机打乱 需求顺序 并 去掉 value 为空的信息
+      var list = this.data.wants
+      //清空数组
+      this.data.secondWants=[] 
+      for (var i = 0, len = list.length; i < len; i++) {
+        if (list[i].value != '') {
+          var want = {
+            key: '',
+            value: '',
+            isChoose: false,
+            id: 0
+          }
+          want.key=list[i].key
+          want.value=list[i].value
+          want.isChoose=list[i].isChoose
+          want.id = Math.floor(Math.random() * 50 + 50)
+          this.data.secondWants.push(want)
+          this.data.secondWants.sort(that.compare("id"))
+          console.log(this.data.secondWants)
+
+        }else{//如果需求数组的值为空，将选中状态也设置为初始状态
+          list[i].isChoose=false
+        }
+      }
 
       that.setData({
-        list: this.data.wants
+        list: this.data.wants,
+        secondWants: this.data.secondWants
       })
     }
     const addCurrent = this.data.current + 1;
     this.handleClick(addCurrent)
     //如果到了生成结果的步骤
-    if (this.data.current==2){
+    if (this.data.current == 2) {
       this.showWantResult()
     }
   },
+  /**
+   * 内部函数
+   * 对数组进行排序
+   */
+  compare: function (property) {
+    return function (a, b) {
+      var value1 = a[property];
+      var value2 = b[property];
+      return value2 - value1;
+    }
+
+  },
+
+
   /**
    * 内部使用函数
    * 为需求数组重新赋值
@@ -371,6 +415,8 @@ Page({
     this.data.wants[32].value = e.detail.value.fun5
     this.data.wants[33].value = e.detail.value.fun6
     this.data.wants[34].value = e.detail.value.fun7
+
+
   },
   /**
    * 页面中 【上一步】 按钮的点击事件
@@ -428,11 +474,20 @@ Page({
     const detail = event.detail;
     var keyValue = event.target.id
     var list = that.data.wants
+    var secondWants = that.data.secondWants
     //依据系统开关的键值（开关英文名称），定位到List相关信息
-    var currentSwitch = ""
+   
+   
     for (var i = 0, len = list.length; i < len; i++) {
       if (keyValue == list[i].key) {
-        currentSwitch = "list[" + i + "].isChoose"
+        list[i].isChoose = detail.value
+        break
+      }
+    }
+    var currentSwitch = ""
+    for (var i = 0, len = secondWants.length; i < len; i++) {
+      if (keyValue == secondWants[i].key) {
+        currentSwitch = "secondWants[" + i + "].isChoose"
         break
       }
     }
@@ -443,7 +498,7 @@ Page({
   },
 
   showWantResult() {
-    var wants=JSON.stringify(this.data.wants)
+    var wants = JSON.stringify(this.data.wants)
     wx.navigateTo({
       url: '/packageWhatYouWant/pages/tree/index?wants=' + wants,
     })

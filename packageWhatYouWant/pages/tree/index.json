@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "需求树形图",
   "usingComponents": {
     "ec-canvas": "../../../ec-canvas/ec-canvas"
   }
