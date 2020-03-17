@@ -11,6 +11,9 @@ Page({
     //用于记录目前处于第几步操作
     current: 0,
 
+    //用于记录用户选择了多少需求
+    choseWantNum:0,
+
     //用控制在不同操作步骤时，页面的显示和隐藏区域
     isfirstShow: false,
     isSecondShow: true,
@@ -318,12 +321,29 @@ Page({
       this.updateWants(e)
 
       //对生成的需求数组进行如下处理
-      //1、如果用户输入的需求数不足35个，给予温馨提示，
-      //不强行限制，允许用户在输入不满35条的时,仍可以进行后续的操作
-      //2、随机打乱 需求顺序 并 去掉 value 为空的信息
+
       var list = this.data.wants
-      //清空数组
-      this.data.secondWants=[] 
+      //1、如果用户输入的需求数不足35个，给予温馨提示，不强行限制，
+      //   允许用户在输入不满35条的时,仍可以进行后续的操作
+      var wantsNum = 0
+      for (var i = 0, len = list.length; i < len; i++) {
+        if (list[i].value != 0) {
+          wantsNum = wantsNum + 1
+        }
+      }
+      if (wantsNum < 12) {
+        wx.showToast({
+          title: '亲，输入的需求项目至少要12项呦~',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
+
+
+      //2、随机打乱 需求顺序 并 去掉 value 为空的信息
+      this.data.secondWants = []
+      var chooseNum = 0
       for (var i = 0, len = list.length; i < len; i++) {
         if (list[i].value != '') {
           var want = {
@@ -332,22 +352,31 @@ Page({
             isChoose: false,
             id: 0
           }
-          want.key=list[i].key
-          want.value=list[i].value
-          want.isChoose=list[i].isChoose
+          want.key = list[i].key
+          want.value = list[i].value
+          want.isChoose = list[i].isChoose
           want.id = Math.floor(Math.random() * 50 + 50)
           this.data.secondWants.push(want)
           this.data.secondWants.sort(that.compare("id"))
           console.log(this.data.secondWants)
 
-        }else{//如果需求数组的值为空，将选中状态也设置为初始状态
-          list[i].isChoose=false
+        } else { //如果需求数组的值为空，将选中状态也设置为初始状态
+          list[i].isChoose = false
         }
+
+        if (list[i].isChoose) {
+          chooseNum = chooseNum + 1
+        }
+
       }
+
+      
+      this.data.choseWantNum = chooseNum
 
       that.setData({
         list: this.data.wants,
-        secondWants: this.data.secondWants
+        secondWants: this.data.secondWants,
+        chooseNum: chooseNum //页面上提示已经选择的数目
       })
     }
     const addCurrent = this.data.current + 1;
@@ -361,8 +390,8 @@ Page({
    * 内部函数
    * 对数组进行排序
    */
-  compare: function (property) {
-    return function (a, b) {
+  compare: function(property) {
+    return function(a, b) {
       var value1 = a[property];
       var value2 = b[property];
       return value2 - value1;
@@ -475,9 +504,19 @@ Page({
     var keyValue = event.target.id
     var list = that.data.wants
     var secondWants = that.data.secondWants
+    //如果用户选择的项目 已经超过12条 给予提示 并退出
+    if (detail.value){
+      if(this.data.choseWantNum>=12){
+        wx.showToast({
+          title: '亲，不要贪心哦，最多只能选择12项哦~',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
+    }
+
     //依据系统开关的键值（开关英文名称），定位到List相关信息
-   
-   
     for (var i = 0, len = list.length; i < len; i++) {
       if (keyValue == list[i].key) {
         list[i].isChoose = detail.value
@@ -492,8 +531,16 @@ Page({
       }
     }
 
+    //更新用户选择的需求数目
+    if (detail.value){
+      this.data.choseWantNum = this.data.choseWantNum+1
+    }else{
+      this.data.choseWantNum = this.data.choseWantNum - 1
+    }
+
     that.setData({
-      [currentSwitch]: detail.value
+      [currentSwitch]: detail.value,
+      chooseNum: this.data.choseWantNum 
     })
   },
 

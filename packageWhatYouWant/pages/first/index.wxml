@@ -37,7 +37,7 @@
         <button id="nextButton" class="button.small" form-type="submit">下一步</button>
       </i-col>
       <i-col span="8">
-        <button class="button.small" id='saveBut' form-type="submit">暂存</button>
+        <button class="button.small" id='saveBut' form-type="submit">保存</button>
       </i-col>
 
     </i-row>
@@ -57,7 +57,7 @@
 
     <i-drawer mode="left" visible="{{showLeft1}}" bind:close="toggleLeft1">
 
-      <i-input name="alive1" value="{{list[0].value}}" title="生存1" />
+      <i-input name="alive1" value="{{list[0].value}}" title="生存1" placeholder="例如：健康的身体"/>
       <i-input name="alive2" value="{{list[1].value}}" title="生存2" />
       <i-input name="alive3" value="{{list[2].value}}" title="生存3" />
       <i-input name="alive4" value="{{list[3].value}}" title="生存4" />
@@ -79,7 +79,7 @@
     </i-drawer>
 
     <i-drawer mode="left" visible="{{showRight1}}" bind:close="toggleRight1">
-      <i-input name="power1" value="{{list[14].value}}" title="权利1" placeholder="例如：有爱我的人" />
+      <i-input name="power1" value="{{list[14].value}}" title="权利1" placeholder="例如：有成就感" />
       <i-input name="power2" value="{{list[15].value}}" title="权利2" />
       <i-input name="power3" value="{{list[16].value}}" title="权利3" />
       <i-input name="power4" value="{{list[17].value}}" title="权利4" />
@@ -89,7 +89,7 @@
     </i-drawer>
 
     <i-drawer mode="right" visible="{{showRight2}}" bind:close="toggleRight2">
-      <i-input name="free1" value="{{list[21].value}}" title="自由1" placeholder="例如：有爱我的人" />
+      <i-input name="free1" value="{{list[21].value}}" title="自由1" placeholder="例如：有可以自由支配的时间" />
       <i-input name="free2" value="{{list[22].value}}" title="自由2" />
       <i-input name="free3" value="{{list[23].value}}" title="自由3" />
       <i-input name="free4" value="{{list[24].value}}" title="自由4" />
@@ -99,7 +99,7 @@
     </i-drawer>
 
     <i-drawer mode="left" visible="{{showLeft3}}" bind:close="toggleLeft3">
-      <i-input name="fun1" value="{{list[28].value}}" title="乐趣1" placeholder="例如：有爱我的人" />
+      <i-input name="fun1" value="{{list[28].value}}" title="乐趣1" placeholder="例如：爱玩音乐" />
       <i-input name="fun2" value="{{list[29].value}}" title="乐趣2" />
       <i-input name="fun3" value="{{list[30].value}}" title="乐趣3" />
       <i-input name="fun4" value="{{list[31].value}}" title="乐趣4" />
@@ -125,18 +125,24 @@
         </i-cell>
       </view>
     </i-cell-group>
+
+    <!--圆形点击框  -->
+    <view class="round-click" bindtap="goHomePage">
+
+      {{chooseNum}}
+    </view>
   </view>
 
   <view class=".view.block" hidden="{{isThirdShow}}">
 
-    
+
     <view class=".view.block" bindtap="showWantResult">
-       
-          <image mode='aspectFit' src="../img/tree.png"></image>
-        
+
+      <image mode='aspectFit' src="../img/tree.png"></image>
+
 
     </view>
-    
+
   </view>
 
 

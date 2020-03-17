@@ -46,9 +46,9 @@ function initChart(canvas, width, height, wants) {
       } else if (wantsType == 'lov') {
         data1.children[1].children.push(child)
       } else if (wantsType == 'pow') {
-        data1.children[2].children.push(child)
-      } else if (wantsType == 'fre') {
         data1.children[3].children.push(child)
+      } else if (wantsType == 'fre') {
+        data1.children[2].children.push(child)
       } else {
         data1.children[4].children.push(child)
       }
