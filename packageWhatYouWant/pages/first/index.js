@@ -1,5 +1,3 @@
-
-
 Page({
   data: {
 
@@ -242,7 +240,7 @@ Page({
 
     var collectioninfos = wx.getStorageSync("wantsInfo")
     if (collectioninfos) {
-      this.data.wants= collectioninfos;
+      this.data.wants = collectioninfos;
     }
     me.setData({
       list: this.data.wants
@@ -284,10 +282,10 @@ Page({
    */
   handleGoClick(e) {
     //判断要执行什么操作
-    var buttonName=e.detail.target.id
+    var buttonName = e.detail.target.id
 
     //如果执行暂存操作，依据页面中数据更新数组内容，将数组保存到本地缓存中
-    if (buttonName=='saveBut'){
+    if (buttonName == 'saveBut') {
       this.updateWants(e)
       wx.setStorageSync("wantsInfo", this.data.wants)
       wx.showToast({
@@ -324,12 +322,16 @@ Page({
     }
     const addCurrent = this.data.current + 1;
     this.handleClick(addCurrent)
+    //如果到了生成结果的步骤
+    if (this.data.current==2){
+      this.showWantResult()
+    }
   },
   /**
    * 内部使用函数
    * 为需求数组重新赋值
    */
-  updateWants(e){
+  updateWants(e) {
     this.data.wants[0].value = e.detail.value.alive1
     this.data.wants[1].value = e.detail.value.alive2
     this.data.wants[2].value = e.detail.value.alive3
@@ -438,8 +440,15 @@ Page({
     that.setData({
       [currentSwitch]: detail.value
     })
+  },
+
+  showWantResult() {
+    var wants=JSON.stringify(this.data.wants)
+    wx.navigateTo({
+      url: '/packageWhatYouWant/pages/tree/index?wants=' + wants,
+    })
   }
- 
+
 
 
 

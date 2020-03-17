@@ -1,46 +1,46 @@
 <form bindsubmit='handleGoClick'>
-<view class=".view.block">
-  <i-steps current="{{current}}">
-    <i-step>
-      <view slot="title">
-        细化需求
-      </view>
-      <view slot="content">
-        点击下列5类基本需求，每类写出7项你的更具体需求
-      </view>
-    </i-step>
-    <i-step>
-      <view slot="title">
-        筛选需求
-      </view>
-      <view slot="content">
-        请在35项需求中，选出12项你更想要的
-      </view>
-    </i-step>
-    <i-step>
-      <view slot="title">
-        生成结果
-      </view>
-      <view slot="content">
-        系统将自动生成 你的需求排序
-      </view>
-    </i-step>
-  </i-steps>
-</view>
+  <view class=".view.block">
+    <i-steps current="{{current}}">
+      <i-step>
+        <view slot="title">
+          细化需求
+        </view>
+        <view slot="content">
+          点击下列5类基本需求，每类写出7项你的更具体需求
+        </view>
+      </i-step>
+      <i-step>
+        <view slot="title">
+          筛选需求
+        </view>
+        <view slot="content">
+          请在35项需求中，选出12项你更想要的
+        </view>
+      </i-step>
+      <i-step>
+        <view slot="title">
+          生成结果
+        </view>
+        <view slot="content">
+          系统将自动生成 你的需求排序
+        </view>
+      </i-step>
+    </i-steps>
+  </view>
 
-<view class=".view.block">
-  <i-row>
-    <i-col span="8">
-      <button class="button.small" bindtap="handleBackClick">上一步</button>
-    </i-col>
-    <i-col span="8">
-      <button id="nextButton" class="button.small" form-type="submit">下一步</button>
-    </i-col>
-    <i-col span="8">
-      <button class="button.small" id='saveBut' form-type="submit">暂存</button>
-    </i-col>
-   
-  </i-row>
+  <view class=".view.block">
+    <i-row>
+      <i-col span="8">
+        <button class="button.small" bindtap="handleBackClick">上一步</button>
+      </i-col>
+      <i-col span="8">
+        <button id="nextButton" class="button.small" form-type="submit">下一步</button>
+      </i-col>
+      <i-col span="8">
+        <button class="button.small" id='saveBut' form-type="submit">暂存</button>
+      </i-col>
+
+    </i-row>
 
   </view>
 
@@ -128,7 +128,13 @@
   </view>
 
   <view class=".view.block" hidden="{{isThirdShow}}">
-    我是第三步骤
+    
+     
+  
   </view>
+
+
+
+
 
 </form>

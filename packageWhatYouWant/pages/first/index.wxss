@@ -1,12 +1,10 @@
-.demo-container{
-	width:50vw;
-	height: 100vh;
-	background:#fff;
-}
-
 .view.block{
   
   margin-top: 15px;
 }
+
+
+
+
 
 
