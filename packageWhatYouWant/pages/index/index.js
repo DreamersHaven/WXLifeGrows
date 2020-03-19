@@ -34,6 +34,10 @@ Page({
 
   onReady() {},
 
+  onShow:function(){
+    wx.hideHomeButton()
+  },
+
 
 
 

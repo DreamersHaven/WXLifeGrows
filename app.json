@@ -43,7 +43,7 @@
     "backgroundTextStyle": "light",
     "backgroundColor": "#eee",
     "navigationBarBackgroundColor": "#eee",
-    "navigationBarTitleText": "自我探索工具箱 左右滑动切换",
+    "navigationBarTitleText": "DISC性格测试",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
