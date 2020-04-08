@@ -1,0 +1,9 @@
+
+.view.block{
+  text-align: center;
+  margin-top: 15px;
+}
+
+.view.nocenter{
+  margin-top: 15px;
+}

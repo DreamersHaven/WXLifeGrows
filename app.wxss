@@ -114,6 +114,19 @@
     justify-content: center;
     z-index: 9;
 }
+.roundBut-click{
+    height: 100rpx;
+    width: 100rpx;
+    background-color: rgb(248, 246, 74);
+    border-radius: 100%;
+    position: fixed;
+    bottom: 5rpx;
+    left: 250rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+}
 .round-click navigator{
     font-size: 32rpx;
     max-width: 80rpx;

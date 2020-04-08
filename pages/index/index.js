@@ -75,7 +75,18 @@ Page({
         success: function() {},
         fail: function() {}
       }
-    } else {
+    }
+
+    if (buttonName == 'shareOpenMyBut') {
+      return {
+        title: '探索别人眼中的自己，你也来试试吧！',
+        path: '/packageOpenMy/pages/index/index',
+        success: function () { },
+        fail: function () { }
+      }
+    }
+    
+     else {
       return {
         title: '超实用的DISC性格测试，你也来试试吧！',
         path: '/pages/index/index',
@@ -131,6 +142,12 @@ Page({
   goWhatYouWant: function(res) {
     wx.redirectTo({
       url: '/packageWhatYouWant/pages/first/index',
+    })
+  },
+
+  goOpenMy:function(res) {
+    wx.redirectTo({
+      url: '/packageOpenMy/pages/index/index',
     })
   }
 

@@ -37,6 +37,14 @@
         "pages/tree/index",
         "pages/index/index"
       ]
+    },
+    {
+      "root": "packageOpenMy",
+      "pages": [
+        "pages/index/index",
+        "pages/collection/index",
+        "pages/feedback/index"
+      ]
     }
   ],
   "window": {

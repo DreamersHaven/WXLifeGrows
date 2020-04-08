@@ -1,83 +1,106 @@
 <view>
-    <!--个人中心 -->
-    <view class="view.block" wx:if="{{isLogin}}">
-  
-   
+  <!--个人中心 -->
+  <view class="view.block" wx:if="{{isLogin}}">
 
-    
-<i-row>
-    <i-col span="8" i-class="col-class">  <i-avatar src="{{faceUrl}}" size="default"></i-avatar></i-col>
-    <i-col span="8" i-class="col-class"> {{nickname}}
-    
-    <i-tag 
-    class="i-tags" 
-    name="标签一" 
-    color="blue" wx:if="{{isMember}}">
-    
-    VIP
-</i-tag>
 
-   
 
-</i-col>
-    <i-col span="8" i-class="col-class"><button class="button.small" bindtap="goMinePage">{{buttonName}}</button></i-col>
-</i-row>
 
-    </view>
-   
-   <swiper  class="swiper-box" duration="300" style="height:550px" >
-     <swiper-item>
-    <view class="view.block" bindtap="goAboutDISC">
-        <image  mode='widthFix'  src="../resource/images/dsp.jpg" style='width=600rpx'></image>
-        
-    </view>
-     <view class="invite">
-    <i-notice-bar  loop speed="800" backgroundcolor="#f8f8f9" color="#495060">
-        Hi!欢迎来到DISC测评~DISC通过测试帮助人们评估和认识自己，进而改善行为方式。点击上图可查看更多介绍~
-    </i-notice-bar>
-    </view>
+    <i-row>
+      <i-col span="8" i-class="col-class">
+        <i-avatar src="{{faceUrl}}" size="default"></i-avatar>
+      </i-col>
+      <i-col span="8" i-class="col-class"> {{nickname}}
 
-                <!--按钮-->
-            <view>
-                <button class='button.bluebutton'  hover-class="hover.bluebutton" bindtap="goDiscPage">我要测试</button>
-            </view>
+        <i-tag class="i-tags" name="标签一" color="blue" wx:if="{{isMember}}">
 
-            <view>
-                <button class="button.yellowbutton" hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
-            </view>
+          VIP
+        </i-tag>
+
+
+
+      </i-col>
+      <i-col span="8" i-class="col-class">
+        <button class="button.small" bindtap="goMinePage">{{buttonName}}</button>
+      </i-col>
+    </i-row>
+
+  </view>
+
+  <swiper class="swiper-box" duration="300" style="height:550px">
+    <swiper-item>
+      <view class="view.block" bindtap="goAboutDISC">
+        <image mode='widthFix' src="../resource/images/dsp.jpg" style='width=600rpx'></image>
+
+      </view>
+      <view class="invite">
+        <i-notice-bar loop speed="800" backgroundcolor="#f8f8f9" color="#495060">
+          Hi!欢迎来到DISC测评~DISC通过测试帮助人们评估和认识自己，进而改善行为方式。点击上图可查看更多介绍~
+        </i-notice-bar>
+      </view>
+
+      <!--按钮-->
+      <view>
+        <button class='button.bluebutton' hover-class="hover.bluebutton" bindtap="goDiscPage">我要测试</button>
+      </view>
+
+      <view>
+        <button class="button.yellowbutton" hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
+      </view>
     </swiper-item>
 
     <swiper-item wx:if="{{isSYSAdmin}}">
-    <view class="view.block" >
-        <image  mode='widthFix'  src="../resource/images/whatDoYouWant.png" style='width=600rpx'></image>
-        
-    </view>
+      <view class="view.block">
+        <image mode='widthFix' src="../resource/images/whatDoYouWant.png" style='width=600rpx'></image>
 
-       <view class="invite">
-    <i-notice-bar  loop speed="800" backgroundcolor="#f8f8f9" color="#495060">
-        Hi!我是一款可以帮你快速找到内心深处需求的小工具~
-    </i-notice-bar>
-    </view>
+      </view>
 
-                    <!--按钮-->
-            <view>
-                <button class='button.bluebutton'  hover-class="hover.bluebutton" bindtap="goWhatYouWant">我要探索</button>
-            </view>
+      <view class="invite">
+        <i-notice-bar loop speed="800" backgroundcolor="#f8f8f9" color="#495060">
+          Hi!我是一款可以帮你快速找到内心深处需求的小工具~
+        </i-notice-bar>
+      </view>
 
-            <view>
-                <button class="button.yellowbutton" id='shareWhatDoYouBut' hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
-            </view>
+      <!--按钮-->
+      <view>
+        <button class='button.bluebutton' hover-class="hover.bluebutton" bindtap="goWhatYouWant">我要探索</button>
+      </view>
+
+      <view>
+        <button class="button.yellowbutton" id='shareWhatDoYouBut' hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
+      </view>
+    </swiper-item>
+    
+    <swiper-item wx:if="{{isSYSAdmin}}">
+      <view class="view.block">
+        <image mode='widthFix' src="../resource/images/openMy.png" style='width=600rpx'></image>
+
+      </view>
+
+      <view class="invite">
+        <i-notice-bar loop speed="800" backgroundcolor="#f8f8f9" color="#495060">
+          Hi!如果你对别人眼中的自己很感兴趣，可以把四个经典的问题发给你身边的老铁们，看看可以收到什么惊喜的反馈~~
+        </i-notice-bar>
+      </view>
+
+      <!--按钮-->
+      <view>
+        <button class='button.bluebutton' hover-class="hover.bluebutton" bindtap="goOpenMy">我也试试</button>
+      </view>
+
+      <view>
+        <button class="button.yellowbutton" id='shareOpenMyBut' hover-class="hover.yellowbutton" open-type='share'>我要分享</button>
+      </view>
     </swiper-item>
 
-    </swiper>
+  </swiper>
 
 
 
 
-     
-   
 
 
-        
-  
+
+
+
+
 </view>
