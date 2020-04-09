@@ -1,46 +1,68 @@
-<view class="view.block">
-  <image mode='widthFix' src="../../../pages/resource/images/openMy.png" style='width=250rpx'></image>
-<i-panel title="感谢你愿意花宝贵的时间，回答关于我的四个问题，帮助我可以更多认识自己~">
-  </i-panel>
-</view>
+<form bindsubmit='handleGoClick'>
+  <view class="view.block">
+    <image mode='widthFix' src="../../../pages/resource/images/openMy.png" style='width=250rpx'></image>
+    <i-panel title="感谢你愿意花宝贵的时间，回答关于我[{{userName}}]的四个问题，帮助我可以更多认识自己~">
+    </i-panel>
+  </view>
 
-<view class="view.nocenter">
-  <i-row>
-    <i-col span="24">
+  <view class="view.nocenter">
+    <i-row>
+      <i-col span="24">
 
-      <i-panel title="1、对我第一直觉的三个词评价？"></i-panel>
-    </i-col>
-    <i-col span="24">
-      <i-input value="" type="textarea" autofocus placeholder="三个关键词" />
-    </i-col>
-    <i-col span="24">
-      <i-panel title="2、我有什么异于常人的特质或者是你欣赏的、印象深刻的？"></i-panel>
+        <i-panel title="1、对我第一直觉的三个词评价？"></i-panel>
+      </i-col>
+      <i-col span="24">
+        <i-input name="question1" value="" type="textarea" autofocus placeholder="三个关键词" />
+      </i-col>
+      <i-col span="24">
+        <i-panel title="2、我有什么异于常人的特质或者是你欣赏的、印象深刻的？"></i-panel>
 
-    </i-col>
+      </i-col>
 
-    <i-col span="24">
-      <i-input value="" type="textarea" title="" placeholder="匿名收集大实话" />
-    </i-col>
+      <i-col span="24">
+        <i-input name="question2" value="" type="textarea" title="" placeholder="匿名收集大实话" />
+      </i-col>
 
-    <i-col span="24">
+      <i-col span="24">
 
-      <i-panel title="3、你印象中我做什么事情的时候，看起来最兴奋？"></i-panel>
-    </i-col>
+        <i-panel title="3、你印象中我做什么事情的时候，看起来最兴奋？"></i-panel>
+      </i-col>
 
-    <i-col span="24">
-      <i-input value="" type="textarea" title="" placeholder="观察到的任何事情都可以写呀" />
-    </i-col>
+      <i-col span="24">
+        <i-input name="question3" value="" type="textarea" title="" placeholder="观察到的任何事情都可以写呀" />
+      </i-col>
 
-    <i-col span="24">
+      <i-col span="24">
 
-      <i-panel title="4、什么情况下你会想到可以找我？"></i-panel>
-    </i-col>
+        <i-panel title="4、什么情况下你会想到可以找我？"></i-panel>
+      </i-col>
 
-    <i-col span="24">
-      <i-input value="" type="textarea" title="" placeholder="等你呦" />
-    </i-col>
+      <i-col span="24">
+        <i-input name="question4" value="" type="textarea" title="" placeholder="等你呦" />
+      </i-col>
+
+    </i-row>
 
 
-  </i-row>
+  </view>
 
-</view>
+  <view class="view.nocenter">
+    <i-row>
+      <!--
+      <i-col span="8">
+        <button id="saveBut" class="button.small" form-type="submit">暂存</button>
+      </i-col>
+      -->
+      <i-col span="12">
+        <button class="button.small" id='commitBut' form-type="submit">提交</button>
+      </i-col>
+
+      <i-col span="12">
+        <button class="button.small" bindtap="">我也试试</button>
+      </i-col>
+
+    </i-row>
+  </view>
+
+
+</form>

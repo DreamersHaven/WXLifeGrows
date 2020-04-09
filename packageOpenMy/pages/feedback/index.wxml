@@ -1,2 +1,30 @@
-<!--packageOpenMy/pages/feedback/index.wxml-->
-<text>packageOpenMy/pages/feedback/index.wxml</text>
+
+<i-panel title="共收到 {{feedbackNum}} 位朋友的反馈">
+  
+</i-panel>
+
+<i-panel title="朋友们用一下关键词形容你">
+  
+  <i-tag wx:for="{{tags}}" wx:key="{{index}}" name="{{index}}" color="{{item.color}}" type="border" style="margin-right:5px;">
+    {{item.name}}
+  </i-tag>
+
+</i-panel>
+
+<i-panel title="朋友们认为你的特质、欣赏你、对你印象深刻的地方">
+  <i-cell-group>
+    <i-cell wx:for="{{answers[0].answers}}" title="• {{item}}"></i-cell>
+  </i-cell-group>
+</i-panel>
+
+<i-panel title="朋友认为你做以下事情的时候，看起来很兴奋">
+  <i-cell-group>
+   <i-cell wx:for="{{answers[1].answers}}" title="• {{item}}"></i-cell>
+  </i-cell-group>
+</i-panel>
+
+<i-panel title="朋友在以下情况会想找你">
+  <i-cell-group>
+    <i-cell wx:for="{{answers[2].answers}}" title="• {{item}}"></i-cell>
+  </i-cell-group>
+</i-panel>

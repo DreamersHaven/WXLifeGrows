@@ -18,7 +18,14 @@ Page({
       me.redirectUrl = redirectUrl;
     }
   },
-
+  
+  /**
+  * 生命周期函数--监听页面显示
+  */
+  
+  onShow: function () {
+    wx.hideHomeButton()
+  },
   // 登录  
   doLogin: function (e) {
     var me = this;

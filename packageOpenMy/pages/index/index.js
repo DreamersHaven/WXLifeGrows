@@ -1,11 +1,16 @@
-// packageOpenMy/pages/index/index.js
+const app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
+   * 
    */
   data: {
-
+    //判断用户是否已经登录
+    isLogin: false,
+    userId:'',
+    userName:''
   },
 
   /**
@@ -20,7 +25,18 @@ Page({
    *    关键参数：userId（发起人用户ID）
    */
   onLoad: function (options) {
+    var user = app.getGlobalUserInfo();
+    var me = this;
+    if (user == undefined || user == '' || user.userId == undefined) {
 
+    }else{
+      this.data.isLogin=true
+      this.data.userId = user.userId
+      this.data.userName = user.username
+      me.setData({
+        isLogin: true
+      })
+    }
   },
 
   /**
@@ -64,6 +80,22 @@ Page({
   onReachBottom: function () {
 
   },
+  /**
+   * 跳转到授权登录页面
+   */
+  goLogin: function (res) {
+      wx.redirectTo({
+        url: '../../../pages/userLogin/login?redirectUrl=/packageOpenMy/pages/index/index',
+      })
+  },
+
+  //packageOpenMy/pages/collection/index?userId=' + userId + '&userName=' + userName
+  goFeedbackPage:function(res){
+    console.log("跳转到结果页面")
+    wx.navigateTo({
+      url: '/packageOpenMy/pages/feedback/index?userId=' + this.data.userId + '&userName=' + this.data.userName,
+    })
+  },
 
   /**
    * 用户点击右上角分享
@@ -73,12 +105,14 @@ Page({
   onShareAppMessage: function (res) {
     var buttonName = res.target.id
     //获得发起人ID
-    var userName='dongyaxin'
-    var userId='14'
+    var userName=this.data.userName
+    var userId = this.data.userId
     if (buttonName == 'shareCollection') {
+      
+
       return {
         title: 'Hi老铁，我是' + userName+',请帮忙匿名回答关于我的四个问题，让我更了解自己，抱拳抱拳~',
-        path: '/packageOpenMy/pages/collection/index?userId=' + userId,
+        path: '/packageOpenMy/pages/collection/index?userId=' + userId + '&userName=' + userName,
         success: function () { },
         fail: function () { }
       }

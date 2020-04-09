@@ -8,13 +8,23 @@
 
 </view>
 
- <view class="view.block">
+ <view class="view.block" wx:if="{{!isLogin}}">
+    <i-row>
+      <i-col span="24">
+         <button class="button.small" id='loginBut' bindtap="goLogin">登录</button>
+      </i-col>
+    </i-row>
+
+  </view>
+
+ <view class="view.block" wx:if="{{isLogin}}">
     <i-row>
       <i-col span="8">
         <button class="button.small" id='shareCollection' open-type='share'>收集反馈</button>
       </i-col>
       <i-col span="8">
-        <button id="nextButton" class="button.small">查看结果</button>
+        <!--在按钮名称后，加入友好提示，已经收集到的反馈结果数目-->
+        <button id="nextButton" class="button.small" bindtap="goFeedbackPage">查看结果</button>
       </i-col>
       <i-col span="8">
         <button class="button.small" id='shareOpenMyBut' open-type='share'>分享小程序</button>
