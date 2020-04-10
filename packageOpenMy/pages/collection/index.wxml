@@ -1,11 +1,12 @@
 <form bindsubmit='handleGoClick'>
-  <view class="view.block">
+  <view class="view.block" wx:if="{{state==0}}">
     <image mode='widthFix' src="../../../pages/resource/images/openMy.png" style='width=250rpx'></image>
     <i-panel title="感谢你愿意花宝贵的时间，回答关于我[{{userName}}]的四个问题，帮助我可以更多认识自己~">
     </i-panel>
   </view>
-
-  <view class="view.nocenter">
+ 
+   
+  <view class="view.nocenter" wx:if="{{state==0}}">
     <i-row>
       <i-col span="24">
 
@@ -46,7 +47,7 @@
 
   </view>
 
-  <view class="view.nocenter">
+  <view class="view.nocenter" wx:if="{{state==0}}">
     <i-row>
       <!--
       <i-col span="8">
@@ -58,10 +59,31 @@
       </i-col>
 
       <i-col span="12">
-        <button class="button.small" bindtap="">我也试试</button>
+        <button class="button.small" bindtap="goOpenMy">我也试试</button>
       </i-col>
 
     </i-row>
+  </view>
+
+  <view class="view.block" wx:if="{{state==1}}">
+      <image mode='widthFix' src="../img/success.png" style='width=250rpx'></image>
+
+        <i-row>
+      <!--
+      <i-col span="8">
+        <button id="saveBut" class="button.small" form-type="submit">暂存</button>
+      </i-col>
+      -->
+      <i-col span="12">
+        <button class="button.small" id='againBut' bindtap="again" >再填一次</button>
+      </i-col>
+
+      <i-col span="12">
+        <button class="button.small" bindtap="goOpenMy">我也试试</button>
+      </i-col>
+
+    </i-row>
+
   </view>
 
 

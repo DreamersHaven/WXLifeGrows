@@ -13,7 +13,8 @@ Page({
    */
   data: {
     userId: '',
-    userName: ''
+    userName: '',
+    state:0 //用于标识该表单的状态
   },
 
   /**
@@ -27,10 +28,18 @@ Page({
     console.log("发起测评的用户ID：" + userId);
     this.data.userId = userId
     this.data.userName = userName
+    
+    //从用户本地缓存中获取该表单的状态
+    var key = "openMyFromState_def_" + userId
+    var state = wx.getStorageSync(key)
+    if (state) {
+      this.data.state = state;
+    }
 
     me.setData({
       userName: userName,
-      userId: userId
+      userId: userId,
+      state: state
     })
 
   },
@@ -88,6 +97,7 @@ Page({
    * 
    */
   handleGoClick(e) {
+    var me = this;
     //判断要执行什么操作
     var buttonName = e.detail.target.id
     var question1 = e.detail.value.question1
@@ -131,15 +141,14 @@ Page({
       util.post(url, data).then((res) => {
         console.log(res.data);
         wx.hideLoading();
-        wx.showToast({
-            title: "提交成功，谢谢老铁~！！！",
-            icon: 'none',
-            duration: 3000
-          }),
-          // 页面跳转
-          wx.redirectTo({
-            url: '../index/index',
-          })
+      //更新本地缓存的状态
+        var key = "openMyFromState_def_" + userId
+        wx.setStorageSync(key,1)
+        this.data.state=1
+        me.setData({
+          state: 1
+        })
+
       }).catch((errMsg) => {
         // 失败弹出框
         wx.showToast({
@@ -149,5 +158,24 @@ Page({
         })
       })
     }
+  },
+  goOpenMy: function (res) {
+    wx.redirectTo({
+      url: '/packageOpenMy/pages/index/index',
+    })
+  },
+  /**
+   * 再填一次功能，主要用于测试
+   */
+  again: function (res){
+    var me = this;
+    var userId = this.data.userId
+    var key = "openMyFromState_def_" + userId
+    wx.setStorageSync(key, 0)
+    this.data.state=0
+    me.setData({
+      state: 0
+    })
   }
+
 })

@@ -1,9 +1,10 @@
 {
-  "navigationBarTitleText": "整合结果",
+  "navigationBarTitleText": "来自朋友们的反馈",
   "usingComponents": {
     "i-panel": "../../../dist/panel/index",
     "i-cell-group": "../../../dist/cell-group/index",
     "i-cell": "../../../dist/cell/index",
-    "i-tag": "../../../dist/tag/index"
+    "i-tag": "../../../dist/tag/index",
+    "i-icon": "../../../dist/icon/index"
   }
 }

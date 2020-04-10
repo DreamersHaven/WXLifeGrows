@@ -7,6 +7,7 @@
  *    参数：userId
  *    
  * 3、对接收的反馈信息，进行组装，并在页面显示
+ * 4、当用户使用三个点的转发功能，将测评结果发送给朋友的时候，需要有处理和判断
  */
 var util = require('../../../utils/util.js')
 const app = getApp();
@@ -21,6 +22,9 @@ Page({
     tags: [], //页面上显示的标签信息
     colors: ['default', 'red', 'blue', 'green'],
     feedbackNum: 0,
+    isShare: false,
+    userName: '',
+    per_pro: '你',
     answers: [{
       "questionsId": 2,
       "answers": []
@@ -38,10 +42,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    //添加控制参数，如果该页面为他人分享，userId取自页面传递来值
+
+    if (options.isShare != undefined) {
+      this.data.isShare = options.isShare
+      this.data.userName = options.userName
+      this.data.per_pro = "TA"
+    }
+
     var me = this;
     var user = app.getGlobalUserInfo();
     var serverUrl = app.serverUrl;
-    var userId = user.userId
+    var userId = ''
+    if (options.isShare != undefined) {
+      this.data.isShare = options.isShare
+      userId = options.userId
+    } else {
+      userId = user.userId
+    }
+
+
     wx.showLoading({
       title: '结果加载中，请稍后...',
     });
@@ -117,7 +137,10 @@ Page({
     me.setData({
       feedbackNum: feedbackNum,
       tags: this.data.tags,
-      answers: this.data.answers
+      answers: this.data.answers,
+      isShare: this.data.isShare,
+      userName: this.data.userName,
+      per_pro: this.data.per_pro
     })
   },
 
@@ -132,7 +155,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    wx.hideHomeButton()
   },
 
   /**
@@ -167,6 +190,14 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    var user = app.getGlobalUserInfo();
+    var userId = user.userId
+    var userName = user.username
+    return {
+      title: 'Hi，这是朋友眼中的我，感觉挺有意思的，分享给你~',
+      path: '/packageOpenMy/pages/feedback/index?userId=' + userId + '&isShare=true&userName=' + userName,
+      success: function() {},
+      fail: function() {}
+    }
   }
 })
