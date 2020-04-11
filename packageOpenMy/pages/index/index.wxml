@@ -1,38 +1,69 @@
 <!--页面根标签-->
-<view class="view.block">
-    <!--pics文件夹下的background.jpg文件-->
-    
 
-     <image mode='widthFix' src="../img/openMyIndex.png" style='width=600rpx'></image>
-    <!--页面其它部分-->
+<view class="topview.block">
+  <!--pics文件夹下的background.jpg文件-->
+
+  <image mode='widthFix' src="../img/openMyIndex.png" style='width=600rpx'></image>
+  <!--页面其它部分-->
 
 </view>
 
- <view class="view.block" wx:if="{{!isLogin}}">
-    <i-row>
-      <i-col span="24">
-         <button class="button.small" id='loginBut' bindtap="goLogin">登录</button>
-      </i-col>
-    </i-row>
+<view class="view.block" wx:if="{{!isLogin}}">
+  <i-row>
+    <i-col span="24">
+      <button class="button.small" id='loginBut' bindtap="goLogin">登录</button>
+    </i-col>
+  </i-row>
 
-  </view>
+</view>
 
- <view class="view.block" wx:if="{{isLogin}}">
-    <i-row>
-      <i-col span="8">
-        <button class="button.small" id='shareCollection' open-type='share'>收集反馈</button>
-      </i-col>
-      <i-col span="8">
-        <!--在按钮名称后，加入友好提示，已经收集到的反馈结果数目-->
-        <button id="nextButton" class="button.small" bindtap="goFeedbackPage">查看结果</button>
-      </i-col>
-      <i-col span="8">
-        <button class="button.small" id='shareOpenMyBut' open-type='share'>分享小程序</button>
-      </i-col>
 
-    </i-row>
+<view wx:if="{{isLogin}}">
+  <i-row>
 
-  </view>
-   
+    <i-col span="6" i-class="col-class">
+      <button open-type="share" class='but.noborder' id='shareCollection'>
+        <i-icon type="editor" size="28" color="#5cadff" />
+        <view>收集反馈</view>
 
- 
+      </button>
+    </i-col>
+    <i-col span="6" i-class="col-class">
+      <button bindtap="goFeedbackPage" class='but.noborder' id="nextButton">
+        <i-icon type="document" size="28" color="#5cadff" />
+        <view>查看结果</view>
+
+      </button>
+
+
+    </i-col>
+
+    <i-col span="6" i-class="col-class">
+      <button id='shareOpenMyBut' open-type='share' class='but.noborder'>
+        <i-icon type="share" size="28" color="#5cadff" />
+        <view>分享</view>
+
+      </button>
+    </i-col>
+    <i-col span="6" i-class="col-class">
+      <button bindtap="toggleLeft1" class='but.noborder'>
+        <i-icon type="setup" size="28" color="#5cadff" />
+        <view>设置</view>
+
+      </button>
+
+
+    </i-col>
+  </i-row>
+
+</view>
+
+<form bindsubmit='setup'>
+  <i-drawer mode="left" visible="{{showLeft1}}" mask-closable="{{false}}">
+
+    <i-input name="in_userName" value="{{userName}}" title="修改昵称" />
+    <view class="view.block">
+    <button class="button.small" id='saveBut' form-type="submit">确认</button>
+    </view>
+  </i-drawer>
+</form>

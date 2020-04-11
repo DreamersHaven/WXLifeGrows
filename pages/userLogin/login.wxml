@@ -1,65 +1,56 @@
 <view>
- 
-    <view class='comment-toprow'>
-        
-        <form bindsubmit='doLogin'>
-         
-            <!--账号-->
-            <view class="inputView">
-                <i-icon type="addressbook" size="24"/>
-                <label class="loginLabel">账号</label>
-                <input name="username" value='' class="inputText" placeholder="请输入账号" />
-            </view>
-            <view class="line"></view>
 
-            <!--密码-->
-            <view class="inputView">
-                 <i-icon type="lock" size="24"/>
-                <label class="loginLabel">密码</label>
-                <input name="password" value='' class="inputText" password="true" placeholder="请输入密码" />
-            </view>
-            <view class="line"></view>
+  <view class='comment-toprow'>
 
-            <!--按钮-->
-            <view>
-                <button class="button.bluebutton"  form-type='submit'>登录</button>
-            </view>
+    <form bindsubmit='doLogin'>
 
-</form>
+      <!--账号-->
+      <view class="inputView">
+        <i-icon type="addressbook" size="24" />
+        <label class="loginLabel">账号</label>
+        <input name="username" value='' class="inputText" placeholder="请输入账号" />
+      </view>
+      <view class="line"></view>
 
-   </view>
+      <!--密码-->
+      <view class="inputView">
+        <i-icon type="lock" size="24" />
+        <label class="loginLabel">密码</label>
+        <input name="password" value='' class="inputText" password="true" placeholder="请输入密码" />
+      </view>
+      <view class="line"></view>
+
+      <!--按钮-->
+      <view>
+        <button class="button.bluebutton" form-type='submit'>登录</button>
+      </view>
+
+    </form>
+
+  </view>
 
   <view>
-             
-   
-    <i-row>
-    
-    <i-col span="12" i-class="col-class">
-       <button
-   
-    open-type="getUserInfo"
-    bindgetuserinfo="bindGetUserInfo"
-class='but.noborder'>
-    <i-icon type="interactive" size="28" color="#19be6b" />
-    <view>微信授权登录</view>
-    
-    </button>
-     </i-col>
-    <i-col span="12" i-class="col-class"> 
-      <button
-    
-   
-    bindtap="goRegistPage"
-class='but.noborder'>
-    <i-icon type="mine" size="28" color="#5cadff" />
-    <view>注册新用户</view>
-    
-    </button>
-     
-    
-    </i-col>
-    
-</i-row>
- </view>
-</view>
 
+
+    <i-row>
+
+      <i-col span="12" i-class="col-class">
+        <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class='but.noborder'>
+          <i-icon type="interactive" size="28" color="#19be6b" />
+          <view>微信授权登录</view>
+
+        </button>
+      </i-col>
+      <i-col span="12" i-class="col-class">
+        <button bindtap="goRegistPage" class='but.noborder'>
+          <i-icon type="mine" size="28" color="#5cadff" />
+          <view>注册新用户</view>
+
+        </button>
+
+
+      </i-col>
+
+    </i-row>
+  </view>
+</view>

@@ -9,8 +9,9 @@ Page({
   data: {
     //判断用户是否已经登录
     isLogin: false,
-    userId:'',
-    userName:''
+    userId: '',
+    userName: '',
+    showLeft1: false
   },
 
   /**
@@ -24,17 +25,24 @@ Page({
    * 4、【查看结果】
    *    关键参数：userId（发起人用户ID）
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var user = app.getGlobalUserInfo();
     var me = this;
     if (user == undefined || user == '' || user.userId == undefined) {
 
-    }else{
-      this.data.isLogin=true
+    } else {
+      this.data.isLogin = true
       this.data.userId = user.userId
-      this.data.userName = user.username
+      //如果用户设置了昵称，优先显示用户的昵称，否则显示用户微信名称
+      var userNameStor = wx.getStorageSync("openMy_userName")
+      if (userNameStor) {
+        this.data.userName = userNameStor;
+      } else {
+        this.data.userName = user.username
+      }
       me.setData({
-        isLogin: true
+        isLogin: true,
+        userName: this.data.userName
       })
     }
   },
@@ -42,59 +50,90 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     wx.hideHomeButton()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
   /**
    * 跳转到授权登录页面
    */
-  goLogin: function (res) {
-      wx.redirectTo({
-        url: '../../../pages/userLogin/login?redirectUrl=/packageOpenMy/pages/index/index',
-      })
+  goLogin: function(res) {
+    wx.redirectTo({
+      url: '../../../pages/userLogin/login?redirectUrl=/packageOpenMy/pages/index/index',
+    })
   },
 
   //packageOpenMy/pages/collection/index?userId=' + userId + '&userName=' + userName
-  goFeedbackPage:function(res){
+  goFeedbackPage: function(res) {
     console.log("跳转到结果页面")
     wx.navigateTo({
       url: '/packageOpenMy/pages/feedback/index?userId=' + this.data.userId + '&userName=' + this.data.userName,
     })
+  },
+  /**
+   * 用于显示设置昵称等抽屉层
+   */
+  toggleLeft1() {
+    this.setData({
+      showLeft1: !this.data.showLeft1
+    });
+  },
+
+  /**
+   * 将用户的设置信息保存到本地缓存中
+   */
+  setup(e) {
+
+    var userName = e.detail.value.in_userName
+    if (userName == '') {
+      wx.showToast({
+        title: '亲，昵称不能为空呀~',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    var key = "openMy_userName"
+    wx.setStorageSync(key, userName)
+    this.data.userName = userName
+    this.setData({
+      showLeft1: !this.data.showLeft1,
+      userName: this.data.userName
+    });
   },
 
   /**
@@ -102,29 +141,28 @@ Page({
    * 依据不同的分享按钮ID，响应不同操作
    * 
    */
-  onShareAppMessage: function (res) {
+  onShareAppMessage: function(res) {
     var buttonName = res.target.id
     //获得发起人ID
-    var userName=this.data.userName
+    var userName = this.data.userName
     var userId = this.data.userId
     if (buttonName == 'shareCollection') {
-      
+
 
       return {
-        title: 'Hi老铁，我是' + userName+',请帮忙匿名回答关于我的四个问题，让我更了解自己，抱拳抱拳~',
+        title: 'Hi老铁，我是' + userName + ',请帮忙匿名回答关于我的四个问题，让我更了解自己，抱拳抱拳~',
         path: '/packageOpenMy/pages/collection/index?userId=' + userId + '&userName=' + userName,
-        success: function () { },
-        fail: function () { }
+        success: function() {},
+        fail: function() {}
       }
-    }
-
-    else {
+    } else {
       return {
         title: '探索别人眼中的自己，你也来试试吧！',
         path: '/packageOpenMy/pages/index/index',
-        success: function () { },
-        fail: function () { }
+        success: function() {},
+        fail: function() {}
       }
     }
   }
+
 })

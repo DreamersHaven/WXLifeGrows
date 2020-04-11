@@ -192,7 +192,15 @@ Page({
   onShareAppMessage: function() {
     var user = app.getGlobalUserInfo();
     var userId = user.userId
-    var userName = user.username
+    var userName = ''
+
+
+    var userNameStor = wx.getStorageSync("openMy_userName")
+    if (userNameStor) {
+      userName = userNameStor;
+    } else {
+      userName = user.username
+    }
     return {
       title: 'Hi，这是朋友眼中的我，感觉挺有意思的，分享给你~',
       path: '/packageOpenMy/pages/feedback/index?userId=' + userId + '&isShare=true&userName=' + userName,
